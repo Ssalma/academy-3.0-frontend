@@ -9,12 +9,14 @@ import AssessmentView from "@/views/user_views/AssessmentView.vue"
 import QuestionsView from "@/views/user_views/QuestionsView.vue"
 import SuccessfulView from "@/views/user_views/SuccessfulView.vue"
 
+
 const routes = [
   {
     path: "/",
     name: "home",
     component: HomeView,
   },
+
   {
     path: "/signup",
     name: "signUP",
