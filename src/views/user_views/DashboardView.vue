@@ -1,8 +1,10 @@
 <template>
-  <div class="main-container">
-    <SideNav />
-    <section class="right-section">
-      <h2>Dashboard</h2>
+<the-layout>
+  <template v-slot:side-nav>
+     <SideNav />
+  </template>
+  <template v-slot:main-content>
+     <h2>Dashboard</h2>
       <p>
         Your Application is currently being review, you wil be notified if
         successful
@@ -37,50 +39,23 @@
           </div>
         </div>
       </div>
-    </section>
-  </div>
+  </template>
+</the-layout>
+ 
 </template>
 
 <script>
 import SideNav from "@/components/UserSideNav.vue";
+import TheLayout from "@/components/TheLayout.vue";
 
 export default {
   components: {
-    SideNav,
+    SideNav,TheLayout
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.main-container {
-  font-family: "Lato";
-  height: 100vh;
-  display: flex;
-  padding-right: 15px;
-}
-.right-section {
-  width: calc(100% - 292px);
-  padding: 107px 0 86px 47px;
-  overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-    border-radius: 17px;
-    margin-right: 30px;
-  }
-  &::-webkit-scrollbar-track {
-    background: #cdcfd6;
-    height: 681px;
-  }
-  /* Handle */
-  &::-webkit-scrollbar-thumb {
-    background: #031131;
-    opacity: 0.7;
-    border-radius: 17px;
-    background-clip: padding-box;
-  }
-}
-
 h2 {
   font-weight: 300;
   font-size: 43.5555px;
