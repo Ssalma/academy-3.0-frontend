@@ -20,7 +20,7 @@
                 <app-button class="signin-btn" :text="signInText"></app-button>
                 <div class="btn-container-text">
                     <p class="signinbtn-text">Don't have an account Yet? <router-link :to="{ name: 'signup'}">Sign Up</router-link></p>
-                    <p class="signinbtn-text">Forgot Password</p>
+                    <p class="signinbtn-text">Forgot Password?</p>
                 </div>  
             </div>
             

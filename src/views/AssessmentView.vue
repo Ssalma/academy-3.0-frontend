@@ -1,67 +1,20 @@
 <template>
-    <div class="main-dashboard">
+<div class="main-dashboard">
         <div class="left">
             <dashboard-left></dashboard-left>
         </div>
         <div class="right">
-            <h1 class="dashboardmain-text">Dashboard</h1>
-            <p class="status">Your Application is currently being reviewed, you will be notified if successful</p>
-            <div class="status-card">
-                <div>
-                    <h3 class="header">Date of Application</h3>
-                    <h1 class="status-text">09.09.19</h1>
-                    <hr class="blue-horizonal">
-                    <p class="status-time">4 days since applied</p>
-                </div>
-                <div>
-                    <h3 class="header">Application Status</h3>
-                    <h1 class="status-text">Pending</h1>
-                    <hr class="yellow-horizonal">
-                    <p class="status-time">We will get back to you</p>
-                </div>
-            </div>
-            <!-- This is the card section below -->
-            <section>
-                <div class="update-card">
-                    <div class="update-content">
-                        <div class="updatetext-content">
-                            <h3 class="update-header">Updates</h3>
-                            <ul>
-                                <li><hr class="grey-horizonal"></li>
-                                <li><hr class="grey-horizonal"></li>
-                                <li><hr class="grey-horizonal"></li>
-                                <li><hr class="grey-horizonal"></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="update-content">
-                        <div class="updatetext-content">
-                            <h3 class="update-header">Take Assessment</h3>
-                            <div class="assessment-info">
-                                <h3>We have 4 days left until the next assessment <br>
-                                Watch this space</h3>
-                                <app-button :text="takeAssessmentText" class="takeassessment-btn"></app-button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            
         </div>
     </div> 
 </template>
 
 <script>
 import leftDashboardComponentVue from '@/components/leftDashboardComponent.vue';
-import buttonComponentVue from '@/components/buttonComponent.vue';
+
 export default {
-    components:{
+    components: {
         "dashboard-left": leftDashboardComponentVue,
-        "app-button": buttonComponentVue
-    },
-    data(){
-        return{
-            takeAssessmentText: "Take Assessment"
-        }
     }
 }
 </script>
@@ -207,4 +160,5 @@ ul{
     top: 50%;
     transform: translate(0, -50%);
 }
+
 </style>

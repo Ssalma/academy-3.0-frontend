@@ -4,6 +4,7 @@ import SignUpView from '../views/SignUpView.vue'
 import SignInView from '../views/SignInView.vue'
 import ApplicationView from '../views/ApplicationView.vue'
 import DashboardView from '../views/DashboardView.vue'
+import AssessmentDashboardView from '../views/AssessmentView.vue'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/applicantdashboard',
     name: 'applicantdashboard',
     component: DashboardView
+  },
+  {
+    path: '/assessmentdashboard',
+    name: 'assessmentdashboard',
+    component: AssessmentDashboardView
   },
 ]
 

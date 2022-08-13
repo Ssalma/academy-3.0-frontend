@@ -52,4 +52,19 @@ props: {
     background-color: #7557D3;
 }
 
+.takeassessment-btn{
+    padding: 11px 42px;
+    border: none;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #FFFFFF;
+    background: #B1B1B1;
+    border-radius: 4px;
+    margin-top: 24px;
+}
+
 </style>
