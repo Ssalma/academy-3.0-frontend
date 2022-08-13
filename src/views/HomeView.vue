@@ -134,6 +134,7 @@ main{
   background: #FDC840;
   border-radius: 2px;
   margin-right: 16px;
+  border: none;
 }
 
 .why-us{

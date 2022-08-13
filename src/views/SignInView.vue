@@ -1,40 +1,32 @@
 <template>
-  <div class="signup-container">
-        <div class="signup-header">
+    <div class="signin-container">
+        <div class="signin-header">
             <figure>
-                <router-link :to="{ name: 'home'}"><img src="../assets/enyataSmallerLogo.svg" alt="Enyata logo"></router-link>  
+              <router-link :to="{ name: 'home'}"><img src="../assets/enyataSmallerLogo.svg" alt="Enyata logo"></router-link>  
             </figure>
-            <h1 class="applicantText">Applicant Sign Up</h1>
+            <h1 class="applicantText">Applicant Log In</h1>
         </div>
-        
         <form>
             <div class="form-input">
-                <fieldset>
-                    <label for="first Name">First Name</label>
-                    <input type="text">
+                <fieldset class="left">
                     <label for="Email Address">Email Address</label>
                     <input type="email">
                     <label for="Password">Password</label>
-                    <input type="password">
-                </fieldset>
-                <fieldset>
-                    <label for="last Name">Last Name</label>
-                    <input type="text">
-                    <label for="phone Number">Phone Number</label>
-                    <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
-                    <label for="confirm Password">Confirm Password</label>
-                    <input type="password">
+                    <input type="password" class="password">
+                    
                 </fieldset>
             </div>
-            <div class="btnContainer">
-                <app-button class="signup-btn" :text="signUpText"></app-button>
-                <p class="signupbtn-text">Already have an account? <router-link :to="{ name: 'signin'}">Sign In</router-link></p>
+            <div class="btn-container">
+                <app-button class="signin-btn" :text="signInText"></app-button>
+                <div class="btn-container-text">
+                    <p class="signinbtn-text">Don't have an account Yet? <router-link :to="{ name: 'signup'}">Sign Up</router-link></p>
+                    <p class="signinbtn-text">Forgot Password</p>
+                </div>  
             </div>
             
         </form>
-   
     
-  </div>
+    </div>
 </template>
 
 <script>
@@ -45,23 +37,27 @@ export default {
     },
     data(){
         return{
-            signUpText: "Sign Up"
+            signInText: "Sign In"
         }
     }
 }
 </script>
 
 <style scoped>
-.signup-container{
-    height: 100vh;
-    max-width: 1440px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-content: space-around;
+.signin-container{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
 }
 
-.signup-header{
+.form-input{
+    display: flex;
+    justify-content: center;
+}
+
+.signin-header{
     text-align: center;
 }
 
@@ -74,12 +70,6 @@ export default {
     /* identical to box height */
     color: #2B3C4E;
     margin: 28px 0px 68px 0px;
-}
-
-.form-input{
-    display: flex;
-    justify-content: center;
-    gap: 62px;
 }
 
 fieldset{
@@ -110,11 +100,11 @@ input:focus{
   outline: none;
 }
 
-input[type=password]:focus, [type=text]:focus, [type=tel]:focus, [type=email]:focus {
+input[type=password]:focus, [type=email]:focus {
   border: 3px solid #7557D3;
 }
 
-input[type=password], [type=text], [type=tel], [type=email]{
+input[type=password], [type=email]{
     padding-left: 10px;
     font-family: 'Lato';
     font-style: normal;
@@ -125,11 +115,12 @@ input[type=password], [type=text], [type=tel], [type=email]{
     color: #4F4F4F; 
 }
 
-.btnContainer{
-    text-align: center;
+.btn-container-text{
+    display: flex;
+    justify-content: space-between;
 }
 
-.signupbtn-text{
+.signinbtn-text{
     font-family: 'Lato';
     font-style: italic;
     font-weight: 400;
@@ -139,5 +130,9 @@ input[type=password], [type=text], [type=tel], [type=email]{
     color: #4F4F4F;
     margin-top: 10px;
 }
+
+
+
+
 
 </style>
