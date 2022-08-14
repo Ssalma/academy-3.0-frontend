@@ -83,11 +83,11 @@ export default {
 }
 
 .dashboard-text:focus{
-    border-left: 4px solid #7557D3;;
+    border-left: 4px solid #7557D3;
 }
 
 .dashboard-text:active{
-    border-left: 4px solid #7557D3;;
+    border-left: 4px solid #7557D3;
 }
 
 a{

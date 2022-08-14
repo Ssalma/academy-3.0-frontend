@@ -24,6 +24,7 @@ props: {
     border-radius: 2px;
     border: none;
     align-items: center;
+    cursor: pointer;
 }
 
 .signup-btn{
@@ -36,6 +37,7 @@ props: {
     line-height: 19px;
     color: #FFFFFF;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 .signin-btn{
@@ -50,6 +52,7 @@ props: {
     line-height: 19px;
     color: #FFFFFF;
     background-color: #7557D3;
+    cursor: pointer;
 }
 
 .takeassessment-btn{
@@ -65,6 +68,50 @@ props: {
     background: #B1B1B1;
     border-radius: 4px;
     margin-top: 24px;
+    cursor: pointer;
+}
+
+.previous-btn{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+    color: #211F26;
+    padding: 10px 32px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.next-btn{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+    color: #211F26;
+    padding: 10px 32px;
+    border-radius: 4px;
+    background: #7557D3;
+    cursor: pointer;
+}
+
+.finish-btn{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+    color: #211F26;
+    padding: 11px 81px;
+    border-radius: 4px;
+    background: #CECECE;
+    color: #FFFFFF;
 }
 
 </style>

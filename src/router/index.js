@@ -5,6 +5,7 @@ import SignInView from '../views/SignInView.vue'
 import ApplicationView from '../views/ApplicationView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import AssessmentDashboardView from '../views/AssessmentView.vue'
+import ForgotView from '../views/ForgetView.vue'
 
 const routes = [
   {
@@ -21,6 +22,11 @@ const routes = [
     path: '/signin',
     name: 'signin',
     component: SignInView
+  },
+  {
+    path: '/forgot',
+    name: 'forgot',
+    component: ForgotView
   },
   {
     path: '/applicationform',
