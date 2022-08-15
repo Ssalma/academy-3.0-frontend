@@ -23,39 +23,39 @@
                 </figure>
             </div>
 
-            <form>
-                <div class="form">
-                    <h5>Question 1</h5>
-                    <h1 class="question">What is the purpose of HDR technology?</h1>
-                        <div class="input-questions">
-                            <div class="input-top">
-                                <input type="checkbox" id="option1">
-                                <label for="option1" class="option-selector">A. To reduce the file size of images and videos</label><br>
-                            </div>
-                            <div class="input-bottom">
-                                <input type="checkbox" id="option2">
-                                <label for="option2" class="option-selector">B. To speed up 3D rendering performance.</label><br>
-                            </div>
-                            <div class="input-bottom">
-                                <input type="checkbox" id="option3">
-                                <label for="option3" class="option-selector">C. To support higher video resolutions</label><br>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="option4">
-                                <label for="option4" class="option-selector">D. To display more colors in images and videos</label> 
-                            </div>
+            <div class="main-body">
+                <div class="questions">
+                    <h5>{{ questions[index]["questionNumber"] }}</h5>
+                    <h1 class="question">{{ questions[index]["question"] }}</h1>
+                    <div class="checkbox-container" @click="changeColor">
+                    <div class="input-questions">
+                            <label
+                                class="option-selector"
+                                :for="key"
+                                v-for="(answer, key) in questions[index]['answers']"
+                                :key="answer"
+                            >
+                                <br />
+                                <input
+                                type="checkbox"
+                                :id="key"
+                                name=""
+                                :value="key"
+                                @change="answered($event)"
+                                />
+                                {{ answer }}
+                            </label>
                         </div>
-                    <div class="next-previous">
-                        <app-button class="previous-btn" :text="Button.previousButton"></app-button>
-                        <app-button class="next-btn next-button-right" :text="Button.nextButton"></app-button>
                     </div>
-                    <div class="finish">
-                        <app-button class="finish-btn finish-button-center" :text="Button.finishButton"></app-button>
-                    </div>
-                    
                 </div>
-                
-            </form>
+          <div class="next-previous">
+            <app-button class="previous-btn" @click="index--"  :text="Button.previousButton"></app-button>
+            <app-button class="next-btn next-button-right" @click="index++" :text="Button.nextButton"></app-button>
+          </div>
+          <div class="finish">
+                <app-button class="finish-btn finish-button-center" :text="Button.finishButton"></app-button>
+          </div>
+        </div>
         </div>
     </div> 
 </template>
@@ -70,9 +70,53 @@ export default {
     },
     data(){
         return{
-            Button: { nextButton: "Next", previousButton: "Previous", finishButton: "finish", TakeAssessment: "Take Assessment"}
-        }
-    }
+            Button: { nextButton: "Next", previousButton: "Previous", finishButton: "Finish", TakeAssessment: "Take Assessment"},
+            selectedAnswer: "",
+      index: 0,
+      questions: [
+        {
+          questionNumber: "Question 1",
+          question: "which of these is a frameworks?",
+          answers: {
+            a: "A. To reduce teh file size of images and videos.",
+            b: "B. To speed up 3D rendering performance.",
+            c: "C. To support higher video resolutions.",
+            d: "D. To display more colors in images and videos",
+          },
+          correctAnswer: "c",
+        },
+        {
+          questionNumber: "Question 2",
+          question: "which of these is a programming language ?",
+          answers: {
+            a: "A. css",
+            b: "B. javascript",
+            c: "C. vuejs",
+            d: "D. html",
+          },
+          correctAnswer: "b",
+        },
+        {
+          questionNumber: "Question 3",
+          question: "which of these is used for styling?",
+          answers: {
+            a: "A. css",
+            b: "B. javascript",
+            c: "C. uejs",
+            d: "D. html",
+          },
+          correctAnswer: "a",
+        },
+      ],
+        };
+    },
+    methods: {
+    answered(event) {
+      this.selectedAnswer = event.target.value;
+    },
+    // changeColor() {},
+  },
+
 }
 </script>
 
@@ -173,7 +217,7 @@ h5{
 }
 
 input[type=checkbox]{
-    margin-right: 42px; 
+    margin: 0px 42px 37px 0px; 
 }
 
 .option-selector{
@@ -200,16 +244,17 @@ input[type=checkbox]{
 }
 
 .next-previous{
-    margin-top: 86px;
+    margin-top: 26px;
 }
 
 .finish{
-    margin: 75px 0px 0px 0px;
+    margin: 45px 0px 0px 0px;
     text-align: center;
 }
 
 .show-before{
     text-align: center;
+    display: none;
 }
 
 figcaption{
@@ -222,7 +267,7 @@ figcaption{
     margin: 21px 0px 24px 0px;
 }
 
-form{
+/* form{
     display: none;
-}
+} */
 </style>

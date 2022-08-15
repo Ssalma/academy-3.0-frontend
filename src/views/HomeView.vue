@@ -10,7 +10,7 @@
         <section class="hero-text-container">
           <h1 class="hero-text">Ever had a Dream of Becoming a Software <span class="engineerColor">Engineer</span></h1>
           <p class="hero-para">Join enyata academy today and bring your long awaiting dream to reality.</p>
-          <app-button :text="registerbtnText"></app-button>
+          <router-link :to="{ name: 'signup'}"><app-button :text="registerbtnText"></app-button></router-link>
         </section>
         <figure>
           <img src="../assets/manChildImage.svg" alt="Image of a man teaching his child on a computer">
@@ -152,8 +152,7 @@ main{
   display: flex;
 }
 
-
-
-
-
+a{
+  text-decoration: none;
+}
 </style>

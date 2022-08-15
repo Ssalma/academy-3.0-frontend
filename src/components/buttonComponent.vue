@@ -77,7 +77,6 @@ props: {
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
-    /* identical to box height */
     color: #211F26;
     padding: 10px 32px;
     border: 1px solid rgba(0, 0, 0, 0.25);
@@ -92,8 +91,7 @@ props: {
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
-    /* identical to box height */
-    color: #211F26;
+    color: #FFFFFF;
     padding: 10px 32px;
     border-radius: 4px;
     background: #7557D3;

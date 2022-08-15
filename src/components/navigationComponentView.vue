@@ -4,8 +4,8 @@
       <img src="../assets/heroLogo.svg" alt="Enyata Logo">
     </figure>
     <ul>
-      <li>Home</li>
-      <li>Sign in</li>
+      <router-link :to="{ name: 'home'}"><li>Home</li></router-link>
+      <router-link :to="{ name: 'signin'}"><li>Sign in</li></router-link>
       <router-link :to="{ name: 'signup'}"><li class="register-now">Register Now</li></router-link>
     </ul>
 
