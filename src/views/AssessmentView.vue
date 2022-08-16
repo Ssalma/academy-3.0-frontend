@@ -7,7 +7,7 @@
             <div class="header-text">
                 <div>
                     <h1 class="take-assessment">Take Assessment</h1>
-                    <p class="status">Click the button below to start assessment, you have limited time for this test</p>
+                    <p class="status">Click the finish button below to submit assessment, you can go back at any time to edit your answers.</p>
                 </div>
                 <div>
                     <h1 class="timer">Timer</h1>
@@ -160,6 +160,7 @@ export default {
     line-height: 19px;
     color: #2B3C4E;
     margin: 14px 0px 61px 0px;
+    width: 607px;
 }
 
 .timer{

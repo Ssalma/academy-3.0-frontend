@@ -112,4 +112,18 @@ props: {
     color: #FFFFFF;
 }
 
+.home-btn{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+    color: #211F26;
+    padding: 11px 81px;
+    border-radius: 4px;
+    background: #7557D3;
+    color: #FFFFFF;
+}
+
 </style>

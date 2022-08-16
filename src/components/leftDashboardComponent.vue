@@ -76,7 +76,7 @@ export default {
 .dashboard-text{
     font-family: 'Lato';
     font-style: normal;
-    font-weight: 700;
+    font-weight: 400;
     font-size: 16px;
     line-height: 19px;
     color: #2B3C4E;
@@ -84,10 +84,12 @@ export default {
 
 .dashboard-text:focus{
     border-left: 4px solid #7557D3;
+    font-weight: 700;
 }
 
 .dashboard-text:active{
     border-left: 4px solid #7557D3;
+    font-weight: 700;
 }
 
 a{
@@ -101,8 +103,6 @@ a{
 .logout{
     margin-top: 29px;
 }
-
-
 
 
 </style>

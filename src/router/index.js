@@ -6,6 +6,8 @@ import ApplicationView from '../views/ApplicationView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import AssessmentDashboardView from '../views/AssessmentView.vue'
 import ForgotView from '../views/ForgetView.vue'
+import TakeAssessmentView from '../views/TakeAssessmentView.vue'
+import ThankYouAssessmentView from '../views/ThankYouView.vue'
 
 const routes = [
   {
@@ -43,6 +45,16 @@ const routes = [
     name: 'assessmentdashboard',
     component: AssessmentDashboardView
   },
+  {
+    path: '/takeassessmentdashboard',
+    name: 'takeassessmentdashboard',
+    component: TakeAssessmentView
+  },
+  {
+    path: '/thankyouassessmentdashboard',
+    name: 'thankyoussessmentdashboard',
+    component: ThankYouAssessmentView
+  }
 ]
 
 const router = createRouter({

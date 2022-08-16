@@ -7,23 +7,30 @@
             <h1 class="applicantText">Applicant Sign Up</h1>
         </div>
         
-        <form>
+        <form @submit.prevent="submitForm">
             <div class="form-input">
                 <fieldset>
                     <label for="first Name">First Name</label>
-                    <input type="text">
+                    <input type="text" v-model="firstName">
+                    <h6>{{form.firstNameErr}}</h6>
                     <label for="Email Address">Email Address</label>
-                    <input type="email">
+                    <input type="email" v-model="emailAddress">
+                    <h6>{{form.emailAddressErr}}</h6>
                     <label for="Password">Password</label>
-                    <input type="password">
+                    <input type="password" v-model="password.password">
+                    <span class="material-symbols-outlined">visibility</span>
+                    <h6>{{form.passwordErr}}</h6>
                 </fieldset>
                 <fieldset>
                     <label for="last Name">Last Name</label>
-                    <input type="text">
+                    <input type="text" v-model="lastName">
+                    <h6>{{form.lastNameErr}}</h6>
                     <label for="phone Number">Phone Number</label>
-                    <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+                    <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" v-model="phoneNumber" placeholder="000-000-0000">
                     <label for="confirm Password">Confirm Password</label>
-                    <input type="password">
+                    <input type="password" v-model="password.confirmPassword">
+                    <span class="material-symbols-outlined">visibility</span>
+                    <h6>{{form.confirmPasswordErr}}</h6>
                 </fieldset>
             </div>
             <div class="btnContainer">
@@ -45,9 +52,34 @@ export default {
     },
     data(){
         return{
-            signUpText: "Sign Up"
+            signUpText: "Sign Up",
+            firstName: "",
+            lastName: "",
+            emailAddress: "",
+            phoneNumber: "",
+            password: {
+            password: "",
+            confirmPassword: "",
+            },
+            form: {
+                firstNameErr: "",
+                lastNameErr: "",
+                emailAddressErr: "",
+                phoneNumberErr: "",
+                passwordErr: "",
+                confirmPasswordErr: "",
+            }
         }
-    }
+    },
+    methods: {
+            submitForm(){
+                this.firstName.trim().length < 2 ? this.form.firstNameErr = "This field should be more than one character" : console.log(this.firstName)
+                this.lastName.trim().length < 2 ? this.form.lastNameErr = "This field should be more than one character" : console.log(this.firstName)
+                !this.emailAddress.trim().includes("@") ? this.form.emailAddressErr = "Please include an @ in the email address" : console.log(this.emailAddress)
+                this.password.password.trim() < 8 ? this.form.passwordErr = "Your password should be eight characters long" : console.log(this.password.password)
+                this.password.password.trim() === this.password.confirmPassword ? console.log(this.password.confirmPassword): this.form.confirmPasswordErr = "Your passwords do not match"
+            }
+        }
 }
 </script>
 
@@ -138,6 +170,15 @@ input[type=password], [type=text], [type=tel], [type=email]{
     /* identical to box height */
     color: #4F4F4F;
     margin-top: 10px;
+}
+
+.material-symbols-outlined{
+    opacity: 0.4;
+    width: 15px;
+    height: 8.57px;
+    position: relative;
+    left: -30px;
+    top: 5px;
 }
 
 </style>

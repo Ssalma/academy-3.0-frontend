@@ -13,14 +13,14 @@
                     <input type="email">
                     <label for="Password">Password</label>
                     <input type="password" class="password">
-                    
+                    <span class="material-symbols-outlined">visibility</span>
                 </fieldset>
             </div>
             <div class="btn-container">
                 <app-button class="signin-btn" :text="signInText"></app-button>
                 <div class="btn-container-text">
-                    <p class="signinbtn-text">Don't have an account Yet? <router-link :to="{ name: 'signup'}">Sign Up</router-link></p>
-                    <p class="signinbtn-text">Forgot Password?</p>
+                    <p class="signinbtn-text">Don't have an account Yet? <router-link :to="{ name: 'signup'}">Sign Up</router-link></p><span class="signinbtn-text1">Forgot Password?</span>
+                    
                 </div>  
             </div>
             
@@ -48,7 +48,8 @@ export default {
     position: fixed;
     top: 50%;
     left: 50%;
-    /* bring your own prefixes */
+    font-family: 'Lato';
+    font-style: normal;
     transform: translate(-50%, -50%);
 }
 
@@ -62,7 +63,6 @@ export default {
 }
 
 .applicantText{
-    font-family: 'Lato';
     font-style: italic;
     font-weight: 500;
     font-size: 24px;
@@ -77,8 +77,6 @@ fieldset{
 }
 
 label{
-    font-family: 'Lato';
-    font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
@@ -106,8 +104,6 @@ input[type=password]:focus, [type=email]:focus {
 
 input[type=password], [type=email]{
     padding-left: 10px;
-    font-family: 'Lato';
-    font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
@@ -117,11 +113,9 @@ input[type=password], [type=email]{
 
 .btn-container-text{
     display: flex;
-    justify-content: space-between;
 }
 
 .signinbtn-text{
-    font-family: 'Lato';
     font-style: italic;
     font-weight: 400;
     font-size: 14px;
@@ -129,6 +123,26 @@ input[type=password], [type=email]{
     /* identical to box height */
     color: #4F4F4F;
     margin-top: 10px;
+}
+
+.signinbtn-text1{
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    color: #4F4F4F;
+    margin-top: 10px;
+    margin-left: 80px;
+}
+
+.material-symbols-outlined{
+    opacity: 0.4;
+    width: 15px;
+    height: 8.57px;
+    position: relative;
+    left: -30px;
+    top: 5px;
 }
 
 
