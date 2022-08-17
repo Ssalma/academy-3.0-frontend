@@ -6,14 +6,16 @@
             </figure>
             <h1 class="applicantText">Applicant Log In</h1>
         </div>
-        <form>
+        <form @submit.prevent="loginValidation">
             <div class="form-input">
                 <fieldset class="left">
                     <label for="Email Address">Email Address</label>
-                    <input type="email">
+                    <input type="email" v-model="email">
+                    <p>{{Eerror}}</p>
                     <label for="Password">Password</label>
-                    <input type="password" class="password">
+                    <input type="password" class="password" v-model="password">
                     <span class="material-symbols-outlined">visibility</span>
+                    <p>{{Perror}}</p>
                 </fieldset>
             </div>
             <div class="btn-container">
@@ -31,15 +33,46 @@
 
 <script>
 import buttonComponentVue from '@/components/buttonComponent.vue';
+import axios from "axios"
 export default {
     components:{
         "app-button": buttonComponentVue
     },
     data(){
         return{
-            signInText: "Sign In"
+            signInText: "Sign In",
+            email: "",
+            Eerror: "",
+            password: "",
+            Perror: ""
         }
+    },
+    methods: {
+    async loginValidation(){
+      if(!this.email.includes('@')){
+        this.Eerror = "The email should be valid"
+    } 
+      if(this.password.length < 8 && !this.password){
+        this.Perror = "Password should be more than 8 characters"
+    } 
+
+      let response =await axios.post('http://localhost:8081/api/v1/auth/login',
+       {
+    "email": this.email.trim(),
+    "password": this.password
+})
+    localStorage.setItem("token", response.data.data);
+    console.log(response.data.data)
+    let token = localStorage.getItem("token");
+    let applicationResponse = await axios.get('http://localhost:8081/api/v1/auth/user', {
+        headers: {"token": token}
+    })
+    if(applicationResponse.data.data.application){
+        this.$router.push('/applicantdashboard')
     }
+    this.$router.push('/applicationform')
+    }
+  }
 }
 </script>
 

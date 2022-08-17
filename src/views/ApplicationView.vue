@@ -6,34 +6,44 @@
             </figure>
             <h1 class="applicant-text">Applicant Log In</h1>
         </div>
-        <form>
+        <form action="/profile" method="post" enctype="multipart/form-data" @submit.prevent="applicationFormSubmit">
             <div class="container-form">
                 <fieldset class="input-file-photo">
-                    <input type="file" accept="file_extension" id="file">
+                    <input type="file" accept="file_extension" id="file" name="cv" v-on:change="selectedFile($event)">
                     <label for="file" class="upload-file"><span class="material-symbols-outlined">add</span> Upload CV</label>
-                    <input type="file" accept="image/*" id="upload-photo">
+                    <h6>{{error.cvErr}}</h6>
+                    <input type="file" accept="image/*" id="upload-photo" name="img" v-on:change="selectedFile($event)">
                     <label for="upload-photo" class="upload-file"><span class="material-symbols-outlined">add</span> Upload Photo</label>
+                    <h6>{{error.imgErr}}</h6>
                 </fieldset>
                 <div class="form-input">
                     <fieldset>
                         <label for="fName">First Name</label>
-                        <input type="text" id="fName">
+                        <input type="text" id="fName" name="fName"  v-model="form.firstName">
+                        <h6>{{error.firstNameErr}}</h6>
                         <label for="email">Email</label>
-                        <input type="email" id="email">
+                        <input type="email" id="email" name="email" v-model="form.email">
+                        <h6>{{error.emailErr}}</h6>
                         <label for="address">Address</label>
-                        <input type="text" id="address">
+                        <input type="text" id="address" name="address" v-model="form.address">
+                        <h6>{{error.addressErr}}</h6>
                         <label for="course">Course of Study</label>
-                        <input type="text" id="course">
+                        <input type="text" id="course" name="course" v-model="form.course">
+                        <h6>{{error.courseErr}}</h6>
                     </fieldset>
                     <fieldset>
                             <label for="lName">Last Name</label>
-                            <input type="text" id="lName">
+                            <input type="text" id="lName" name="lastName" v-model="form.lastName">
+                            <h6>{{error.lastNameErr}}</h6>
                             <label for="date">Date of Birth</label>
-                            <input type="date" id="date" max="12-31-1979">
+                            <input type="date" id="date" max="31-12-1979" name="dateOfBirth" v-model="form.dateOfBirth">
+                            <h6>{{error.dateOfBirthErr}}</h6>
                             <label for="university">University</label>
-                            <input type="text" id="university">
+                            <input type="text" id="university" name="university" v-model="form.university">
+                            <h6>{{error.universityErr}}</h6>
                             <label for="number">CGPA</label>
-                            <input type="number" id="number" min="1" max="5" step="0.01">
+                            <input type="number" id="number" min="1" max="5" step="0.01" name="cgpa" v-model="form.cgpa">
+                            <h6>{{error.cgpaErr}}</h6>
                     </fieldset>
                 </div>
                 <div class="btn-container">
@@ -49,14 +59,77 @@
 
 <script>
 import buttonComponentVue from '@/components/buttonComponent.vue';
+import axios from "axios"
 export default {
     components:{
         "app-button": buttonComponentVue
     },
     data(){
         return{
-            submitText: "Submit"
+            submitText: "Submit",
+            form: {
+                firstName: "",
+                lastName: "",
+                email: "",
+                dateOfBirth: null,
+                address: "",
+                university: "",
+                course: "",
+                cgpa: null,
+                cv: null,
+                img: null
+            },
+            error: {
+                firstNameErr: "",
+                lastNameErr: "",
+                emailErr: "",
+                dateOfBirthErr: "",
+                addressErr: "",
+                universityErr: "",
+                courseErr: "",
+                cgpaErr: "",
+                cvErr: "",
+                imgErr: ""
+            }
         }
+    },
+    methods: {
+        selectedFile(event) {
+        this.form.cv = event.target.files[0]
+        this.form.img = event.target.files[1]
+        },
+        async applicationFormSubmit(){
+        !this.form.cv ? this.error.cvErr = "Please upload a cv" : console.log(this.form)
+        !this.form.img ? this.error.imgErr = "Please upload a photo" : console.log(this.form)
+        this.form.firstName.trim().length < 2 ? this.error.firstNameErr = "This field should be more than one character" : console.log(this.form.firstName)
+        this.form.lastName.trim().length < 2 ? this.error.lastNameErr = "This field should be more than one character" : console.log(this.form.lastName)
+        this.form.email.trim().includes("@") ? console.log(this.form.email) : this.error.emailErr = "This field should contain a valid email address"
+        !this.form.dateOfBirth ? this.error.dateOfBirthErr = "The format should follow dd/mm/yyyy" : console.log(this.form.dateOfBirth)
+        this.form.address.trim() ? console.log(this.form.address) : this.error.addressErr =  "This field should be an address"
+        this.form.university.trim() ? console.log(this.form.university) : this.error.universityErr = "This field should be more than one character"
+        this.form.course.trim() ? console.log(this.form.course) : this.error.courseErr = "This field should be more than one character" 
+        this.form.cgpa ?  console.log(this.form.cgpa) : this.error.cgpaErr = "This field should be a number"
+    
+
+        const formData = new FormData()
+        formData.append('cv', this.form.cv)
+        formData.append('img', this.form.img)
+        formData.append('firstName', this.form.firstName)
+        formData.append('lastName', this.form.lastName)
+        formData.append('email', this.form.email)
+        formData.append('dateOfBirth', this.form.dateOfBirth)
+        formData.append('address', this.form.address)
+        formData.append('course', this.form.course)
+        formData.append('cgpa', this.form.cgpa)
+
+        let token = localStorage.getItem("token")
+        let response = await axios.post("http://localhost:8081/api/v1/auth/application", formData, {
+            headers: {"token": token}
+        })
+        console.log(response)
+
+    }
+
     }
 }
 </script>

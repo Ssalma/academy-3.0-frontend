@@ -46,6 +46,7 @@
 
 <script>
 import buttonComponentVue from '@/components/buttonComponent.vue';
+import axios from "axios"
 export default {
     components:{
         "app-button": buttonComponentVue
@@ -72,15 +73,32 @@ export default {
         }
     },
     methods: {
-            submitForm(){
+            async submitForm(){
                 this.firstName.trim().length < 2 ? this.form.firstNameErr = "This field should be more than one character" : console.log(this.firstName)
                 this.lastName.trim().length < 2 ? this.form.lastNameErr = "This field should be more than one character" : console.log(this.firstName)
                 !this.emailAddress.trim().includes("@") ? this.form.emailAddressErr = "Please include an @ in the email address" : console.log(this.emailAddress)
                 this.password.password.trim() < 8 ? this.form.passwordErr = "Your password should be eight characters long" : console.log(this.password.password)
                 this.password.password.trim() === this.password.confirmPassword ? console.log(this.password.confirmPassword): this.form.confirmPasswordErr = "Your passwords do not match"
+            
+                let response = await axios.post('http://localhost:8081/api/v1/users/signUp',
+        {
+            "firstName": this.firstName.trim(),
+            "lastName": this.lastName.trim(),
+            "email": this.emailAddress.trim(),
+            "phoneNumber": this.phoneNumber,
+            "password": this.password.password.trim(),
+        }).then((response)=>{
+        console.log('this should show')
+        console.log(response)
+        });
+            console.log(response)
+    
+  },
+            
+            
             }
-        }
-}
+    }
+
 </script>
 
 <style scoped>
