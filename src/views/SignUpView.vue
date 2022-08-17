@@ -1,202 +1,226 @@
 <template>
   <div class="signup-container">
-        <div class="signup-header">
-            <figure>
-                <router-link :to="{ name: 'home'}"><img src="../assets/enyataSmallerLogo.svg" alt="Enyata logo"></router-link>  
-            </figure>
-            <h1 class="applicantText">Applicant Sign Up</h1>
-        </div>
-        
-        <form @submit.prevent="submitForm">
-            <div class="form-input">
-                <fieldset>
-                    <label for="first Name">First Name</label>
-                    <input type="text" v-model="firstName">
-                    <h6>{{form.firstNameErr}}</h6>
-                    <label for="Email Address">Email Address</label>
-                    <input type="email" v-model="emailAddress">
-                    <h6>{{form.emailAddressErr}}</h6>
-                    <label for="Password">Password</label>
-                    <input type="password" v-model="password.password">
-                    <span class="material-symbols-outlined">visibility</span>
-                    <h6>{{form.passwordErr}}</h6>
-                </fieldset>
-                <fieldset>
-                    <label for="last Name">Last Name</label>
-                    <input type="text" v-model="lastName">
-                    <h6>{{form.lastNameErr}}</h6>
-                    <label for="phone Number">Phone Number</label>
-                    <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" v-model="phoneNumber" placeholder="000-000-0000">
-                    <label for="confirm Password">Confirm Password</label>
-                    <input type="password" v-model="password.confirmPassword">
-                    <span class="material-symbols-outlined">visibility</span>
-                    <h6>{{form.confirmPasswordErr}}</h6>
-                </fieldset>
-            </div>
-            <div class="btnContainer">
-                <app-button class="signup-btn" :text="signUpText"></app-button>
-                <p class="signupbtn-text">Already have an account? <router-link :to="{ name: 'signin'}">Sign In</router-link></p>
-            </div>
-            
-        </form>
-   
-    
+    <div class="signup-header">
+      <figure>
+        <router-link :to="{ name: 'home' }"
+          ><img src="../assets/enyataSmallerLogo.svg" alt="Enyata logo"
+        /></router-link>
+      </figure>
+      <h1 class="applicantText">Applicant Sign Up</h1>
+    </div>
+
+    <form @submit.prevent="submitForm">
+      <div class="form-input">
+        <fieldset>
+          <label for="first Name">First Name</label>
+          <input type="text" v-model="firstName" />
+          <h6>{{ form.firstNameErr }}</h6>
+          <label for="Email Address">Email Address</label>
+          <input type="email" v-model="emailAddress" />
+          <h6>{{ form.emailAddressErr }}</h6>
+          <label for="Password">Password</label>
+          <input type="password" v-model="password.password" />
+          <span class="material-symbols-outlined">visibility</span>
+          <h6>{{ form.passwordErr }}</h6>
+        </fieldset>
+        <fieldset>
+          <label for="last Name">Last Name</label>
+          <input type="text" v-model="lastName" />
+          <h6>{{ form.lastNameErr }}</h6>
+          <label for="phone Number">Phone Number</label>
+          <input
+            type="tel"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            v-model="phoneNumber"
+            placeholder="000-000-0000"
+          />
+          <label for="confirm Password">Confirm Password</label>
+          <input type="password" v-model="password.confirmPassword" />
+          <span class="material-symbols-outlined">visibility</span>
+          <h6>{{ form.confirmPasswordErr }}</h6>
+        </fieldset>
+      </div>
+      <div class="btnContainer">
+        <app-button class="signup-btn" :text="signUpText"></app-button>
+        <p class="signupbtn-text">
+          Already have an account?
+          <router-link :to="{ name: 'signin' }">Sign In</router-link>
+        </p>
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
 import buttonComponentVue from '@/components/buttonComponent.vue';
-import axios from "axios"
+import axios from 'axios';
 export default {
-    components:{
-        "app-button": buttonComponentVue
-    },
-    data(){
-        return{
-            signUpText: "Sign Up",
-            firstName: "",
-            lastName: "",
-            emailAddress: "",
-            phoneNumber: "",
-            password: {
-            password: "",
-            confirmPassword: "",
-            },
-            form: {
-                firstNameErr: "",
-                lastNameErr: "",
-                emailAddressErr: "",
-                phoneNumberErr: "",
-                passwordErr: "",
-                confirmPasswordErr: "",
-            }
-        }
-    },
-    methods: {
-            async submitForm(){
-                this.firstName.trim().length < 2 ? this.form.firstNameErr = "This field should be more than one character" : console.log(this.firstName)
-                this.lastName.trim().length < 2 ? this.form.lastNameErr = "This field should be more than one character" : console.log(this.firstName)
-                !this.emailAddress.trim().includes("@") ? this.form.emailAddressErr = "Please include an @ in the email address" : console.log(this.emailAddress)
-                this.password.password.trim() < 8 ? this.form.passwordErr = "Your password should be eight characters long" : console.log(this.password.password)
-                this.password.password.trim() === this.password.confirmPassword ? console.log(this.password.confirmPassword): this.form.confirmPasswordErr = "Your passwords do not match"
-            
-                let response = await axios.post('http://localhost:8081/api/v1/users/signUp',
-        {
-            "firstName": this.firstName.trim(),
-            "lastName": this.lastName.trim(),
-            "email": this.emailAddress.trim(),
-            "phoneNumber": this.phoneNumber,
-            "password": this.password.password.trim(),
-        }).then((response)=>{
-        console.log('this should show')
-        console.log(response)
-        });
-            console.log(response)
-    
+  components: {
+    'app-button': buttonComponentVue,
   },
-            
-            
-            }
-    }
+  data() {
+    return {
+      signUpText: 'Sign Up',
+      firstName: '',
+      lastName: '',
+      emailAddress: '',
+      phoneNumber: '',
+      password: {
+        password: '',
+        confirmPassword: '',
+      },
+      form: {
+        firstNameErr: '',
+        lastNameErr: '',
+        emailAddressErr: '',
+        phoneNumberErr: '',
+        passwordErr: '',
+        confirmPasswordErr: '',
+      },
+    };
+  },
+  methods: {
+    async submitForm() {
+      this.firstName.trim().length < 2
+        ? (this.form.firstNameErr =
+            'This field should be more than one character')
+        : console.log(this.firstName);
+      this.lastName.trim().length < 2
+        ? (this.form.lastNameErr =
+            'This field should be more than one character')
+        : console.log(this.firstName);
+      !this.emailAddress.trim().includes('@')
+        ? (this.form.emailAddressErr =
+            'Please include an @ in the email address')
+        : console.log(this.emailAddress);
+      this.password.password.trim() < 8
+        ? (this.form.passwordErr =
+            'Your password should be eight characters long')
+        : console.log(this.password.password);
+      this.password.password.trim() === this.password.confirmPassword
+        ? console.log(this.password.confirmPassword)
+        : (this.form.confirmPasswordErr = 'Your passwords do not match');
 
+      let response = await axios
+        .post('http://localhost:8081/api/v1/users/signUp', {
+          firstName: this.firstName.trim(),
+          lastName: this.lastName.trim(),
+          email: this.emailAddress.trim(),
+          phoneNumber: this.phoneNumber,
+          password: this.password.password.trim(),
+        })
+        .then((response) => {
+          console.log('this should show');
+          console.log(response);
+        });
+      console.log(response);
+      this.$router.push('/signin');
+    },
+  },
+};
 </script>
 
 <style scoped>
-.signup-container{
-    height: 100vh;
-    max-width: 1440px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-content: space-around;
+.signup-container {
+  height: 100vh;
+  max-width: 1440px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content: space-around;
 }
 
-.signup-header{
-    text-align: center;
+.signup-header {
+  text-align: center;
 }
 
-.applicantText{
-    font-family: 'Lato';
-    font-style: italic;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 29px;
-    /* identical to box height */
-    color: #2B3C4E;
-    margin: 28px 0px 68px 0px;
+.applicantText {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  /* identical to box height */
+  color: #2b3c4e;
+  margin: 28px 0px 68px 0px;
 }
 
-.form-input{
-    display: flex;
-    justify-content: center;
-    gap: 62px;
+.form-input {
+  display: flex;
+  justify-content: center;
+  gap: 62px;
 }
 
-fieldset{
-    border: none;
+fieldset {
+  border: none;
 }
 
-label{
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    /* identical to box height */
-    color: #4F4F4F;
-    margin-bottom: 5px;
-    display: block;
+label {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  color: #4f4f4f;
+  margin-bottom: 5px;
+  display: block;
 }
 
-input{
-    border: 1.5px solid #BDBDBD;
-    border-radius: 4px;
-    width: 379px;
-    height: 48px;
-    margin-bottom: 27px;
+input {
+  border: 1.5px solid #bdbdbd;
+  border-radius: 4px;
+  width: 379px;
+  height: 48px;
+  margin-bottom: 27px;
 }
 
-input:focus{
+input:focus {
   outline: none;
 }
 
-input[type=password]:focus, [type=text]:focus, [type=tel]:focus, [type=email]:focus {
-  border: 3px solid #7557D3;
+input[type='password']:focus,
+[type='text']:focus,
+[type='tel']:focus,
+[type='email']:focus {
+  border: 3px solid #7557d3;
 }
 
-input[type=password], [type=text], [type=tel], [type=email]{
-    padding-left: 10px;
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    /* identical to box height */
-    color: #4F4F4F; 
+input[type='password'],
+[type='text'],
+[type='tel'],
+[type='email'] {
+  padding-left: 10px;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  color: #4f4f4f;
 }
 
-.btnContainer{
-    text-align: center;
+.btnContainer {
+  text-align: center;
 }
 
-.signupbtn-text{
-    font-family: 'Lato';
-    font-style: italic;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    /* identical to box height */
-    color: #4F4F4F;
-    margin-top: 10px;
+.signupbtn-text {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  color: #4f4f4f;
+  margin-top: 10px;
 }
 
-.material-symbols-outlined{
-    opacity: 0.4;
-    width: 15px;
-    height: 8.57px;
-    position: relative;
-    left: -30px;
-    top: 5px;
+.material-symbols-outlined {
+  opacity: 0.4;
+  width: 15px;
+  height: 8.57px;
+  position: relative;
+  left: -30px;
+  top: 5px;
 }
-
 </style>
