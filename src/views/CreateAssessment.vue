@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <DashboardNav />
+    <DashboardNav activeTab="2" />
     <FormLayOut />
   </div>
 </template>

@@ -38,22 +38,16 @@
 
     <div class="bottom">
       <div class="batchWrap">
-        <div class="batch" id="batch1">
-          <p>Academy Batch 1</p>
-          <p>15 students</p>
-          <p>started 11/09/15</p>
-        </div>
-
-        <div class="batch">
-          <p>Academy Batch 2</p>
-          <p>15 students</p>
-          <p>started 11/09/15</p>
-        </div>
-
-        <div class="batch">
-          <p>Academy Batch 3</p>
-          <p>15 students</p>
-          <p>started 11/09/15</p>
+        <div
+          class="batch"
+          v-for="batch in batches"
+          :key="batch.id"
+          :class="{ active: batch === activeTab }"
+          @click="() => (activeTab = batch)"
+        >
+          <p>{{ batch.batchNo }}</p>
+          <p>{{ batch.noOfStudents }}</p>
+          <p>{{ batch.started }}</p>
         </div>
       </div>
 
@@ -70,14 +64,30 @@
 export default {
   data() {
     return {
-      isActive: "false",
+      activeTab: "",
+      batches: [
+        {
+          id: "1",
+          batchNo: "Academy Batch 2",
+          noOfStudents: "15",
+          started: "started 11/09/15",
+        },
+        {
+          id: "2",
+          batchNo: "Academy Batch 2",
+          noOfStudents: "15",
+          started: "started 11/09/15",
+        },
+        {
+          id: "3",
+          batchNo: "Academy Batch 2",
+          noOfStudents: "15",
+          started: "started 11/09/15",
+        },
+      ],
     };
   },
-  methods: {
-    activeTab() {
-      this.isActive = !this.isActive;
-    },
-  },
+  methods: {},
 };
 </script>
 
@@ -201,7 +211,7 @@ hr {
   height: 66px;
   padding: 0 21px 0 25px;
 }
-#batch1 {
+.active {
   box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
   background: #ffffff;
   border-left-color: #7557d3;

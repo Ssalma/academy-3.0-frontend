@@ -8,52 +8,18 @@
 
     <div class="whiteBackground">
       <div class="tabsWrap">
-        <div class="tabs" id="topTab">
-          <img
-            src="../assets/D.svg"
-            alt=""
-            class="tabIcon"
-            @click="this.$router.push({ name: 'DashBoard' })"
-          />
-          <p class="tabText" @click="activeTab()">Dashboard</p>
-        </div>
-
-        <div class="tabs">
-          <img src="../assets/plus.svg" alt="" class="tabIcon" />
-          <p class="tabText" @click="this.$router.push({ name: 'FormAssesment' })">
-            Create Application
-          </p>
-        </div>
-
-        <div class="tabs">
-          <img src="../assets/message.svg" alt="" class="tabIcon" />
-          <p class="tabText" @click="this.$router.push({ name: 'ApplicationEntries' })">
-            Application Entries
-          </p>
-        </div>
-
-        <div class="tabs">
-          <img src="../assets/mm.svg" alt="" class="tabIcon" />
-          <p class="tabText" @click="this.$router.push({ name: 'ComposeAssessment' })">
-            Compose Assessment
-          </p>
-        </div>
-
-        <div class="tabs">
-          <img src="../assets/4.svg" alt="" class="tabIcon" />
-          <p class="tabText" @click="this.$router.push({ name: 'AssessmentHistory' })">
-            Assessment History
-          </p>
-        </div>
-
-        <div class="tabs">
-          <img src="../assets/dr.svg" alt="" class="tabIcon" />
-          <p class="tabText" @click="this.$router.push({ name: 'Results' })">Results</p>
-        </div>
-
-        <div class="tabs">
-          <img src="../assets/Setting.svg" alt="" class="tabIcon" />
-          <p class="tabText" @click="this.$router.push({ name: 'Settings' })">Settings</p>
+        <div
+          class="tabs"
+          v-for="tab in tabs"
+          :key="tab.id"
+          :class="{
+            active: tab.id === id && tab.id < 6,
+            result: tab.id === id && tab.id > 5,
+          }"
+          @click="routing(tab)"
+        >
+          <img :src="tab.icon" alt="" class="tabIcon" />
+          <p class="tabText">{{ tab.text }}</p>
         </div>
       </div>
 
@@ -68,14 +34,57 @@
 <script>
 export default {
   name: "DashBoardNav",
+  props: {
+    activeTab: { type: String },
+  },
   data() {
     return {
-      isActive: "false",
+      // activeTab: "",
+      id: this.activeTab,
+      tabs: [
+        {
+          id: "1",
+          icon: require("../assets/D.svg"),
+          text: "Dashboard",
+          route: "DashBoard",
+        },
+        {
+          id: "2",
+          icon: require("../assets/plus.svg"),
+          text: "Create Application",
+          route: "FormAssesment",
+        },
+        {
+          id: "3",
+          icon: require("../assets/message.svg"),
+          text: "Application Entries",
+          route: "ApplicationEntries",
+        },
+        {
+          id: "4",
+          icon: require("../assets/mm.svg"),
+          text: "Compose Assessment",
+          route: "ComposeAssessment",
+        },
+        {
+          id: "5",
+          icon: require("../assets/4.svg"),
+          text: "Assessment History",
+          route: "AssessmentHistory",
+        },
+        { id: "6", icon: require("../assets/dr.svg"), text: "Results", route: "Results" },
+        {
+          id: "7",
+          icon: require("../assets/Setting.svg"),
+          text: "Settings",
+          route: "Settings",
+        },
+      ],
     };
   },
   methods: {
-    activeTab() {
-      this.isActive = !this.isActive;
+    routing(tab) {
+      this.$router.push({ name: `${tab.route}` });
     },
   },
 };
@@ -130,12 +139,24 @@ p {
   border-left-color: #7557d3;
   border-left-width: 4px;
 }
+.active p {
+  font-weight: 700;
+}
+.result {
+  border-left-style: solid;
+  border-left-color: #31d283;
+  border-left-width: 4px;
+}
+.result p {
+  font-weight: 700;
+}
+
 .tabText {
   font-family: "Lato";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  /* line-height: 19px; */
+  line-height: 19px;
   text-align: center;
   color: #2b3c4e;
 }
@@ -149,7 +170,7 @@ p {
   padding: 230px 0 160px 0;
   display: flex;
 }
-#topTab {
-  margin-top: 14px;
+.tabsWrap {
+  padding-top: 14px;
 }
 </style>

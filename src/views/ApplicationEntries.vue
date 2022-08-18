@@ -3,7 +3,7 @@
     <ProfileView class="profile" />
     <alertBox class="alert" />
     <div class="home">
-      <DashBoardNav />
+      <DashBoardNav activeTab="3" />
       <Layout />
     </div>
   </div>

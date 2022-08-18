@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <DashBoardNav />
+    <DashBoardNav activeTab="6" />
     <Layout />
   </div>
 </template>
