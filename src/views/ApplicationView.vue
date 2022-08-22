@@ -124,6 +124,10 @@ export default {
   components: {
     'app-button': buttonComponentVue,
   },
+
+  async created() {
+    await this.userDetails();
+  },
   data() {
     return {
       submitText: 'Submit',
@@ -219,6 +223,22 @@ export default {
       );
       console.log(response);
       this.$router.push('/applicantdashboard');
+    },
+
+    async userDetails() {
+      let token = localStorage.getItem('token');
+      const response = await axios.get(
+        'http://localhost:8081/api/v1/auth/user',
+        {
+          headers: { token: token },
+        }
+      );
+      const user = response.data.data.user;
+      const { firstName, lastName, email } = user;
+      console.log(firstName);
+      this.form.firstName = firstName;
+      this.form.lastName = lastName;
+      this.form.email = email;
     },
   },
 };

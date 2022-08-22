@@ -1,20 +1,20 @@
 <template>
   <div class="main-dashboard">
     <div class="left">
-      <dashboard-left></dashboard-left>
+      <dashboard-left :fullName="fullName" :email="user.email"></dashboard-left>
     </div>
     <div class="right">
       <div class="header-text">
-          <div>
-              <h1 class="take-assessment">Take Assessment</h1>
-              <p class="status">Thank you!</p>
-          </div>
-          <div>
-            <h1 class="timer">Timer</h1>
-            <p class="time">00<sub>min</sub>000<sub>sec</sub></p>
-          </div>
+        <div>
+          <h1 class="take-assessment">Take Assessment</h1>
+          <p class="status">Thank you!</p>
+        </div>
+        <div>
+          <h1 class="timer">Timer</h1>
+          <p class="time">00<sub>min</sub>000<sub>sec</sub></p>
+        </div>
       </div>
-      
+
       <div class="main-body">
         <div class="questions">
           <h5>{{ questions[index]['questionNumber'] }}</h5>
@@ -23,21 +23,21 @@
             <div class="input-questions">
               <div>
                 <label
-                class="option-selector"
-                :for="key"
-                v-for="(answer, key) in questions[index]['answers']"
-                :key="answer"
-              >
-                <br />
-                <input
-                  type="checkbox"
-                  :id="key"
-                  name=""
-                  :value="key"
-                  @change="answered($event)"
-                />
-                {{ answer }}
-              </label>
+                  class="option-selector"
+                  :for="key"
+                  v-for="(answer, key) in questions[index]['answers']"
+                  :key="answer"
+                >
+                  <br />
+                  <input
+                    type="checkbox"
+                    :id="key"
+                    name=""
+                    :value="key"
+                    @change="answered($event)"
+                  />
+                  {{ answer }}
+                </label>
               </div>
             </div>
           </div>
@@ -68,13 +68,20 @@
 <script>
 import leftDashboardComponentVue from '@/components/leftDashboardComponent.vue';
 import buttonComponentVue from '@/components/buttonComponent.vue';
+import axios from 'axios';
 export default {
   components: {
     'dashboard-left': leftDashboardComponentVue,
     'app-button': buttonComponentVue,
   },
+  async created() {
+    await this.loadUserDetails();
+  },
   data() {
     return {
+      fullName: null,
+      user: null,
+      application: null,
       Button: {
         nextButton: 'Next',
         previousButton: 'Previous',
@@ -125,6 +132,21 @@ export default {
       this.selectedAnswer = event.target.value;
     },
     // changeColor() {},
+    async loadUserDetails() {
+      let token = localStorage.getItem('token');
+      const response = await axios.get(
+        'http://localhost:8081/api/v1/auth/user',
+        {
+          headers: { token: token },
+        }
+      );
+      const user = response.data.data.user;
+      const application = response.data.data.application;
+      this.user = user;
+      this.application = application;
+      this.fullName = `${this.user.firstName} ${this.user.lastName}`;
+      console.log(this.user);
+    },
   },
 };
 </script>
@@ -136,7 +158,7 @@ export default {
   overflow-x: hidden;
   font-family: 'Lato';
   font-style: normal;
-  height:100vh;
+  height: 100vh;
 }
 
 .left {
@@ -264,19 +286,19 @@ input[type='checkbox'] {
 }
 
 ::-webkit-scrollbar-track {
-    background: #CDCFD6;
+  background: #cdcfd6;
 }
- 
+
 ::-webkit-scrollbar-thumb {
-    background: #031131;
-    opacity: 0.7;
-    border-radius: 17px; 
-    background-clip: padding-box;
+  background: #031131;
+  opacity: 0.7;
+  border-radius: 17px;
+  background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #031131;
-    opacity: 0.7;
-    border-radius: 17px;
+  background: #031131;
+  opacity: 0.7;
+  border-radius: 17px;
 }
 </style>
