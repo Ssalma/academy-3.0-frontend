@@ -14,10 +14,10 @@
         <fieldset>
           <label for="first Name">First Name</label>
           <input type="text" v-model="firstName" />
-          <h6>{{ form.firstNameErr }}</h6>
+          <h6 class="error">{{ form.firstNameErr }}</h6>
           <label for="Email Address">Email Address</label>
           <input type="email" v-model="emailAddress" />
-          <h6>{{ form.emailAddressErr }}</h6>
+          <h6 class="error">{{ form.emailAddressErr }}</h6>
           <label for="Password">Password</label>
           <input :type="inputTypeIcon" v-model="password.password" />
           <span
@@ -37,7 +37,7 @@
         <fieldset>
           <label for="last Name">Last Name</label>
           <input type="text" v-model="lastName" />
-          <h6>{{ form.lastNameErr }}</h6>
+          <h6 class="error">{{ form.lastNameErr }}</h6>
           <label for="phone Number">Phone Number</label>
           <input
             type="tel"
@@ -45,6 +45,7 @@
             v-model="phoneNumber"
             placeholder="000-000-0000"
           />
+          <h6 class="error">{{ form.phoneNumberErr }}</h6>
           <label for="confirm Password">Confirm Password</label>
           <input :type="inputType" v-model="password.confirmPassword" />
           <span
@@ -113,46 +114,45 @@ export default {
       this.inputType = this.inputType === 'password' ? 'text' : 'password';
     },
     async submitForm() {
-      try {
-        this.firstName.trim().length < 2
-          ? (this.form.firstNameErr =
-              'This field should be more than one character')
-          : console.log('success');
-        this.lastName.trim().length < 2
-          ? (this.form.lastNameErr =
-              'This field should be more than one character')
-          : console.log('success');
-        !this.emailAddress.trim().includes('@')
-          ? (this.form.emailAddressErr =
-              'Please include an @ in the email address')
-          : console.log('success');
-        this.password.password.length < 8
-          ? (this.form.passwordErr =
-              'Your password should be eight characters long')
-          : console.log('success');
-        this.password.password.length > 20
-          ? (this.form.passwordErr =
-              'Your password should be not be more than 20 characters long')
-          : console.log('success');
-        this.password.password.trim() === this.password.confirmPassword
-          ? console.log('success')
-          : (this.form.confirmPasswordErr = 'Your passwords do not match');
+      this.firstName.trim().length < 2
+        ? (this.form.firstNameErr =
+            'This field should be more than one character')
+        : console.log('success');
+      this.lastName.trim().length < 2
+        ? (this.form.lastNameErr =
+            'This field should be more than one character')
+        : console.log('success');
+      !this.emailAddress.trim().includes('@')
+        ? (this.form.emailAddressErr =
+            'Please include an @ in the email address')
+        : console.log('success');
+      this.password.password.length < 8
+        ? (this.form.passwordErr =
+            'Your password should be eight characters long')
+        : console.log('success');
+      this.password.password.length > 20
+        ? (this.form.passwordErr =
+            'Your password should be not be more than 20 characters long')
+        : console.log('success');
+      this.password.password.trim() === this.password.confirmPassword
+        ? console.log('success')
+        : (this.form.confirmPasswordErr = 'Your passwords do not match');
 
-        let response = await axios.post(
-          'http://localhost:8081/api/v1/users/signUp',
-          {
-            firstName: this.firstName.trim(),
-            lastName: this.lastName.trim(),
-            email: this.emailAddress.trim(),
-            phoneNumber: this.phoneNumber,
-            password: this.password.password.trim(),
-          }
-        );
-        console.log(response + `working`);
-        this.$router.push('/signin');
-      } catch (e) {
+      let response = await axios.post(
+        'http://localhost:8081/api/v1/users/signUp',
+        {
+          firstName: this.firstName.trim(),
+          lastName: this.lastName.trim(),
+          email: this.emailAddress.trim(),
+          phoneNumber: this.phoneNumber,
+          password: this.password.password.trim(),
+        }
+      );
+      if (!response) {
         console.log('failed');
       }
+      console.log(response + `working`);
+      this.$router.push('/signin');
     },
   },
 };
