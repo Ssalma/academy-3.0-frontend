@@ -19,17 +19,32 @@
           <input type="email" v-model="email" />
           <label for="Password">Password</label>
           <input :type="inputTypeIcon" class="password" v-model="password" />
-          <span @click.prevent="toggleInputIcon" v-if="inputTypeIcon == 'password'" class="material-symbols-outlined">visibility</span>
-          <span v-else @click.prevent="toggleInputIcon" class="material-symbols-outlined">visibility_off</span>
+          <span
+            @click.prevent="toggleInputIcon"
+            v-if="inputTypeIcon == 'password'"
+            class="material-symbols-outlined"
+            >visibility</span
+          >
+          <span
+            v-else
+            @click.prevent="toggleInputIcon"
+            class="material-symbols-outlined"
+            >visibility_off</span
+          >
         </fieldset>
       </div>
       <div class="btn-container">
         <app-button class="signin-btn" :text="signInText"></app-button>
         <div class="btn-container-text">
-            <span class="signinbtn-text">Don't have an account Yet? <router-link :to="{ name: 'signup'}">Sign Up</router-link></span>
-            <router-link :to="{ name: 'forgot'}" class="signinbtn-text text1">Forgot Password?</router-link>
+          <span class="signinbtn-text"
+            >Don't have an account Yet?
+            <router-link :to="{ name: 'signup' }">Sign Up</router-link></span
+          >
+          <router-link :to="{ name: 'forgot' }" class="signinbtn-text text1"
+            >Forgot Password?</router-link
+          >
         </div>
-      </div>  
+      </div>
     </form>
   </div>
 </template>
@@ -48,47 +63,46 @@ export default {
       password: '',
       error: '',
       success: '',
-      inputTypeIcon: "password",
+      inputTypeIcon: 'password',
     };
   },
   methods: {
     toggleInputIcon() {
       this.inputTypeIcon =
-      this.inputTypeIcon === "password" ? "text" : "password";
+        this.inputTypeIcon === 'password' ? 'text' : 'password';
     },
-    
+
     async loginValidation() {
-      try{
-        this.email.includes('@') && this.password.length >= 8 && this.password ? this.success = 'Success' : console.log("Success")
+      try {
+        // this.email.includes('@') && this.password.length >= 8 && this.password ? this.success = 'Success' : console.log("Success")
         let response = await axios.post(
-        'http://localhost:8081/api/v1/auth/login',
-        {
-          email: this.email.trim(),
-          password: this.password,
+          'http://localhost:8081/api/v1/auth/login',
+          {
+            email: this.email.trim(),
+            password: this.password,
+          }
+        );
+
+        localStorage.setItem('token', response.data.data);
+
+        let token = localStorage.getItem('token');
+        let applicationResponse = await axios.get(
+          'http://localhost:8081/api/v1/auth/user',
+          {
+            headers: { token: token },
+          }
+        );
+
+        if (applicationResponse.data.data.user.applied) {
+          this.$router.push('/applicantdashboard');
+        } else {
+          this.$router.push('/applicationform');
         }
-      );
-      
-      localStorage.setItem('token', response.data.data);
-      
-      let token = localStorage.getItem('token');
-      let applicationResponse = await axios.get(
-        'http://localhost:8081/api/v1/auth/user',
-        {
-          headers: { token: token },
-        }
-      );
-     
-      if (applicationResponse.data.data.user.applied) {
-        this.$router.push('/applicantdashboard');
-      } else {
-        this.$router.push('/applicationform');
+      } catch (error) {
+        this.error = 'Please enter a correct password and email';
       }
-  
-      }catch(error){
-        this.error = 'Please enter a correct password and email' 
-      }
-        this.email = ""
-        this.password = ""
+      this.email = '';
+      this.password = '';
     },
   },
 };
@@ -149,12 +163,14 @@ input:focus {
 }
 
 input[type='password']:focus,
-[type='email']:focus, [type='text']:focus {
+[type='email']:focus,
+[type='text']:focus {
   border: 3px solid #7557d3;
 }
 
-input[type='text']:focus, [type='password'],
-[type='email']  {
+input[type='text']:focus,
+[type='password'],
+[type='email'] {
   padding-left: 10px;
   font-weight: 400;
   font-size: 14px;
@@ -162,26 +178,26 @@ input[type='text']:focus, [type='password'],
   color: #4f4f4f;
 }
 
-input[type='text']{
+input[type='text'] {
   padding-left: 10px;
 }
 
-.btn-container-text{
-    display: flex;
+.btn-container-text {
+  display: flex;
 }
 
-.signinbtn-text{
-    font-style: italic;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    color: #4F4F4F;
-    margin-top: 10px;
+.signinbtn-text {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4f4f4f;
+  margin-top: 10px;
 }
 
-.text1{
-    text-decoration: none;
-    margin-left:80px;
+.text1 {
+  text-decoration: none;
+  margin-left: 80px;
 }
 
 .material-symbols-outlined {
@@ -193,14 +209,15 @@ input[type='text']{
   top: 5px;
 }
 
-.error, .success{
+.error,
+.success {
   text-align: center;
   position: relative;
   top: -30px;
   color: #d90429;
 }
 
-.success{
+.success {
   color: #38b000;
   transition: 10s ease;
 }
