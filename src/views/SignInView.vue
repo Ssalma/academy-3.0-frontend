@@ -8,28 +8,28 @@
       </figure>
       <h1 class="applicantText">Applicant Log In</h1>
     </div>
+
+    <p class="error">{{ error }}</p>
+    <p class="success">{{ success }}</p>
+
     <form @submit.prevent="loginValidation">
       <div class="form-input">
         <fieldset class="left">
           <label for="Email Address">Email Address</label>
           <input type="email" v-model="email" />
-          <p>{{ Eerror }}</p>
           <label for="Password">Password</label>
-          <input type="password" class="password" v-model="password" />
-          <span class="material-symbols-outlined">visibility</span>
-          <p>{{ Perror }}</p>
+          <input :type="inputTypeIcon" class="password" v-model="password" />
+          <span @click.prevent="toggleInputIcon" v-if="inputTypeIcon == 'password'" class="material-symbols-outlined">visibility</span>
+          <span v-else @click.prevent="toggleInputIcon" class="material-symbols-outlined">visibility_off</span>
         </fieldset>
       </div>
       <div class="btn-container">
         <app-button class="signin-btn" :text="signInText"></app-button>
         <div class="btn-container-text">
-          <p class="signinbtn-text">
-            Don't have an account Yet?
-            <router-link :to="{ name: 'signup' }">Sign Up</router-link>
-          </p>
-          <span class="signinbtn-text1">Forgot Password?</span>
+            <span class="signinbtn-text">Don't have an account Yet? <router-link :to="{ name: 'signup'}">Sign Up</router-link></span>
+            <router-link :to="{ name: 'forgot'}" class="signinbtn-text text1">Forgot Password?</router-link>
         </div>
-      </div>
+      </div>  
     </form>
   </div>
 </template>
@@ -45,29 +45,31 @@ export default {
     return {
       signInText: 'Sign In',
       email: '',
-      Eerror: '',
       password: '',
-      Perror: '',
+      error: '',
+      success: '',
+      inputTypeIcon: "password",
     };
   },
   methods: {
+    toggleInputIcon() {
+      this.inputTypeIcon =
+      this.inputTypeIcon === "password" ? "text" : "password";
+    },
+    
     async loginValidation() {
-      if (!this.email.includes('@')) {
-        this.Eerror = 'The email should be valid';
-      }
-      if (this.password.length < 8 && !this.password) {
-        this.Perror = 'Password should be more than 8 characters';
-      }
-
-      let response = await axios.post(
+      try{
+        this.email.includes('@') && this.password.length >= 8 && this.password ? this.success = 'Success' : console.log("Success")
+        let response = await axios.post(
         'http://localhost:8081/api/v1/auth/login',
         {
           email: this.email.trim(),
           password: this.password,
         }
       );
+      
       localStorage.setItem('token', response.data.data);
-      console.log(response.data.data);
+      
       let token = localStorage.getItem('token');
       let applicationResponse = await axios.get(
         'http://localhost:8081/api/v1/auth/user',
@@ -75,11 +77,18 @@ export default {
           headers: { token: token },
         }
       );
+     
       if (applicationResponse.data.data.user.applied) {
         this.$router.push('/applicantdashboard');
       } else {
         this.$router.push('/applicationform');
       }
+  
+      }catch(error){
+        this.error = 'Please enter a correct password and email' 
+      }
+        this.email = ""
+        this.password = ""
     },
   },
 };
@@ -122,7 +131,6 @@ label {
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  /* identical to box height */
   color: #4f4f4f;
   margin-bottom: 5px;
   display: block;
@@ -141,43 +149,39 @@ input:focus {
 }
 
 input[type='password']:focus,
-[type='email']:focus {
+[type='email']:focus, [type='text']:focus {
   border: 3px solid #7557d3;
 }
 
-input[type='password'],
-[type='email'] {
+input[type='text']:focus, [type='password'],
+[type='email']  {
   padding-left: 10px;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  /* identical to box height */
   color: #4f4f4f;
 }
 
-.btn-container-text {
-  display: flex;
+input[type='text']{
+  padding-left: 10px;
 }
 
-.signinbtn-text {
-  font-style: italic;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  /* identical to box height */
-  color: #4f4f4f;
-  margin-top: 10px;
+.btn-container-text{
+    display: flex;
 }
 
-.signinbtn-text1 {
-  font-style: italic;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  /* identical to box height */
-  color: #4f4f4f;
-  margin-top: 10px;
-  margin-left: 80px;
+.signinbtn-text{
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #4F4F4F;
+    margin-top: 10px;
+}
+
+.text1{
+    text-decoration: none;
+    margin-left:80px;
 }
 
 .material-symbols-outlined {
@@ -187,5 +191,17 @@ input[type='password'],
   position: relative;
   left: -30px;
   top: 5px;
+}
+
+.error, .success{
+  text-align: center;
+  position: relative;
+  top: -30px;
+  color: #d90429;
+}
+
+.success{
+  color: #38b000;
+  transition: 10s ease;
 }
 </style>

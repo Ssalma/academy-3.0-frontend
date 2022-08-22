@@ -5,39 +5,24 @@
     </div>
     <div class="right">
       <div class="header-text">
-        <div>
-          <h1 class="take-assessment">Take Assessment</h1>
-          <p class="status">
-            Click the finish button below to submit assessment, you can go back
-            at any time to edit your answers.
-          </p>
-        </div>
-        <div>
-          <h1 class="timer">Timer</h1>
-          <p class="time">00<sub>min</sub>000<sub>sec</sub></p>
-        </div>
+          <div>
+              <h1 class="take-assessment">Take Assessment</h1>
+              <p class="status">Thank you!</p>
+          </div>
+          <div>
+            <h1 class="timer">Timer</h1>
+            <p class="time">00<sub>min</sub>000<sub>sec</sub></p>
+          </div>
       </div>
-      <div class="show-before">
-        <figure>
-          <img src="../assets/hourglass.svg" alt="hour glass loading" />
-          <figcaption>
-            We have 4 days left until the next assessment <br />
-            Watch this space
-          </figcaption>
-          <app-button
-            class="finish-btn finish-button-center"
-            :text="Button.TakeAssessment"
-          ></app-button>
-        </figure>
-      </div>
-
+      
       <div class="main-body">
         <div class="questions">
           <h5>{{ questions[index]['questionNumber'] }}</h5>
           <h1 class="question">{{ questions[index]['question'] }}</h1>
           <div class="checkbox-container" @click="changeColor">
             <div class="input-questions">
-              <label
+              <div>
+                <label
                 class="option-selector"
                 :for="key"
                 v-for="(answer, key) in questions[index]['answers']"
@@ -53,6 +38,7 @@
                 />
                 {{ answer }}
               </label>
+              </div>
             </div>
           </div>
         </div>
@@ -102,7 +88,7 @@ export default {
           questionNumber: 'Question 1',
           question: 'which of these is a frameworks?',
           answers: {
-            a: 'A. To reduce teh file size of images and videos.',
+            a: 'A. To reduce the file size of images and videos.',
             b: 'B. To speed up 3D rendering performance.',
             c: 'C. To support higher video resolutions.',
             d: 'D. To display more colors in images and videos',
@@ -146,11 +132,11 @@ export default {
 <style scoped>
 .main-dashboard {
   display: flex;
-  grid-template-columns: auto;
-  max-width: 100%;
+  max-width: 1440px;
   overflow-x: hidden;
   font-family: 'Lato';
   font-style: normal;
+  height:100vh;
 }
 
 .left {
@@ -165,7 +151,6 @@ export default {
 
 .header-text {
   display: flex;
-  justify-content: space-between;
 }
 
 .take-assessment {
@@ -182,7 +167,7 @@ export default {
   font-size: 16px;
   line-height: 19px;
   color: #2b3c4e;
-  margin: 14px 0px 61px 0px;
+  margin: 14px 0px 0px 0px;
   width: 607px;
 }
 
@@ -190,7 +175,6 @@ export default {
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  /* identical to box height */
   text-align: center;
   color: #4f4f4f;
 }
@@ -226,7 +210,6 @@ h5 {
   font-weight: 500;
   font-size: 24px;
   line-height: 29px;
-  /* identical to box height */
   color: #2b3c4e;
   text-align: center;
 }
@@ -236,8 +219,8 @@ h5 {
 }
 
 .input-questions {
-  position: relative;
-  left: 27%;
+  display: flex;
+  justify-content: center;
 }
 
 input[type='checkbox'] {
@@ -276,22 +259,24 @@ input[type='checkbox'] {
   text-align: center;
 }
 
-.show-before {
-  text-align: center;
-  display: none;
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-figcaption {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16.7273px;
-  line-height: 20px;
-  text-align: center;
-  color: #4f4f4f;
-  margin: 21px 0px 24px 0px;
+::-webkit-scrollbar-track {
+    background: #CDCFD6;
+}
+ 
+::-webkit-scrollbar-thumb {
+    background: #031131;
+    opacity: 0.7;
+    border-radius: 17px; 
+    background-clip: padding-box;
 }
 
-/* form{
-    display: none;
-} */
+::-webkit-scrollbar-thumb:hover {
+    background: #031131;
+    opacity: 0.7;
+    border-radius: 17px;
+}
 </style>

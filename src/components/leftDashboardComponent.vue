@@ -1,5 +1,5 @@
 <template>
-  <div class="applicant-dashboard">
+  <div class="applicant-dashboard" v-cloak>
     <div class="bguser-image">
       <figure class="user-info">
         <img src="../assets/userImage.svg" alt="Image of the user" />
@@ -42,6 +42,7 @@
         /></span>
         Log Out</a
       >
+      
     </div>
   </div>
 </template>
@@ -56,6 +57,11 @@ export default {
       type: String,
     },
   },
+  data(){
+    return{
+      test: "Testing"
+    }
+  },
 
   methods: {
     logout() {
@@ -67,6 +73,11 @@ export default {
 </script>
 
 <style scoped>
+
+[v-cloak] {
+  display: none;
+}
+
 .applicant-dashboard {
   max-width: 292px;
   width: 100%;

@@ -49,11 +49,11 @@ export default {
 <style scoped>
 .main-dashboard{
     display: flex;
-    grid-template-columns: auto;
     max-width: 100%;
     overflow-x: hidden;
     font-family: 'Lato';
     font-style: normal;
+    height: 100vh;
 }
 
 .left{
@@ -135,6 +135,27 @@ figcaption{
     text-align: center;
     color: #4F4F4F;
     margin: 21px 0px 24px 0px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #CDCFD6;
+}
+ 
+::-webkit-scrollbar-thumb {
+    background: #031131;
+    opacity: 0.7;
+    border-radius: 17px; 
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #031131;
+    opacity: 0.7;
+    border-radius: 17px;
 }
 
 </style>

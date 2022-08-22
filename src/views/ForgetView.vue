@@ -3,25 +3,27 @@
     <h1 class="forgot-header">Forgot Password</h1>
     <p class="forgot-para">Please select option to send link to reset password</p>
     <div>
-        <div class="card">
+        <label class="card">
             <img src="../assets/email.svg" alt="message-icon" class="image-icon">
             <div>
                 <a  href="#" class="reset">Reset via Email</a>
                 <p class="reset-para">Reset password link will be send to your registered email address.</p>
             </div>
-            <input type="checkbox" class="checkbox">
-        </div>
+            <input type="radio" class="checkbox" name="reset" checked>
+        </label>
         <div class="card">
             <img src="../assets/telephone.svg" alt="message-icon" class="image-icon">
             <div>
                 <a href="#" class="reset">Reset via Sms</a>
                 <p class="reset-para">Reset password link will be send to your registered phone number.</p>
             </div>
-            <input type="checkbox">
+            <input type="radio" name="reset">
         </div>
         <div class="bottom">
             <app-button :text="sendLink" class="signin-btn"></app-button>
-            <p class="reset-para">Didn't receive link? <a href="#" class="resend">Resend</a></p>
+            <div class="footerbottom">
+                <p class="reset-para">Didn't receive link? <a href="#" class="resend">Resend</a></p>
+            </div>
         </div>
         
     </div>
@@ -79,11 +81,14 @@ export default {
     display: flex;
     padding: 27px 60px 23px 28px;
     background: #FFFFFF;
-    border: 1px solid #7557D3;
     box-shadow: 0px 8px 30px 10px rgba(117, 87, 211, 0.05);
     border-radius: 4px;
     margin-bottom: 24px;
     align-items: center;
+}
+
+.card:hover{
+    border: 1px solid #7557D3;
 }
 
 .image-icon{
@@ -99,7 +104,7 @@ export default {
     color: #211F26;
 }
 
-.reset:hover{
+.reset:hover + .reset:hover{
     color: #7557D3;
 }
 
@@ -114,6 +119,12 @@ export default {
 
 .bottom{
     text-align: center;
+}
+
+.footerbottom{
+    display: flex;
+    justify-content: center;
+    margin-top: 28px;
 }
 
 .resend{

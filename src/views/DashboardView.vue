@@ -3,7 +3,7 @@
     <div class="left">
       <dashboard-left :fullName="fullName" :email="user.email"></dashboard-left>
     </div>
-    <div class="right">
+    <div class="right" :key="reload-dashboard">
       <h1 class="dashboardmain-text">Dashboard</h1>
       <p class="status">
         Your Application is currently being reviewed, you will be notified if
@@ -109,10 +109,11 @@ export default {
 <style scoped>
 .main-dashboard {
   display: flex;
-  grid-template-columns: auto;
   max-width: 1440px;
   font-family: 'Lato';
   font-style: normal;
+  height:100vh;
+  overflow-x: hidden;
 }
 
 .left {
@@ -245,5 +246,26 @@ ul {
   margin: 0 auto;
   top: 50%;
   transform: translate(0, -50%);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #CDCFD6;
+}
+ 
+::-webkit-scrollbar-thumb {
+    background: #031131;
+    opacity: 0.7;
+    border-radius: 17px; 
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #031131;
+    opacity: 0.7;
+    border-radius: 17px;
 }
 </style>

@@ -101,7 +101,7 @@
               type="number"
               id="number"
               min="1"
-              max="5"
+              max="4"
               step="0.01"
               name="cgpa"
               v-model="form.cgpa"

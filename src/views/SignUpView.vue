@@ -8,7 +8,7 @@
       </figure>
       <h1 class="applicantText">Applicant Sign Up</h1>
     </div>
-
+        <p>{{success}}</p>
     <form @submit.prevent="submitForm">
       <div class="form-input">
         <fieldset>
@@ -19,8 +19,9 @@
           <input type="email" v-model="emailAddress" />
           <h6>{{ form.emailAddressErr }}</h6>
           <label for="Password">Password</label>
-          <input type="password" v-model="password.password" />
-          <span class="material-symbols-outlined">visibility</span>
+          <input :type="inputTypeIcon" v-model="password.password" />
+          <span @click.prevent="toggleInputIcon" v-if="inputTypeIcon == 'password'" class="material-symbols-outlined">visibility</span>
+          <span v-else @click.prevent="toggleInputIcon" class="material-symbols-outlined">visibility_off</span>
           <h6>{{ form.passwordErr }}</h6>
         </fieldset>
         <fieldset>
@@ -35,8 +36,9 @@
             placeholder="000-000-0000"
           />
           <label for="confirm Password">Confirm Password</label>
-          <input type="password" v-model="password.confirmPassword" />
-          <span class="material-symbols-outlined">visibility</span>
+          <input :type="inputType" v-model="password.confirmPassword" />
+          <span @click.prevent="toggleInput" v-if="inputType == 'password'" class="material-symbols-outlined">visibility</span>
+          <span v-else @click.prevent="toggleInput" class="material-symbols-outlined">visibility_off</span>
           <h6>{{ form.confirmPasswordErr }}</h6>
         </fieldset>
       </div>
@@ -62,6 +64,8 @@ export default {
     return {
       signUpText: 'Sign Up',
       firstName: '',
+      inputType: "password",
+      inputTypeIcon: "password",
       lastName: '',
       emailAddress: '',
       phoneNumber: '',
@@ -69,6 +73,7 @@ export default {
         password: '',
         confirmPassword: '',
       },
+      success: "",
       form: {
         firstNameErr: '',
         lastNameErr: '',
@@ -80,27 +85,39 @@ export default {
     };
   },
   methods: {
+    toggleInputIcon() {
+      this.inputTypeIcon =
+      this.inputTypeIcon === "password" ? "text" : "password";
+    },
+    toggleInput() {
+      this.inputType =
+      this.inputType === "password" ? "text" : "password";
+    },
     async submitForm() {
       this.firstName.trim().length < 2
         ? (this.form.firstNameErr =
             'This field should be more than one character')
-        : console.log(this.firstName);
+        : console.log("success");
       this.lastName.trim().length < 2
         ? (this.form.lastNameErr =
             'This field should be more than one character')
-        : console.log(this.firstName);
+        : console.log("success");
       !this.emailAddress.trim().includes('@')
         ? (this.form.emailAddressErr =
             'Please include an @ in the email address')
-        : console.log(this.emailAddress);
-      this.password.password.trim() < 8
-        ? (this.form.passwordErr =
+        : console.log("success");
+      this.password.password.length < 8 
+        ? (this.form.passwordErr  =
             'Your password should be eight characters long')
-        : console.log(this.password.password);
+        : console.log("success");
+      this.password.password.length > 20 
+        ? (this.form.passwordErr =
+            'Your password should be not be more than 20 characters long')
+        : console.log("success");
       this.password.password.trim() === this.password.confirmPassword
-        ? console.log(this.password.confirmPassword)
+        ? console.log("success")
         : (this.form.confirmPasswordErr = 'Your passwords do not match');
-
+        
       let response = await axios
         .post('http://localhost:8081/api/v1/users/signUp', {
           firstName: this.firstName.trim(),
@@ -109,12 +126,12 @@ export default {
           phoneNumber: this.phoneNumber,
           password: this.password.password.trim(),
         })
-        .then((response) => {
-          console.log('this should show');
-          console.log(response);
-        });
-      console.log(response);
+        if(!response){
+          console.log("failed")
+        }
+      console.log(response + `working`);
       this.$router.push('/signin');
+      
     },
   },
 };
