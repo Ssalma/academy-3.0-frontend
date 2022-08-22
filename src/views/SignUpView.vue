@@ -14,20 +14,20 @@
         <fieldset>
           <label for="first Name">First Name</label>
           <input type="text" v-model="firstName" />
-          <h6>{{ form.firstNameErr }}</h6>
+          <h6 class="error">{{ form.firstNameErr }}</h6>
           <label for="Email Address">Email Address</label>
           <input type="email" v-model="emailAddress" />
-          <h6>{{ form.emailAddressErr }}</h6>
+          <h6 class="error">{{ form.emailAddressErr }}</h6>
           <label for="Password">Password</label>
           <input :type="inputTypeIcon" v-model="password.password" />
           <span @click.prevent="toggleInputIcon" v-if="inputTypeIcon == 'password'" class="material-symbols-outlined">visibility</span>
           <span v-else @click.prevent="toggleInputIcon" class="material-symbols-outlined">visibility_off</span>
-          <h6>{{ form.passwordErr }}</h6>
+          <h6 class="error">{{ form.passwordErr }}</h6>
         </fieldset>
         <fieldset>
           <label for="last Name">Last Name</label>
           <input type="text" v-model="lastName" />
-          <h6>{{ form.lastNameErr }}</h6>
+          <h6 class="error">{{ form.lastNameErr }}</h6>
           <label for="phone Number">Phone Number</label>
           <input
             type="tel"
@@ -35,11 +35,12 @@
             v-model="phoneNumber"
             placeholder="000-000-0000"
           />
+          <h6 class="error">{{ form.phoneNumberErr }}</h6>
           <label for="confirm Password">Confirm Password</label>
           <input :type="inputType" v-model="password.confirmPassword" />
           <span @click.prevent="toggleInput" v-if="inputType == 'password'" class="material-symbols-outlined">visibility</span>
           <span v-else @click.prevent="toggleInput" class="material-symbols-outlined">visibility_off</span>
-          <h6>{{ form.confirmPasswordErr }}</h6>
+          <h6 class="error">{{ form.confirmPasswordErr }}</h6>
         </fieldset>
       </div>
       <div class="btnContainer">
@@ -104,9 +105,13 @@ export default {
         : console.log("success");
       !this.emailAddress.trim().includes('@')
         ? (this.form.emailAddressErr =
-            'Please include an @ in the email address')
+            'Please include a valid email address')
         : console.log("success");
-      this.password.password.length < 8 
+      !this.phoneNumber.trim()
+        ? (this.form.phoneNumberErr =
+            'Phone number should follow this format (000-000-0000)')
+        : console.log("success");
+      this.password.password.length < 8 && this.password.password === ""
         ? (this.form.passwordErr  =
             'Your password should be eight characters long')
         : console.log("success");
@@ -114,9 +119,9 @@ export default {
         ? (this.form.passwordErr =
             'Your password should be not be more than 20 characters long')
         : console.log("success");
-      this.password.password.trim() === this.password.confirmPassword
-        ? console.log("success")
-        : (this.form.confirmPasswordErr = 'Your passwords do not match');
+      this.password.password.trim() != this.password.confirmPassword
+        ? (this.form.confirmPasswordErr = 'Your passwords do not match') 
+        : console.log("success")
         
       let response = await axios
         .post('http://localhost:8081/api/v1/users/signUp', {
@@ -239,5 +244,11 @@ input[type='password'],
   position: relative;
   left: -30px;
   top: 5px;
+}
+
+.error{
+  position: relative;
+  top: -20px;
+  color: #d90429;
 }
 </style>

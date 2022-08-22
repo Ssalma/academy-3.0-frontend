@@ -9,8 +9,8 @@
       <h1 class="applicantText">Applicant Log In</h1>
     </div>
 
-    <p class="error">{{ error }}</p>
-    <p class="success">{{ success }}</p>
+    <h4 class="error">{{ error }}</h4>
+    <h4 class="success">{{ success }}</h4>
 
     <form @submit.prevent="loginValidation">
       <div class="form-input">
@@ -217,8 +217,8 @@ input[type='text'] {
   color: #d90429;
 }
 
-.success {
+/* .success {
   color: #38b000;
   transition: 10s ease;
-}
+} */
 </style>
