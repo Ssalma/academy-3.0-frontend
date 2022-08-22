@@ -6,7 +6,7 @@
       <div class="cart">
         <div class="hr">
           <span class="cHeadT">Current Applications</span><br />
-          <span class="num">233</span>
+          <span class="num">{{ noOfApplicants }}</span>
         </div>
         <hr id="Ist" />
         <div><span class="subText">Academy 2.0</span></div>
@@ -14,7 +14,7 @@
 
       <div class="cart">
         <span class="cHeadT">Total Applications</span><br />
-        <span class="num">4253</span>
+        <span class="num">{{ noOfApplicants }}</span>
         <hr id="Lnd" />
         <div>
           <span class="subText">All entries do far</span>
@@ -24,7 +24,7 @@
       <div class="cart">
         <div>
           <span class="cHeadT">Academy’s</span><br />
-          <span class="num">4</span>
+          <span class="num">1</span>
         </div>
         <hr id="Rrd" />
         <div><span class="subText">So far</span></div>
@@ -46,7 +46,7 @@
           @click="() => (activeTab = batch)"
         >
           <p>{{ batch.batchNo }}</p>
-          <p>{{ batch.noOfStudents }}</p>
+          <p>{{ noOfApplicants }}</p>
           <p>{{ batch.started }}</p>
         </div>
       </div>
@@ -54,40 +54,49 @@
       <div class="box">
         <p class="boxH">Create Assessment</p>
         <p class="boxSub">Create test question for an incoming academy students</p>
-        <button class="boxBtn">Create Assessment</button>
+        <button class="boxBtn" @click="this.$router.push({ name: 'ComposeAssessment' })">
+          Create Assessment
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
       activeTab: "",
+      noOfApplicants: null,
       batches: [
         {
           id: "1",
-          batchNo: "Academy Batch 2",
-          noOfStudents: "15",
-          started: "started 11/09/15",
-        },
-        {
-          id: "2",
-          batchNo: "Academy Batch 2",
-          noOfStudents: "15",
-          started: "started 11/09/15",
-        },
-        {
-          id: "3",
-          batchNo: "Academy Batch 2",
-          noOfStudents: "15",
+          batchNo: "Academy Batch 1",
+          noOfStudents: "",
           started: "started 11/09/15",
         },
       ],
     };
   },
-  methods: {},
+  async created() {
+    await this.getApplicantsCount();
+  },
+  methods: {
+    async getApplicantsCount() {
+      let token = localStorage.getItem("token");
+      try {
+        let response = await axios.get("http://localhost:5000/api/v1/auth/applications", {
+          headers: { token: token },
+        });
+        console.log(response);
+        this.noOfApplicants = response.data.data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  },
 };
 </script>
 

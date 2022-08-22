@@ -9,47 +9,42 @@
       <span class="subText">Comprises of all that applied for batch 2</span>
     </div>
 
-    <div class="tWrap">
-      <div class="head">
-        <p>Name</p>
-        <p>Email</p>
-        <p>
+    <tabel class="tWrap">
+      <thead class="head">
+        <th>Name</th>
+        <th>Email</th>
+        <th>
           DOB - Age
-          <img src="../assets/arrowUpanddown.svg" alt="" />
-        </p>
-        <p>Address</p>
-        <p>University</p>
-        <p>CGPA<img src="../assets/arrowUpanddown.svg" class="arrow" /></p>
-      </div>
+          <img src="../assets/arrowUpanddown.svg" alt="" class="arrow" />
+        </th>
+        <th>Address</th>
+        <th>University</th>
+        <th>CGPA<img src="../assets/arrowUpanddown.svg" class="arrow" /></th>
+      </thead>
 
-      <div class="body">
-        <div
+      <tbody class="body">
+        <tr
           class="data"
-          :class="{ active: isActive === true }"
-          @click="() => (this.isActive = !this.isActive)"
+          :class="{ active: applicant.active === true }"
+          @click="toggler(applicant)"
+          v-for="applicant in applicants"
+          :key="applicant._id"
         >
-          <p>Ify Chinke</p>
-          <p>ify@enyata.com</p>
-          <p>12/09/19 - 22</p>
-          <p>3 Sabo Ave, Yaba, Lagos</p>
-          <p>University of Nigeria</p>
-          <p>5.0</p>
-        </div>
-
-        <div class="data">
-          <p>Ify Chinke</p>
-          <p>ify@enyata.com</p>
-          <p>12/09/19 - 22</p>
-          <p>3 Sabo Ave, Yaba, Lagos</p>
-          <p>University of Nigeria</p>
-          <p>5.0</p>
-        </div>
-      </div>
-    </div>
+          <td>{{ applicant.firstName + " " + applicant.lastName }}</td>
+          <td>{{ applicant.lastName }}</td>
+          <td>{{ applicant.dateOfBirth }}</td>
+          <td>{{ applicant.address }}</td>
+          <td>{{ applicant.university }}</td>
+          <td>{{ applicant.cgpa }}</td>
+        </tr>
+      </tbody>
+    </tabel>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Entries View",
   components: {},
@@ -57,9 +52,30 @@ export default {
     return {
       isActive: "false",
       isVisibility: "false",
+      applicants: null,
     };
   },
-  methods: {},
+  async created() {
+    await this.getAllApplicants();
+  },
+  methods: {
+    async getAllApplicants() {
+      let token = localStorage.getItem("token");
+      try {
+        let res = await axios.get("http://localhost:5000/api/v1/auth/applicants", {
+          headers: { token: token },
+        });
+        this.applicants = res.data.data;
+        console.log(res.data.data);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
+    toggler(applicant) {
+      applicant["active"] = !applicant["active"];
+    },
+  },
 };
 </script>
 
@@ -90,23 +106,25 @@ export default {
   line-height: 16px;
   color: #4f4f4f;
 }
+.tWrap {
+  width: 100%;
+}
 .head {
   width: 1042px;
   height: 46px;
   background: #2b3c4e;
   /* padding: 0 42px; */
   margin-bottom: 20px;
+  font-family: "Lato";
+  font-size: 14px;
+  line-height: 17px;
+  text-align: left;
+  color: #ffffff;
   align-items: center;
   display: flex;
   justify-content: space-around;
 }
-.head p {
-  font-family: "Lato";
-  font-size: 14px;
-  line-height: 17px;
-  text-align: center;
-  color: #ffffff;
-}
+
 .arrow {
   margin-left: 2px;
 }
@@ -117,6 +135,13 @@ export default {
   align-items: center;
   display: flex;
   justify-content: space-around;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: left;
+  color: #4f4f4f;
 }
 .active {
   background: #ffffff;
@@ -124,14 +149,5 @@ export default {
   border-left-color: #7557d3;
   border-left-style: solid;
   border-left-width: 7px;
-}
-.data p {
-  font-family: "Lato";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
-  text-align: center;
-  color: #4f4f4f;
 }
 </style>

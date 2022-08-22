@@ -2,8 +2,8 @@
   <div class="wrap">
     <div class="profile">
       <div><img src="../assets/Ellipse.svg" alt="" class="userImg" /></div>
-      <p class="name">Josh Doe</p>
-      <p class="email">j.doe@enyata.com</p>
+      <p class="name">{{ adminName }}</p>
+      <p class="email">{{ email }}</p>
     </div>
 
     <div class="whiteBackground">
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "DashBoardNav",
   props: {
@@ -40,7 +42,10 @@ export default {
   data() {
     return {
       // activeTab: "",
+
       id: this.activeTab,
+      adminName: null,
+      email: null,
       tabs: [
         {
           id: "1",
@@ -82,9 +87,23 @@ export default {
       ],
     };
   },
+  async created() {
+    await this.getAdmin();
+  },
   methods: {
     routing(tab) {
       this.$router.push({ name: `${tab.route}` });
+    },
+
+    async getAdmin() {
+      let token = localStorage.getItem("token");
+      let response = await axios.get("http://localhost:5000/api/v1/auth/user", {
+        headers: { token: token },
+      });
+      console.log(response);
+      this.email = response.data.data.user.email;
+      this.adminName =
+        response.data.data.user.firstName + " " + response.data.data.user.lastName;
     },
   },
 };

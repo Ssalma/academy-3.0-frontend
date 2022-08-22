@@ -2,27 +2,29 @@
   <div class="main">
     <p class="headerText">Assessment History</p>
 
-    <div class="tWrap">
-      <div class="head">
-        <p>Batch</p>
-        <p>Date Compsed</p>
-        <p>No of Questions</p>
-        <p>Time Allocated</p>
-        <p>Status</p>
-      </div>
+    <table class="tWrap">
+      <thead class="head">
+        <th class="first">Batch</th>
+        <th>Date Compsed</th>
+        <th>No of Questions</th>
+        <th>Time Allocated</th>
+        <th>Status</th>
+      </thead>
 
-      <div
-        class="data"
-        :class="{ active: isActive === true }"
-        @click="() => (this.isActive = !this.isActive)"
-      >
-        <p>Batch 1</p>
-        <p>12/07/94</p>
-        <p class="num">30</p>
-        <p>30 mins</p>
-        <p>Taken</p>
-      </div>
-    </div>
+      <tbody>
+        <tr
+          class="data"
+          :class="{ active: isActive === true }"
+          @click="() => (this.isActive = !this.isActive)"
+        >
+          <td>Batch 1</td>
+          <td>12/07/94</td>
+          <td class="num">30</td>
+          <td>30 mins</td>
+          <td>Taken</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -56,11 +58,11 @@ export default {
   background: #ffffff;
   box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
   border-radius: 8px;
-  width: fit-content;
+  width: 100%;
   height: fit-content;
   padding: 42px 30px;
 }
-.tWrap::-webkit-scrollbar {
+/* .tWrap::-webkit-scrollbar {
   width: 6px;
   height: 205px;
 }
@@ -74,24 +76,24 @@ export default {
   opacity: 0.7;
   border-radius: 17px;
   height: 120px;
-}
+} */
 .head {
   background: #2b3c4e;
   width: 946px;
   height: 42px;
+  border-collapse: collapse;
   align-items: center;
   display: flex;
   justify-content: space-around;
   /* padding: 0 112px 0 58px; */
   margin-bottom: 28px;
-}
-.head p {
   font-family: "Lato";
   font-size: 12.7167px;
   line-height: 15px;
   text-align: center;
   color: #ffffff;
 }
+
 .data {
   width: 946px;
   height: 42px;
@@ -100,6 +102,12 @@ export default {
   justify-content: space-around;
   /* padding: 0 112px 0 58px; */
   border-radius: 8px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14.5333px;
+  line-height: 17px;
+  color: #4f4f4f;
 }
 .active {
   background: #ffffff;
@@ -108,15 +116,7 @@ export default {
   border-left-style: solid;
   border-left-width: 7px;
 }
-.data p {
-  font-family: "Lato";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14.5333px;
-  line-height: 17px;
-  /* text-align: center; */
-  color: #4f4f4f;
-}
+
 .num {
   width: 88px;
 }
