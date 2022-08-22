@@ -3,7 +3,7 @@
     <div class="left">
       <dashboard-left :fullName="fullName" :email="user.email"></dashboard-left>
     </div>
-    <div class="right" :key="reload-dashboard">
+    <div class="right" :key="reload - dashboard">
       <h1 class="dashboardmain-text">Dashboard</h1>
       <p class="status">
         Your Application is currently being reviewed, you will be notified if
@@ -14,7 +14,7 @@
           <h3 class="header">Date of Application</h3>
           <h1 class="status-text">{{ applicationDate }}</h1>
           <hr class="blue-horizonal" />
-          <p class="status-time">4 days since applied</p>
+          <p class="status-time">{{ difference }} days since applied</p>
         </div>
         <div>
           <h3 class="header">Application Status</h3>
@@ -77,6 +77,7 @@ export default {
       application: null,
       fullName: null,
       applicationDate: null,
+      difference: null,
     };
   },
   methods: {
@@ -100,7 +101,16 @@ export default {
         5,
         2
       )}.${this.application.createdAt.substr(2, 2)}`;
-      console.log(response);
+
+      const date1 = new Date().toISOString();
+      const date2 = this.application.createdAt;
+
+      const DAY_UNIT_IN_MILLISECONDS = 24 * 3600 * 1000;
+
+      const diffInMilliseconds =
+        new Date(date1).getTime() - new Date(date2).getTime();
+      const diffInDays = diffInMilliseconds / DAY_UNIT_IN_MILLISECONDS;
+      this.difference = Math.round(diffInDays);
     },
   },
 };
@@ -112,7 +122,7 @@ export default {
   max-width: 1440px;
   font-family: 'Lato';
   font-style: normal;
-  height:100vh;
+  height: 100vh;
   overflow-x: hidden;
 }
 
@@ -253,19 +263,19 @@ ul {
 }
 
 ::-webkit-scrollbar-track {
-    background: #CDCFD6;
+  background: #cdcfd6;
 }
- 
+
 ::-webkit-scrollbar-thumb {
-    background: #031131;
-    opacity: 0.7;
-    border-radius: 17px; 
-    background-clip: padding-box;
+  background: #031131;
+  opacity: 0.7;
+  border-radius: 17px;
+  background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #031131;
-    opacity: 0.7;
-    border-radius: 17px;
+  background: #031131;
+  opacity: 0.7;
+  border-radius: 17px;
 }
 </style>
