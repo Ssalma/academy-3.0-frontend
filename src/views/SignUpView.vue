@@ -75,84 +75,88 @@
 </template>
 
 <script>
-import buttonComponentVue from '@/components/buttonComponent.vue';
-import axios from 'axios';
+import buttonComponentVue from "@/components/buttonComponent.vue";
+import axios from "axios";
 export default {
   components: {
-    'app-button': buttonComponentVue,
+    "app-button": buttonComponentVue,
   },
   data() {
     return {
-      signUpText: 'Sign Up',
-      firstName: '',
-      inputType: 'password',
-      inputTypeIcon: 'password',
-      lastName: '',
-      emailAddress: '',
-      phoneNumber: '',
+      signUpText: "Sign Up",
+      firstName: "",
+      inputType: "password",
+      inputTypeIcon: "password",
+      lastName: "",
+      emailAddress: "",
+      phoneNumber: "",
       password: {
-        password: '',
-        confirmPassword: '',
+        password: "",
+        confirmPassword: "",
       },
-      success: '',
+      success: "",
       form: {
-        firstNameErr: '',
-        lastNameErr: '',
-        emailAddressErr: '',
-        phoneNumberErr: '',
-        passwordErr: '',
-        confirmPasswordErr: '',
+        firstNameErr: "",
+        lastNameErr: "",
+        emailAddressErr: "",
+        phoneNumberErr: "",
+        passwordErr: "",
+        confirmPasswordErr: "",
       },
     };
   },
   methods: {
     toggleInputIcon() {
       this.inputTypeIcon =
-        this.inputTypeIcon === 'password' ? 'text' : 'password';
+        this.inputTypeIcon === "password" ? "text" : "password";
     },
     toggleInput() {
-      this.inputType = this.inputType === 'password' ? 'text' : 'password';
+      this.inputType = this.inputType === "password" ? "text" : "password";
     },
     async submitForm() {
-      this.firstName.trim().length < 2
-        ? (this.form.firstNameErr =
-            'This field should be more than one character')
-        : console.log('success');
-      this.lastName.trim().length < 2
-        ? (this.form.lastNameErr =
-            'This field should be more than one character')
-        : console.log('success');
-      !this.emailAddress.trim().includes('@')
-        ? (this.form.emailAddressErr =
-            'Please include an @ in the email address')
-        : console.log('success');
-      this.password.password.length < 8
-        ? (this.form.passwordErr =
-            'Your password should be eight characters long')
-        : console.log('success');
-      this.password.password.length > 20
-        ? (this.form.passwordErr =
-            'Your password should be not be more than 20 characters long')
-        : console.log('success');
-      this.password.password.trim() === this.password.confirmPassword
-        ? console.log('success')
-        : (this.form.confirmPasswordErr = 'Your passwords do not match');
+      try {
+        this.firstName.trim().length < 2
+          ? (this.form.firstNameErr =
+              "This field should be more than one character")
+          : console.log("success");
+        this.lastName.trim().length < 2
+          ? (this.form.lastNameErr =
+              "This field should be more than one character")
+          : console.log("success");
+        !this.emailAddress.trim().includes("@")
+          ? (this.form.emailAddressErr =
+              "Please include an @ in the email address")
+          : console.log("success");
+        this.password.password.length < 8
+          ? (this.form.passwordErr =
+              "Your password should be eight characters long")
+          : console.log("success");
+        this.password.password.length > 20
+          ? (this.form.passwordErr =
+              "Your password should be not be more than 20 characters long")
+          : console.log("success");
+        this.password.password.trim() === this.password.confirmPassword
+          ? console.log("success")
+          : (this.form.confirmPasswordErr = "Your passwords do not match");
 
-      let response = await axios.post(
-        'http://localhost:8081/api/v1/users/signUp',
-        {
-          firstName: this.firstName.trim(),
-          lastName: this.lastName.trim(),
-          email: this.emailAddress.trim(),
-          phoneNumber: this.phoneNumber,
-          password: this.password.password.trim(),
+        let response = await axios.post(
+          "http://localhost:8081/api/v1/users/signUp",
+          {
+            firstName: this.firstName.trim(),
+            lastName: this.lastName.trim(),
+            email: this.emailAddress.trim(),
+            phoneNumber: this.phoneNumber,
+            password: this.password.password.trim(),
+          }
+        );
+        if (!response) {
+          console.log("failed");
         }
-      );
-      if (!response) {
-        console.log('failed');
+        console.log(response + `working`);
+        this.$router.push("/signin");
+      } catch (error) {
+        console.log("Failed");
       }
-      console.log(response + `working`);
-      this.$router.push('/signin');
     },
   },
 };
@@ -173,7 +177,7 @@ export default {
 }
 
 .applicantText {
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: italic;
   font-weight: 500;
   font-size: 24px;
@@ -194,7 +198,7 @@ fieldset {
 }
 
 label {
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -217,19 +221,19 @@ input:focus {
   outline: none;
 }
 
-input[type='password']:focus,
-[type='text']:focus,
-[type='tel']:focus,
-[type='email']:focus {
+input[type="password"]:focus,
+[type="text"]:focus,
+[type="tel"]:focus,
+[type="email"]:focus {
   border: 3px solid #7557d3;
 }
 
-input[type='password'],
-[type='text'],
-[type='tel'],
-[type='email'] {
+input[type="password"],
+[type="text"],
+[type="tel"],
+[type="email"] {
   padding-left: 10px;
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -243,7 +247,7 @@ input[type='password'],
 }
 
 .signupbtn-text {
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: italic;
   font-weight: 400;
   font-size: 14px;
