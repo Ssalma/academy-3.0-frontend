@@ -8,7 +8,7 @@
       </figure>
       <h1 class="applicantText">Applicant Sign Up</h1>
     </div>
-    <p>{{ success }}</p>
+
     <form @submit.prevent="submitForm">
       <div class="form-input">
         <fieldset>
@@ -32,7 +32,7 @@
             class="material-symbols-outlined"
             >visibility_off</span
           >
-          <h6>{{ form.passwordErr }}</h6>
+          <h6 class="error">{{ form.passwordErr }}</h6>
         </fieldset>
         <fieldset>
           <label for="last Name">Last Name</label>
@@ -60,7 +60,7 @@
             class="material-symbols-outlined"
             >visibility_off</span
           >
-          <h6>{{ form.confirmPasswordErr }}</h6>
+          <h6 class="error">{{ form.confirmPasswordErr }}</h6>
         </fieldset>
       </div>
       <div class="btnContainer">
@@ -94,7 +94,6 @@ export default {
         password: "",
         confirmPassword: "",
       },
-      success: "",
       form: {
         firstNameErr: "",
         lastNameErr: "",
@@ -115,17 +114,20 @@ export default {
     },
     async submitForm() {
       try {
-        this.firstName.trim().length < 2
+        this.firstName.length < 2
           ? (this.form.firstNameErr =
               "This field should be more than one character")
           : console.log("success");
-        this.lastName.trim().length < 2
+        this.lastName.length < 2
           ? (this.form.lastNameErr =
               "This field should be more than one character")
           : console.log("success");
         !this.emailAddress.trim().includes("@")
           ? (this.form.emailAddressErr =
-              "Please include an @ in the email address")
+              "Please include a valid email address")
+          : console.log("success");
+        this.phoneNumber.length < 12
+          ? (this.form.phoneNumberErr = "Please enter a valid phone number")
           : console.log("success");
         this.password.password.length < 8
           ? (this.form.passwordErr =
@@ -147,6 +149,7 @@ export default {
             email: this.emailAddress.trim(),
             phoneNumber: this.phoneNumber,
             password: this.password.password.trim(),
+            confirmPassword: this.password.confirmPassword.trim(),
           }
         );
         if (!response) {
@@ -155,7 +158,10 @@ export default {
         console.log(response + `working`);
         this.$router.push("/signin");
       } catch (error) {
-        console.log("Failed");
+        let errorMessage = error.response.data.message;
+        errorMessage.includes("E11000")
+          ? (this.form.emailAddressErr = "Email already exist")
+          : console.log("success");
       }
     },
   },
@@ -264,5 +270,11 @@ input[type="password"],
   position: relative;
   left: -30px;
   top: 5px;
+}
+
+.error {
+  position: relative;
+  top: -20px;
+  color: #d90429;
 }
 </style>

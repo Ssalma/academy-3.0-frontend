@@ -22,6 +22,7 @@
           <div class="checkbox-container" @click="changeColor">
             <div class="input-questions">
               <div>
+                <span :class="[isClicked? 'greenbg': 'none']">
                 <label
                   class="option-selector"
                   :for="key"
@@ -29,6 +30,7 @@
                   :key="answer"
                 >
                   <br />
+                  
                   <input
                     type="checkbox"
                     :id="key"
@@ -36,8 +38,10 @@
                     :value="key"
                     @change="answered($event)"
                   />
+                  
                   {{ answer }}
                 </label>
+                </span>
               </div>
             </div>
           </div>
@@ -82,6 +86,7 @@ export default {
       fullName: null,
       user: null,
       application: null,
+      isClicked: false,
       Button: {
         nextButton: 'Next',
         previousButton: 'Previous',
@@ -130,8 +135,11 @@ export default {
   methods: {
     answered(event) {
       this.selectedAnswer = event.target.value;
+      console.log(this.selectedAnswer)
     },
-    // changeColor() {},
+    changeColor() {
+      this.isClicked = !this.isClicked
+    },
     async loadUserDetails() {
       let token = localStorage.getItem('token');
       const response = await axios.get(
@@ -145,7 +153,6 @@ export default {
       this.user = user;
       this.application = application;
       this.fullName = `${this.user.firstName} ${this.user.lastName}`;
-      console.log(this.user);
     },
   },
 };
@@ -300,5 +307,9 @@ input[type='checkbox'] {
   background: #031131;
   opacity: 0.7;
   border-radius: 17px;
+}
+
+.greenbg{
+  background: #31D283;
 }
 </style>
