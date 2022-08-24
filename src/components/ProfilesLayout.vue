@@ -70,15 +70,41 @@
 
       <div class="timer">
         <div class="min">
-          <span class="min1">00</span>
+          <span class="min1">{{ setMin }}</span>
           <span class="min2">min</span>
-          <span class="material-symbols-outlined"> arrow_drop_down </span>
+          <span class="material-symbols-outlined">
+            arrow_drop_down
+            <select name="" id="" v-model="setMin">
+              <option value="15">15</option>
+              <option value="20">20</option>
+              <option value="25">25</option>
+              <option value="30">30</option>
+              <option value="35">35</option>
+              <option value="40">40</option>
+              <option value="45">45</option>
+              <option value="50">50</option>
+              <option value="55">55</option>
+              <option value="60">60</option>
+            </select>
+          </span>
         </div>
 
         <div class="min">
-          <span class="min1">000</span>
+          <span class="min1">{{ setSec }}</span>
           <span class="min2">sec</span>
-          <span class="material-symbols-outlined"> arrow_drop_down </span>
+          <span class="material-symbols-outlined" id="downIcon">
+            arrow_drop_down
+
+            <select name="" id="" v-model="setSec">
+              <option value="000">00</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+              <option value="60">60</option>
+            </select>
+          </span>
         </div>
       </div>
 
@@ -93,6 +119,8 @@ export default {
   data() {
     return {
       active: "",
+      setMin: "00",
+      setSec: "000",
     };
   },
   methods: {
@@ -155,6 +183,9 @@ export default {
 .adminSet {
   margin-left: 6px;
   display: none;
+}
+.timerSet {
+  display: block;
 }
 .adminP p,
 .timerSet p {
@@ -305,5 +336,25 @@ export default {
   font-size: 12px;
   line-height: 14px;
   color: #4f4f4f;
+}
+select {
+  border: none;
+  background: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 4px;
+  background-size: 20px;
+  color: #ffffff;
+  font-size: 20px;
+  position: absolute;
+  left: 4px;
+}
+select option {
+  color: #4f4f4f;
+  background: #ffffff;
+}
+.material-symbols-outlined {
+  position: relative;
 }
 </style>

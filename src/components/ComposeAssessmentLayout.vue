@@ -46,6 +46,8 @@
 export default {
   name: "ComposeAssessment layout",
   components: {},
+  methods: {},
+  computed: {},
 };
 </script>
 <style scoped>

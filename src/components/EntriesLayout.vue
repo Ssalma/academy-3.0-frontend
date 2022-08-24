@@ -31,8 +31,15 @@
           :key="applicant._id"
         >
           <td>{{ applicant.firstName + " " + applicant.lastName }}</td>
-          <td>{{ applicant.lastName }}</td>
-          <td>{{ applicant.dateOfBirth }}</td>
+          <td>{{ applicant.email }}</td>
+          <td>
+            {{
+              `${applicant.dateOfBirth.substr(8, 2)}/${applicant.dateOfBirth.substr(
+                5,
+                2
+              )}/${applicant.dateOfBirth.substr(2, 2)}`
+            }}
+          </td>
           <td>{{ applicant.address }}</td>
           <td>{{ applicant.university }}</td>
           <td>{{ applicant.cgpa }}</td>
@@ -53,6 +60,7 @@ export default {
       isActive: "false",
       isVisibility: "false",
       applicants: null,
+      dateOfBirth: null,
     };
   },
   async created() {

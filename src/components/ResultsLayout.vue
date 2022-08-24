@@ -31,40 +31,62 @@
 
       <div
         class="data"
-        :class="{ active: isActive === true }"
-        @click="() => (this.isActive = !this.isActive)"
+        :class="{ active: applicant.active === true }"
+        @click="toggler(applicant)"
+        v-for="applicant in applicants"
+        :key="applicant._id"
       >
-        <P>Ify Chinke</P>
-        <P>ify@enyata.com</P>
-        <P>12/09/19 - 22</P>
-        <P>3 Sabo Ave, Yaba, Lagos</P>
-        <P>University of Nigeria</P>
-        <P>5.0</P>
-        <p>15</p>
-      </div>
-
-      <div class="data">
-        <p>Ify Chinke</p>
-        <p>ify@enyata.com</p>
-        <p>12/09/19 - 22</p>
-        <p>3 Sabo Ave, Yaba, Lagos</p>
-        <p>University of Nigeria</p>
-        <p>5.0</p>
+        <p>{{ applicant.firstName + " " + applicant.lastName }}</p>
+        <p>{{ applicant.email }}</p>
+        <p>
+          {{
+            `${applicant.dateOfBirth.substr(8, 2)}/${applicant.dateOfBirth.substr(
+              5,
+              2
+            )}/${applicant.dateOfBirth.substr(2, 2)}`
+          }}
+        </p>
+        <p>{{ applicant.address }}</p>
+        <p>{{ applicant.university }}</p>
+        <p>{{ applicant.cgpa }}</p>
+        <p>{{ applicant.score }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Entries View",
   components: {},
   data() {
     return {
       isActive: "false",
+      applicants: null,
     };
   },
-  methods: {},
+  async created() {
+    await this.getAllApplicants();
+  },
+  methods: {
+    async getAllApplicants() {
+      let token = localStorage.getItem("token");
+      try {
+        let res = await axios.get("http://localhost:5000/api/v1/auth/applicants", {
+          headers: { token: token },
+        });
+        this.applicants = res.data.data;
+        console.log(res.data.data);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
+    toggler(applicant) {
+      applicant["active"] = !applicant["active"];
+    },
+  },
 };
 </script>
 
@@ -124,8 +146,8 @@ export default {
   width: 1042px;
   height: 66px;
   align-items: center;
-  /* padding: 0 22px 0 18px; */
-  justify-content: space-around;
+  padding: 0 22px 0 18px;
+  justify-content: space-between;
 }
 .active {
   background: #ffffff;
@@ -142,5 +164,7 @@ export default {
   line-height: 19px;
   text-align: left;
   color: #4f4f4f;
+  width: 30%;
+  text-align: center;
 }
 </style>

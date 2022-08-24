@@ -25,38 +25,45 @@ const routes = [
   {
     path:'/dashboard',
     name:'DashBoard',
-    component:DashBoard
+    component:DashBoard,
+    meta: { requiresAuth: true },
     
   },
   {
     path:'/createAssessment',
     name:"FormAssesment",
-    component: CreateAssessment
+    component: CreateAssessment,
+    meta: { requiresAuth: true },
   },
   {
     path:"/applicationEntries",
     name:"ApplicationEntries",
-    component: ApplicationEntries
+    component: ApplicationEntries,
+    meta: { requiresAuth: true },
   },
   {
     path:"/composeAssessment",
     name:"ComposeAssessment",
-    component: ComposeAssessment
+    component: ComposeAssessment,
+    meta: { requiresAuth: true },
   },
   {
      path:"/AssessmentHistory",
       name:"AssessmentHistory",
-      component: AssessmentHistory
+      component: AssessmentHistory,
+      meta: { requiresAuth: true },
   },
   {
     path:"/results",
     name:"Results",
-    component: ResultsView
+    component: ResultsView,
+    meta: { requiresAuth: true },
   },
   {
     path:"/settingsProfile",
     name:"Settings",
-    component:Settings
+    component:Settings,
+    meta: { requiresAuth: true },
   }
 
 ]

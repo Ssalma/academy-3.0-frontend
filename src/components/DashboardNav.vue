@@ -25,7 +25,7 @@
 
       <div class="" id="logout">
         <img src="../assets/logout.svg" alt="" class="tabIcon" />
-        <p class="tabText">Log Out</p>
+        <p class="tabText" @click="loggedOut()">Log Out</p>
       </div>
     </div>
   </div>
@@ -104,6 +104,11 @@ export default {
       this.email = response.data.data.user.email;
       this.adminName =
         response.data.data.user.firstName + " " + response.data.data.user.lastName;
+    },
+
+    loggedOut() {
+      localStorage.clear();
+      this.$router.push({ name: "home" });
     },
   },
 };

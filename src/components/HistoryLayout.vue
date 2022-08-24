@@ -62,21 +62,7 @@ export default {
   height: fit-content;
   padding: 42px 30px;
 }
-/* .tWrap::-webkit-scrollbar {
-  width: 6px;
-  height: 205px;
-}
-.tWrap::-webkit-scrollbar-thumb {
-}
-.tWrap ::-webkit-scrollbar-track {
-  background: #cdcfd6;
-}
-.tWrap ::-webkit-scrollbar-track-piece {
-  background: #031131;
-  opacity: 0.7;
-  border-radius: 17px;
-  height: 120px;
-} */
+
 .head {
   background: #2b3c4e;
   width: 946px;
