@@ -2,7 +2,7 @@
   <div class="applicant-dashboard" v-cloak>
     <div class="bguser-image">
       <figure class="user-info">
-        <img src="../assets/userImage.svg" alt="Image of the user" />
+        <img :src="imgURL" alt="Image of the user" />
         <figcaption class="user-name">{{ fullName }}</figcaption>
         <figcaption class="user-email">{{ email }}</figcaption>
       </figure>
@@ -42,7 +42,6 @@
         /></span>
         Log Out</a
       >
-      
     </div>
   </div>
 </template>
@@ -56,11 +55,12 @@ export default {
     email: {
       type: String,
     },
+    imgURL: {
+      type: String,
+    },
   },
-  data(){
-    return{
-      
-    }
+  data() {
+    return {};
   },
 
   methods: {
@@ -73,7 +73,6 @@ export default {
 </script>
 
 <style scoped>
-
 [v-cloak] {
   display: none;
 }

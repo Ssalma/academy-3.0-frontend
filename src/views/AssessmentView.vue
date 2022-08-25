@@ -1,7 +1,11 @@
 <template>
   <div class="main-dashboard">
     <div class="left">
-      <dashboard-left :fullName="fullName" :email="user.email"></dashboard-left>
+      <dashboard-left
+        :fullName="fullName"
+        :email="email"
+        :imgURL="img"
+      ></dashboard-left>
     </div>
     <div class="right">
       <div class="header-text">
@@ -17,8 +21,8 @@
 
       <div class="main-body">
         <div class="questions">
-          <h5>{{ questions[index]["questionNumber"] }}</h5>
-          <h1 class="question">{{ questions[index]["question"] }}</h1>
+          <h5>{{ questions[index]['questionNumber'] }}</h5>
+          <h1 class="question">{{ questions[index]['question'] }}</h1>
           <div class="checkbox-container" @click="changeColor">
             <div class="input-questions">
               <div>
@@ -71,13 +75,13 @@
 </template>
 
 <script>
-import leftDashboardComponentVue from "@/components/leftDashboardComponent.vue";
-import buttonComponentVue from "@/components/buttonComponent.vue";
-import axios from "axios";
+import leftDashboardComponentVue from '@/components/leftDashboardComponent.vue';
+import buttonComponentVue from '@/components/buttonComponent.vue';
+import axios from 'axios';
 export default {
   components: {
-    "dashboard-left": leftDashboardComponentVue,
-    "app-button": buttonComponentVue,
+    'dashboard-left': leftDashboardComponentVue,
+    'app-button': buttonComponentVue,
   },
   async created() {
     await this.loadUserDetails();
@@ -87,49 +91,51 @@ export default {
       fullName: null,
       user: null,
       application: null,
+      email: null,
+      img: null,
       isClicked: false,
-      clicked: "",
+      clicked: '',
       Button: {
-        nextButton: "Next",
-        previousButton: "Previous",
-        finishButton: "Finish",
-        TakeAssessment: "Take Assessment",
+        nextButton: 'Next',
+        previousButton: 'Previous',
+        finishButton: 'Finish',
+        TakeAssessment: 'Take Assessment',
       },
-      selectedAnswer: "",
+      selectedAnswer: '',
       index: 0,
       questions: [
         {
-          questionNumber: "Question 1",
-          question: "which of these is a frameworks?",
+          questionNumber: 'Question 1',
+          question: 'which of these is a frameworks?',
           answers: {
-            a: "A. To reduce the file size of images and videos.",
-            b: "B. To speed up 3D rendering performance.",
-            c: "C. To support higher video resolutions.",
-            d: "D. To display more colors in images and videos",
+            a: 'A. To reduce the file size of images and videos.',
+            b: 'B. To speed up 3D rendering performance.',
+            c: 'C. To support higher video resolutions.',
+            d: 'D. To display more colors in images and videos',
           },
-          correctAnswer: "c",
+          correctAnswer: 'c',
         },
         {
-          questionNumber: "Question 2",
-          question: "which of these is a programming language ?",
+          questionNumber: 'Question 2',
+          question: 'which of these is a programming language ?',
           answers: {
-            a: "A. css",
-            b: "B. javascript",
-            c: "C. vuejs",
-            d: "D. html",
+            a: 'A. css',
+            b: 'B. javascript',
+            c: 'C. vuejs',
+            d: 'D. html',
           },
-          correctAnswer: "b",
+          correctAnswer: 'b',
         },
         {
-          questionNumber: "Question 3",
-          question: "which of these is used for styling?",
+          questionNumber: 'Question 3',
+          question: 'which of these is used for styling?',
           answers: {
-            a: "A. css",
-            b: "B. javascript",
-            c: "C. uejs",
-            d: "D. html",
+            a: 'A. css',
+            b: 'B. javascript',
+            c: 'C. uejs',
+            d: 'D. html',
           },
-          correctAnswer: "a",
+          correctAnswer: 'a',
         },
       ],
     };
@@ -141,18 +147,18 @@ export default {
       this.isClicked = !this.isClicked;
     },
     async loadUserDetails() {
-      let token = localStorage.getItem("token");
+      let token = localStorage.getItem('token');
       const response = await axios.get(
-        "http://localhost:8081/api/v1/auth/user",
+        'http://localhost:8081/api/v1/auth/user/application',
         {
           headers: { token: token },
         }
       );
-      const user = response.data.data.user;
-      const application = response.data.data.application;
-      this.user = user;
-      this.application = application;
-      this.fullName = `${this.user.firstName} ${this.user.lastName}`;
+      const application = response.data.data;
+      this.status = application.status;
+      this.fullName = `${application.firstName} ${application.lastName}`;
+      this.email = application.email;
+      this.img = application.img;
     },
   },
 };
@@ -163,7 +169,7 @@ export default {
   display: flex;
   max-width: 1440px;
   overflow-x: hidden;
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   height: 100vh;
 }
@@ -307,7 +313,7 @@ h5 {
   padding-left: 10px;
 }
 
-input[type="radio"] {
+input[type='radio'] {
   position: relative;
   appearance: none;
   border: 1px solid #d3d3d3;
@@ -318,7 +324,7 @@ input[type="radio"] {
   margin: 49px 42px 0px 0px;
 }
 
-input[type="radio"]:checked {
+input[type='radio']:checked {
   appearance: none;
   outline: none;
   padding: 0;
@@ -326,10 +332,10 @@ input[type="radio"]:checked {
   border: none;
 }
 
-input[type="radio"]:checked::before {
+input[type='radio']:checked::before {
   position: absolute;
   color: #2b3c4e !important;
-  content: "\00A0\2713\00A0" !important;
+  content: '\00A0\2713\00A0' !important;
   border: 1px solid #d3d3d3;
   font-weight: bolder;
   font-size: 8px;

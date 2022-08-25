@@ -1,7 +1,11 @@
 <template>
   <div class="main-dashboard">
     <div class="left">
-      <dashboard-left :fullName="fullName" :email="user.email"></dashboard-left>
+      <dashboard-left
+        :fullName="fullName"
+        :email="email"
+        :imgURL="img"
+      ></dashboard-left>
     </div>
     <div class="right">
       <h1 class="dashboardmain-text">Dashboard</h1>
@@ -18,7 +22,7 @@
         </div>
         <div>
           <h3 class="header">Application Status</h3>
-          <h1 class="status-text">{{ application.status }}</h1>
+          <h1 class="status-text">{{ status }}</h1>
           <hr class="yellow-horizonal" />
           <p class="status-time">We will get back to you</p>
         </div>
@@ -74,36 +78,39 @@ export default {
     return {
       takeAssessmentText: 'Take Assessment',
       user: null,
+      email: null,
       application: null,
       fullName: null,
       applicationDate: null,
       difference: null,
+      status: null,
+      img: null,
     };
   },
   methods: {
     async loadUserDetails() {
       let token = localStorage.getItem('token');
       const response = await axios.get(
-        'http://localhost:8081/api/v1/auth/user',
+        'http://localhost:8081/api/v1/auth/user/application',
         {
           headers: { token: token },
         }
       );
-      const user = response.data.data.user;
-      const application = response.data.data.application;
-      this.user = user;
-      this.application = application;
-      this.fullName = `${this.user.firstName} ${this.user.lastName}`;
-      this.applicationDate = `${this.application.createdAt.substr(
+      const application = response.data.data;
+      this.status = application.status;
+      this.fullName = `${application.firstName} ${application.lastName}`;
+      this.email = application.email;
+      this.img = application.img;
+      this.applicationDate = `${application.createdAt.substr(
         8,
         2
-      )}.${this.application.createdAt.substr(
-        5,
+      )}.${application.createdAt.substr(5, 2)}.${application.createdAt.substr(
+        2,
         2
-      )}.${this.application.createdAt.substr(2, 2)}`;
+      )}`;
 
       const date1 = new Date().toISOString();
-      const date2 = this.application.createdAt;
+      const date2 = application.createdAt;
 
       const DAY_UNIT_IN_MILLISECONDS = 24 * 3600 * 1000;
 
