@@ -3,38 +3,42 @@
     <div class="coloredBackground"></div>
 
     <div class="form">
-      <div class="formImg"><img src="" alt="" /></div>
+      <div><img :src="applicant.img" alt="" class="formImg" /></div>
       <p class="title">Personal Details</p>
       <hr />
       <div class="formWrap">
         <div class="formLeft">
-          <label for="">Name</label>
-          <input type="text" />
+          <p>Name</p>
+          <div class="formContainer">
+            {{ applicant.firstName + " " + applicant.lastName }}
+          </div>
 
-          <label for="">Address</label>
-          <input type="text" />
+          <p>Address</p>
+          <div class="formContainer">{{ applicant.address }}</div>
 
-          <label for="">Course of study</label>
-          <input type="text" />
+          <p for="">Course of study</p>
+          <div class="formContainer">{{ applicant.course }}</div>
 
-          <label for="">CGPA</label>
-          <input type="text" />
+          <p for="">CGPA</p>
+          <div class="formContainer">{{ applicant.cgpa }}</div>
 
           <button>Approve</button>
         </div>
 
         <div class="formRight">
-          <label for="">Email</label>
-          <input type="text" />
+          <p for="">Email</p>
+          <div class="formContainer">{{ applicant.email }}</div>
 
-          <label for="">University</label>
-          <input type="text" />
+          <p for="">University</p>
+          <div class="formContainer">{{ applicant.university }}</div>
 
-          <label for="">Date of birth</label>
-          <input type="text" />
+          <p for="">Date of birth</p>
+          <div class="formContainer">
+            {{ applicant.dateOfBirth }}
+          </div>
 
-          <label for="">CV</label>
-          <input type="text" />
+          <p for="">CV</p>
+          <div class="formContainer" id="cv"></div>
 
           <button>Decline</button>
         </div>
@@ -43,7 +47,11 @@
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  props: { applicant: { type: Object } },
+};
+</script>
 
 <style scoped>
 .container {
@@ -88,7 +96,7 @@ hr {
   display: flex;
   gap: 0 32px;
 }
-.formWrap label {
+.formWrap p {
   font-family: "Lato";
   font-style: normal;
   font-weight: 400;
@@ -96,13 +104,22 @@ hr {
   line-height: 17px;
   color: #b1b1b1;
 }
-.formWrap input {
+.formContainer {
   width: 231px;
-  height: 48px;
   border-radius: 4px;
   margin-bottom: 36px;
+  height: 48px;
   border: 1px solid #cdcfd6;
   border-radius: 4px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #4f4f4f;
+  display: flex;
+  align-items: center;
+  padding-left: 18px;
 }
 .formWrap button {
   width: 125px;
@@ -124,5 +141,8 @@ hr {
   color: #ffffff;
   border: 1px solid #cdcfd6;
   margin-left: 115px;
+}
+#cv {
+  border: none;
 }
 </style>

@@ -4,14 +4,24 @@
     <p class="subText">Helps you set admin profile and give other users permissions</p>
 
     <div class="btns">
-      <button @click="clicked()" :class="{ active: active === true }">
+      <button
+        @click="clicked(false)"
+        class="btnBtns"
+        :class="[!displayTab ? 'activeBtn' : 'none']"
+      >
         Admin Profile
       </button>
 
-      <button>Timer Settings</button>
+      <button
+        class="btnBtns"
+        @click="clicked(true)"
+        :class="[displayTab ? 'activeBtn' : 'none']"
+      >
+        Timer Settings
+      </button>
     </div>
 
-    <div class="adminSet">
+    <div class="adminSet" :class="{ displayTab: displayTab == false }">
       <div class="adminP">
         <p>Profiles Setting</p>
         <button>Edit</button>
@@ -21,7 +31,12 @@
       <form>
         <div class="profileImage">
           <img src="" alt="" class="image" />
-          <p class="upload">Upload new image</p>
+
+          <div>
+            <label for="file" class="upload">Upload new image</label>
+            <input type="file" id="file" />
+          </div>
+
           <p class="remove">
             <span class="material-symbols-outlined"> close </span>Remove
           </p>
@@ -60,7 +75,7 @@
       </form>
     </div>
 
-    <div class="timerSet">
+    <div class="timerSet" :class="{ displayTab: displayTab == true }">
       <div>
         <p>Timer Setting</p>
         <hr class="hr" />
@@ -121,11 +136,12 @@ export default {
       active: "",
       setMin: "00",
       setSec: "000",
+      displayTab: "",
     };
   },
   methods: {
-    clicked() {
-      return (this.active = !this.active);
+    clicked(data) {
+      this.displayTab = data;
     },
   },
 };
@@ -159,7 +175,7 @@ export default {
 .btns {
   display: flex;
 }
-.btns button {
+.btnBtns {
   width: 188px;
   height: 64px;
   font-family: "Lato";
@@ -173,7 +189,7 @@ export default {
   background-color: #fefcfc;
   margin-bottom: 44px;
 }
-.active {
+.activeBtn {
   background: rgba(117, 87, 211, 0.1);
 }
 .adminP {
@@ -185,8 +201,9 @@ export default {
   display: none;
 }
 .timerSet {
-  display: block;
+  display: none;
 }
+
 .adminP p,
 .timerSet p {
   font-family: "Lato";
@@ -239,6 +256,9 @@ export default {
   color: #333758;
   opacity: 0.5;
   margin: 0 46px 0 32px;
+}
+#file {
+  display: none;
 }
 .remove {
   font-family: "Lato";
@@ -356,5 +376,8 @@ select option {
 }
 .material-symbols-outlined {
   position: relative;
+}
+.displayTab {
+  display: block;
 }
 </style>

@@ -1,4 +1,10 @@
 <template>
+  <ProfileView
+    class="profile"
+    :applicant="reviewApplicant"
+    :class="[isVisibility ? 'profileReview' : 'none']"
+  />
+  <AlertBox class="alert" />
   <div class="main">
     <div class="header">
       <span class="headerText">
@@ -9,7 +15,7 @@
       <span class="subText">Comprises of all that applied for batch 2</span>
     </div>
 
-    <tabel class="tWrap">
+    <table class="tWrap">
       <thead class="head">
         <th>Name</th>
         <th>Email</th>
@@ -27,8 +33,8 @@
           class="data"
           :class="{ active: applicant.active === true }"
           @click="toggler(applicant)"
-          v-for="applicant in applicants"
-          :key="applicant._id"
+          v-for="(applicant, index) in applicants"
+          :key="index"
         >
           <td>{{ applicant.firstName + " " + applicant.lastName }}</td>
           <td>{{ applicant.email }}</td>
@@ -45,22 +51,25 @@
           <td>{{ applicant.cgpa }}</td>
         </tr>
       </tbody>
-    </tabel>
+    </table>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import ProfileView from "../components/ProfileView.vue";
+import AlertBox from "../components/alertBtn.vue";
 
 export default {
   name: "Entries View",
-  components: {},
+  components: { ProfileView, AlertBox },
   data() {
     return {
       isActive: "false",
-      isVisibility: "false",
+      isVisibility: false,
       applicants: null,
       dateOfBirth: null,
+      reviewApplicant: {},
     };
   },
   async created() {
@@ -82,6 +91,8 @@ export default {
 
     toggler(applicant) {
       applicant["active"] = !applicant["active"];
+      this.reviewApplicant = applicant;
+      this.isVisibility = true;
     },
   },
 };
@@ -91,6 +102,19 @@ export default {
 .main {
   /* background: #e5e5e5; */
   margin: 102px 0 0 42px;
+}
+
+.profile {
+  position: absolute;
+  display: none;
+}
+.profileReview {
+  display: flex;
+}
+
+.alert {
+  position: absolute;
+  display: none;
 }
 
 .header {

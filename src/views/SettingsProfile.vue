@@ -7,7 +7,7 @@
 
 <script>
 import DashBoardNav from "../components/DashboardNav.vue";
-import Layout from "../components/ProfilesLayout.vue";
+import Layout from "../components/settings.vue";
 export default {
   name: "HomeView",
   components: { DashBoardNav, Layout },

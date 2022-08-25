@@ -118,6 +118,7 @@ export default {
 p {
   margin: 0;
 }
+
 .profile {
   background: #7557d3;
   width: 292px;
@@ -157,6 +158,7 @@ p {
   padding-top: 29px;
   height: fit-content;
   align-items: center;
+  cursor: pointer;
 }
 .active {
   border-left-style: solid;
