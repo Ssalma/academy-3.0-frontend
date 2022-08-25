@@ -1,5 +1,5 @@
 <template>
-  <div class="main-dashboard">
+  <div class="main-dashboard" v-cloak>
     <div class="left">
       <dashboard-left
         :fullName="fullName"
@@ -23,7 +23,7 @@
         <div class="questions">
           <h5>{{ questions[index]['questionNumber'] }}</h5>
           <h1 class="question">{{ questions[index]['question'] }}</h1>
-          <div class="checkbox-container" @click="changeColor">
+          <div class="checkbox-container">
             <div class="input-questions">
               <div>
                 <label
@@ -165,6 +165,10 @@ export default {
 </script>
 
 <style scoped>
+[v-cloak] {
+  display: none;
+}
+
 .main-dashboard {
   display: flex;
   max-width: 1440px;
@@ -228,6 +232,10 @@ sub {
   line-height: 14px;
   text-align: center;
   color: #4f4f4f;
+}
+
+.main-body{
+  margin-top: 64px;
 }
 
 h5 {
@@ -313,6 +321,10 @@ h5 {
   padding-left: 10px;
 }
 
+label{
+  cursor: pointer;
+}
+
 input[type='radio'] {
   position: relative;
   appearance: none;
@@ -321,7 +333,9 @@ input[type='radio'] {
   height: 8px;
   content: none;
   outline: none;
-  margin: 49px 42px 0px 0px;
+  margin: 37px 42px 0px 0px;
+  cursor: pointer;
+  align-self: center;
 }
 
 input[type='radio']:checked {

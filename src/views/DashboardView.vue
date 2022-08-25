@@ -1,5 +1,5 @@
 <template>
-  <div class="main-dashboard">
+  <div class="main-dashboard" v-cloak>
     <div class="left">
       <dashboard-left
         :fullName="fullName"
@@ -124,6 +124,10 @@ export default {
 </script>
 
 <style scoped>
+[v-cloak] {
+  display: none;
+}
+
 .main-dashboard {
   display: flex;
   max-width: 1440px;

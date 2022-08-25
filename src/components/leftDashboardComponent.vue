@@ -2,7 +2,7 @@
   <div class="applicant-dashboard" v-cloak>
     <div class="bguser-image">
       <figure class="user-info">
-        <img :src="imgURL" alt="Image of the user" />
+        <img :src="imgURL" alt="Image of the user" class="image"/>
         <figcaption class="user-name">{{ fullName }}</figcaption>
         <figcaption class="user-email">{{ email }}</figcaption>
       </figure>
@@ -152,5 +152,13 @@ a {
 
 .logout {
   margin-top: 29px;
+}
+
+.image{
+  position: relative;
+  top: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
 }
 </style>
