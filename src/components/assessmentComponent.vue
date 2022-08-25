@@ -1,8 +1,4 @@
 <template>
-  <div class="main-dashboard">
-    <div class="left">
-      <dashboard-left :fullName="fullName" :email="user.email"></dashboard-left>
-    </div>
     <div class="right">
       <div class="header-text">
         <div>
@@ -67,16 +63,13 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
-import leftDashboardComponentVue from "@/components/leftDashboardComponent.vue";
-import buttonComponentVue from "@/components/buttonComponent.vue";
+import buttonComponentVue from "./buttonComponent.vue"
 import axios from "axios";
 export default {
   components: {
-    "dashboard-left": leftDashboardComponentVue,
     "app-button": buttonComponentVue,
   },
   async created() {
@@ -159,20 +152,6 @@ export default {
 </script>
 
 <style scoped>
-.main-dashboard {
-  display: flex;
-  max-width: 1440px;
-  overflow-x: hidden;
-  font-family: "Lato";
-  font-style: normal;
-  height: 100vh;
-}
-
-.left {
-  width: 100%;
-  max-width: 292px;
-}
-
 .right {
   width: 100%;
   margin: 107px 82px 86px 56px;

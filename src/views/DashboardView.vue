@@ -3,7 +3,7 @@
     <div class="left">
       <dashboard-left :fullName="fullName" :email="user.email"></dashboard-left>
     </div>
-    <div class="right" :key="reload - dashboard">
+    <div class="right">
       <h1 class="dashboardmain-text">Dashboard</h1>
       <p class="status">
         Your Application is currently being reviewed, you will be notified if

@@ -1,7 +1,7 @@
 <!-- This is trial/did not work -->
 <template>
   <div class="main-dashboard">
-    <div class="right" :key="reload - dashboard">
+    <div class="right">
       <h1 class="dashboardmain-text">Dashboard</h1>
       <p class="status">
         Your Application is currently being reviewed, you will be notified if
