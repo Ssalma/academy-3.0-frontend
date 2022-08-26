@@ -10,7 +10,7 @@
         <div class="formLeft">
           <p>Name</p>
           <div class="formContainer">
-            {{ applicant.firstName + " " + applicant.lastName }}
+            {{ applicant.firstName + ' ' + applicant.lastName }}
           </div>
 
           <p>Address</p>
@@ -34,7 +34,7 @@
 
           <p for="">Date of birth</p>
           <div class="formContainer">
-            {{ applicant.dateOfBirth }}
+            {{ applicant.date }}
           </div>
 
           <p for="">CV</p>
@@ -85,7 +85,7 @@ export default {
   background-color: #7557d3;
 }
 .title {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -105,7 +105,7 @@ hr {
   gap: 0 32px;
 }
 .formWrap p {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -119,7 +119,7 @@ hr {
   height: 48px;
   border: 1px solid #cdcfd6;
   border-radius: 4px;
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -132,7 +132,7 @@ hr {
 .formWrap button {
   width: 125px;
   height: 48px;
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;

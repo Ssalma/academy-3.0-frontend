@@ -9,7 +9,9 @@
   <div class="main">
     <div class="header">
       <span class="headerText">
-        Entries - Batch 2<span class="material-symbols-outlined"> arrow_drop_down </span>
+        Entries - Batch 2<span class="material-symbols-outlined">
+          arrow_drop_down
+        </span>
       </span>
       <br />
 
@@ -37,11 +39,14 @@
           v-for="(applicant, index) in applicants"
           :key="index"
         >
-          <td>{{ applicant.firstName + " " + applicant.lastName }}</td>
+          <td>{{ applicant.firstName + ' ' + applicant.lastName }}</td>
           <td>{{ applicant.email }}</td>
           <td>
             {{
-              `${applicant.dateOfBirth.substr(8, 2)}/${applicant.dateOfBirth.substr(
+              `${applicant.dateOfBirth.substr(
+                8,
+                2
+              )}/${applicant.dateOfBirth.substr(
                 5,
                 2
               )}/${applicant.dateOfBirth.substr(2, 2)}`
@@ -57,16 +62,16 @@
 </template>
 
 <script>
-import axios from "axios";
-import ProfileView from "../components/ProfileView.vue";
-import AlertBox from "../components/alertBtn.vue";
+import axios from 'axios';
+import ProfileView from '../components/ProfileView.vue';
+import AlertBox from '../components/alertBtn.vue';
 
 export default {
-  name: "Entries View",
+  name: 'Entries View',
   components: { ProfileView, AlertBox },
   data() {
     return {
-      isActive: "false",
+      isActive: 'false',
       isVisibility: false,
       applicants: null,
       dateOfBirth: null,
@@ -78,11 +83,14 @@ export default {
   },
   methods: {
     async getAllApplicants() {
-      let token = localStorage.getItem("token");
+      let token = localStorage.getItem('token');
       try {
-        let res = await axios.get("http://localhost:5000/api/v1/auth/applicants", {
-          headers: { token: token },
-        });
+        let res = await axios.get(
+          'http://localhost:5000/api/v1/auth/applicants',
+          {
+            headers: { token: token },
+          }
+        );
         this.applicants = res.data.data;
         console.log(res.data.data);
       } catch (e) {
@@ -91,10 +99,10 @@ export default {
     },
 
     toggler(applicant) {
-      applicant["active"] = !applicant["active"];
+      applicant['active'] = !applicant['active'];
       this.reviewApplicant = applicant;
       this.isVisibility = true;
-      this.reviewApplicant.dateOfBirth = `${this.reviewApplicant.dateOfBirth.substr(
+      this.reviewApplicant['date'] = `${this.reviewApplicant.dateOfBirth.substr(
         8,
         2
       )}/${this.reviewApplicant.dateOfBirth.substr(
@@ -133,7 +141,7 @@ export default {
   padding-bottom: 38px;
 }
 .headerText {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 300;
   font-size: 44px;
@@ -143,7 +151,7 @@ export default {
   padding: 0 16px 1px 0;
 }
 .subText {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: italic;
   font-weight: 400;
   font-size: 13px;
@@ -159,7 +167,7 @@ export default {
   background: #2b3c4e;
   /* padding: 0 42px; */
   margin-bottom: 20px;
-  font-family: "Lato";
+  font-family: 'Lato';
   font-size: 14px;
   line-height: 17px;
   text-align: left;
@@ -179,7 +187,7 @@ export default {
   align-items: center;
   display: flex;
   justify-content: space-around;
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
