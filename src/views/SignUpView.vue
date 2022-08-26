@@ -77,6 +77,7 @@
 <script>
 import buttonComponentVue from "@/components/buttonComponent.vue";
 import axios from "axios";
+import swal from 'sweetalert';
 export default {
   components: {
     "app-button": buttonComponentVue,
@@ -156,6 +157,7 @@ export default {
           console.log("failed");
         }
         console.log(response + `working`);
+        swal("Congratulations!", "You signed up!", "success");
         this.$router.push("/signin");
       } catch (error) {
         let errorMessage = error.response.data.message;

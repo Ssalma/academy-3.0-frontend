@@ -23,10 +23,10 @@
             name="cv"
             v-on:change="selectedFile($event)"
           />
-          <label for="file" class="upload-file"
+          <label for="file" class="upload-file" :class="[error.cvErr? 'borderRed': 'none']"
             ><span class="material-symbols-outlined">add</span> Upload CV</label
           >
-          <h6>{{ error.cvErr }}</h6>
+    
           <input
             type="file"
             accept="image/*"
@@ -34,11 +34,10 @@
             name="img"
             v-on:change="selectedImg($event)"
           />
-          <label for="upload-photo" class="upload-file"
+          <label for="upload-photo" class="upload-file" :class="[error.imgErr? 'borderRed': 'none']"
             ><span class="material-symbols-outlined">add</span> Upload
             Photo</label
           >
-          <h6>{{ error.imgErr }}</h6>
         </fieldset>
         <div class="form-input">
           <fieldset>
@@ -48,27 +47,26 @@
               id="fName"
               name="fName"
               v-model="form.firstName"
+              :class="[error.firstNameErr? 'borderRed': 'none']"
             />
-            <h6>{{ error.firstNameErr }}</h6>
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" v-model="form.email" />
-            <h6>{{ error.emailErr }}</h6>
+            <input type="email" id="email" name="email" v-model="form.email" :class="[error.emailErr? 'borderRed': 'none']"/>
             <label for="address">Address</label>
             <input
               type="text"
               id="address"
               name="address"
               v-model="form.address"
+              :class="[error.addressErr? 'borderRed': 'none']"
             />
-            <h6>{{ error.addressErr }}</h6>
             <label for="course">Course of Study</label>
             <input
               type="text"
               id="course"
               name="course"
               v-model="form.course"
+              :class="[error.courseErr? 'borderRed': 'none']"
             />
-            <h6>{{ error.courseErr }}</h6>
           </fieldset>
           <fieldset>
             <label for="lName">Last Name</label>
@@ -77,8 +75,9 @@
               id="lName"
               name="lastName"
               v-model="form.lastName"
+              :class="[error.lastNameErr? 'borderRed': 'none']"
             />
-            <h6>{{ error.lastNameErr }}</h6>
+            
             <label for="date">Date of Birth</label>
             <input
               type="date"
@@ -86,16 +85,17 @@
               max="31-12-1979"
               name="dateOfBirth"
               v-model="form.dateOfBirth"
+              :class="[error.dateOfBirthErr? 'borderRed': 'none']"
             />
-            <h6>{{ error.dateOfBirthErr }}</h6>
+            
             <label for="university">University</label>
             <input
               type="text"
               id="university"
               name="university"
               v-model="form.university"
+              :class="[error.universityErr? 'borderRed': 'none']"
             />
-            <h6>{{ error.universityErr }}</h6>
             <label for="number">CGPA</label>
             <input
               type="number"
@@ -105,8 +105,8 @@
               step="0.01"
               name="cgpa"
               v-model="form.cgpa"
+              :class="[error.cgpaErr? 'borderRed': 'none']"
             />
-            <h6>{{ error.cgpaErr }}</h6>
           </fieldset>
         </div>
         <div class="btn-container">
@@ -149,7 +149,7 @@ export default {
         emailErr: '',
         dateOfBirthErr: '',
         addressErr: '',
-        universityErr: '',
+        universityErr: false,
         courseErr: '',
         cgpaErr: '',
         cvErr: '',
@@ -166,40 +166,35 @@ export default {
     },
     async applicationFormSubmit() {
       !this.form.cv
-        ? (this.error.cvErr = 'Please upload a cv')
+        ? this.error.cvErr = true
         : console.log(this.form.cv.name);
       !this.form.img
-        ? (this.error.imgErr = 'Please upload a photo')
+        ? this.error.imgErr = true
         : console.log(this.form.img);
       this.form.firstName.trim().length < 2
-        ? (this.error.firstNameErr =
-            'This field should be more than one character')
+        ? this.error.firstNameErr = true
         : console.log(this.form.firstName);
       this.form.lastName.trim().length < 2
-        ? (this.error.lastNameErr =
-            'This field should be more than one character')
+        ? this.error.lastNameErr = true
         : console.log(this.form.lastName);
       this.form.email.trim().includes('@')
-        ? console.log(this.form.email)
-        : (this.error.emailErr =
-            'This field should contain a valid email address');
+        ? this.error.emailErr = false
+        : this.error.emailErr = true
       !this.form.dateOfBirth
-        ? (this.error.dateOfBirthErr = 'The format should follow dd/mm/yyyy')
+        ? this.error.dateOfBirthErr = true
         : console.log(this.form.dateOfBirth);
       this.form.address.trim()
         ? console.log(this.form.address)
-        : (this.error.addressErr = 'This field should be an address');
+        : this.error.addressErr = true
       this.form.university.trim()
         ? console.log(this.form.university)
-        : (this.error.universityErr =
-            'This field should be more than one character');
+        : this.error.universityErr = true
       this.form.course.trim()
         ? console.log(this.form.course)
-        : (this.error.courseErr =
-            'This field should be more than one character');
+        : this.error.courseErr = true
       this.form.cgpa
         ? console.log(this.form.cgpa)
-        : (this.error.cgpaErr = 'This field should be a number');
+        : this.error.cgpaErr = true
 
       const formData = new FormData();
       formData.append('cv', this.form.cv, this.form.cv.name);
@@ -399,4 +394,19 @@ input[type='password'],
   margin: 0 auto 10px auto;
   padding: 53px 0px 39px 0px;
 }
+
+.error{
+  color: #d90429;
+  position: relative;
+  top: -20px;
+}
+
+.borderRed{
+  border: 3px solid #d90429;
+}
+
+.borderGreen{
+  border-color: #38b000;
+}
+
 </style>
