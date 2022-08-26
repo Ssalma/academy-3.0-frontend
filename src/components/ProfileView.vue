@@ -38,7 +38,7 @@
           </div>
 
           <p for="">CV</p>
-          <div class="formContainer" id="cv"></div>
+          <div class="formContainer" id="cv">{{ applicant.cv }}</div>
 
           <button>Decline</button>
         </div>
@@ -50,6 +50,10 @@
 <script>
 export default {
   props: { applicant: { type: Object } },
+  data() {
+    return {};
+  },
+  methods: {},
 };
 </script>
 
@@ -58,6 +62,10 @@ export default {
   display: flex;
   width: 100%;
   height: 100%;
+}
+
+.notVisible {
+  display: none;
 }
 .coloredBackground {
   width: 80%;

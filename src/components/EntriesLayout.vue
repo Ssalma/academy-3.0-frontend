@@ -3,6 +3,7 @@
     class="profile"
     :applicant="reviewApplicant"
     :class="[isVisibility ? 'profileReview' : 'none']"
+    @click="closeProfile()"
   />
   <AlertBox class="alert" />
   <div class="main">
@@ -93,6 +94,17 @@ export default {
       applicant["active"] = !applicant["active"];
       this.reviewApplicant = applicant;
       this.isVisibility = true;
+      this.reviewApplicant.dateOfBirth = `${this.reviewApplicant.dateOfBirth.substr(
+        8,
+        2
+      )}/${this.reviewApplicant.dateOfBirth.substr(
+        5,
+        2
+      )}/${this.reviewApplicant.dateOfBirth.substr(2, 2)}`;
+    },
+
+    closeProfile() {
+      this.isVisibility = false;
     },
   },
 };
