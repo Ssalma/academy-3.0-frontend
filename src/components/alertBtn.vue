@@ -1,20 +1,44 @@
 <template>
   <div class="home">
     <div class="alertBox">
-      <p>Are you sure you want to decline this application?</p>
+      <p>{{ `Are you sure you want to ${action} this application?` }}</p>
 
       <div class="btns">
-        <button class="btn1">Yes</button>
-        <button class="btn2">NO</button>
+        <button class="btn1" @click="yesButton()">Yes</button>
+        <button class="btn2" @click="">NO</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "alert",
   components: {},
+  props: { action: { type: String }, applicant: { type: Object } },
+  methods: {
+    async yesButton() {
+      var token = localStorage.getItem("token");
+      if (this.action === "approve") {
+        let response = await axios.put(
+          `http://localhost:5000/api/v1/auth/user/${this.applicant}/approve`,
+          {
+            headers: { token: token },
+          }
+        );
+        console.log(response);
+      } else {
+        let response = await axios.put(
+          `http://localhost:5000/api/v1/auth/user/${this.applicant}/decline`,
+          {
+            headers: { token: token },
+          }
+        );
+        console.log(response);
+      }
+    },
+  },
 };
 </script>
 

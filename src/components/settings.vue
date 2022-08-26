@@ -45,29 +45,29 @@
         <div class="input1">
           <div>
             <label class="label">Name</label>
-            <input />
+            <input v-model="adminName" />
           </div>
 
           <div>
             <label class="label">Email</label>
-            <input />
+            <input v-model="adminEmail" />
           </div>
 
           <div>
             <label class="label">Phone number</label>
-            <input />
+            <input v-model="phoneNumber" />
           </div>
         </div>
 
         <div class="bottom">
           <div>
             <label class="label">Country</label>
-            <input class="country" />
+            <input class="country" v-model="country" />
           </div>
 
           <div class="address">
             <label class="label">Address</label>
-            <input class="addressInput" />
+            <input class="addressInput" v-model="address" />
           </div>
         </div>
 
@@ -137,6 +137,10 @@ export default {
       setMin: "00",
       setSec: "000",
       displayTab: "",
+      adminName: "",
+      adminEmail: "",
+      phoneNumber: "",
+      address: "",
     };
   },
   methods: {
