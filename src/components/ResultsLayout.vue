@@ -11,15 +11,15 @@
 
     <div class="body">
       <div class="thead">
-        <P>Name</P>
-        <P>Email</P>
-        <div class="text">
+        <P id="name">Name</P>
+        <P id="email">Email</P>
+        <div class="text" id="age">
           <P>DOB - Age</P>
           <img src="../assets/arrowUpanddown.svg" />
         </div>
-        <P>Address</P>
-        <P>University</P>
-        <div class="text">
+        <P id="address">Address</P>
+        <P id="university">University</P>
+        <div class="text" id="cgpa">
           <P>CGPA</P>
           <img src="../assets/arrowUpanddown.svg" />
         </div>
@@ -122,16 +122,15 @@ export default {
   background: #2b3c4e;
   display: flex;
   align-items: center;
-  /* padding: 0 8px 0 42px; */
-  justify-content: space-around;
+  padding-left: 42px;
   margin-bottom: 20px;
 }
 .thead p {
   font-family: "Lato";
   font-size: 14px;
   line-height: 17px;
-  text-align: center;
   color: #ffffff;
+  text-align: center;
 }
 .text {
   display: flex;
@@ -146,8 +145,8 @@ export default {
   width: 1042px;
   height: 66px;
   align-items: center;
-  padding: 0 22px 0 18px;
-  justify-content: space-between;
+  padding-left: 20px;
+  /* justify-content: space-around; */
 }
 .active {
   background: #ffffff;
@@ -164,7 +163,31 @@ export default {
   line-height: 19px;
   text-align: left;
   color: #4f4f4f;
-  width: 30%;
-  text-align: center;
+  margin-right: 60px;
+  width: 80%;
+}
+#name {
+  margin-right: 94px;
+  width: 42px;
+}
+#email {
+  margin-right: 72px;
+  width: 100px;
+}
+#age {
+  margin-right: 120px;
+  width: 82px;
+}
+#address {
+  margin-right: 135px;
+  width: 44px;
+}
+#university {
+  margin-right: 90px;
+  width: 65px;
+}
+#cgpa {
+  margin-right: 50px;
+  width: 38px;
 }
 </style>

@@ -84,7 +84,7 @@ input ::placeholder {
   font-size: 10px;
   line-height: 12px;
   color: #cecece;
-  opacity: 0.5;
+  opacity: 0.1;
 }
 .top {
   display: flex;

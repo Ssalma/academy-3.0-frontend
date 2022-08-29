@@ -267,7 +267,6 @@ export default {
   font-family: "Lato";
   font-size: 14px;
   line-height: 17px;
-  text-align: left;
   color: #ffffff;
   align-items: center;
   display: flex;
@@ -289,7 +288,6 @@ export default {
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  text-align: left;
   color: #4f4f4f;
 }
 .active {
