@@ -1,7 +1,9 @@
 <template>
   <div class="main">
     <p class="header">Profiles and Settings</p>
-    <p class="subText">Helps you set admin profile and give other users permissions</p>
+    <p class="subText">
+      Helps you set admin profile and give other users permissions
+    </p>
 
     <div class="btns">
       <button
@@ -28,13 +30,24 @@
       </div>
       <hr class="hr" />
 
-      <form>
+      <form
+        action="/application"
+        method="post"
+        enctype="multipart/form-data"
+        @submit.prevent="updateProfile"
+      >
         <div class="profileImage">
           <img src="" alt="" class="image" />
 
           <div>
             <label for="file" class="upload">Upload new image</label>
-            <input type="file" id="file" />
+            <input
+              type="file"
+              id="file"
+              accept="image/*"
+              name="img"
+              v-on:change="selectedImg($event)"
+            />
           </div>
 
           <p class="remove">
@@ -45,29 +58,29 @@
         <div class="input1">
           <div>
             <label class="label">Name</label>
-            <input v-model="adminName" />
+            <input type="text" class="name" v-model="adminName" />
           </div>
 
           <div>
             <label class="label">Email</label>
-            <input v-model="adminEmail" />
+            <input type="text" class="email" v-model="adminEmail" />
           </div>
 
           <div>
             <label class="label">Phone number</label>
-            <input v-model="phoneNumber" />
+            <input type="text" class="phoneNumber" v-model="phoneNumber" />
           </div>
         </div>
 
         <div class="bottom">
           <div>
             <label class="label">Country</label>
-            <input class="country" v-model="country" />
+            <input type="text" class="country" v-model="country" />
           </div>
 
           <div class="address">
             <label class="label">Address</label>
-            <input class="addressInput" v-model="address" />
+            <input type="text" class="addressInput" v-model="address" />
           </div>
         </div>
 
@@ -129,23 +142,84 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-  name: "Profile",
+  name: 'Profile',
   data() {
     return {
-      active: "",
-      setMin: "00",
-      setSec: "000",
-      displayTab: "",
-      adminName: "",
-      adminEmail: "",
-      phoneNumber: "",
-      address: "",
+      active: '',
+      setMin: '00',
+      setSec: '000',
+      displayTab: '',
+      adminName: '',
+      adminEmail: '',
+      phoneNumber: '',
+      address: '',
+      country: '',
+      img: null,
+      firstName: '',
+      lastName: '',
+      fullName: null,
     };
   },
   methods: {
     clicked(data) {
       this.displayTab = data;
+    },
+
+    selectedImg(event) {
+      this.img = event.target.files[0];
+    },
+
+    async updateProfile() {
+      this.fullName = this.adminName.split(' ');
+      if (this.fullName.length > 1) {
+        this.firstName = this.fullName[0];
+        this.lastName = this.fullName[1];
+      } else {
+        this.firstName = '';
+        this.lastname = '';
+      }
+      const formData = new FormData();
+      if (this.img) {
+        formData.append('img', this.img, this.img.name);
+      }
+      if (this.firstName.length > 1) {
+        formData.append('firstName', this.firstName);
+        console.log(this.firstName);
+      }
+      if (this.lastName.length > 1) {
+        formData.append('lastName', this.lastName);
+        console.log(this.lastName);
+      }
+      if (this.adminEmail.length > 1) {
+        formData.append('email', this.adminEmail);
+        console.log(this.adminEmail);
+      }
+      if (this.country.length > 1) {
+        formData.append('country', this.country);
+        console.log(this.country);
+      }
+      if (this.address.length > 1) {
+        formData.append('address', this.address);
+        console.log(this.address);
+      }
+      if (this.phoneNumber.length > 1) {
+        formData.append('phoneNumber', this.phoneNumber);
+        console.log(this.phoneNumber);
+      }
+
+      console.log(formData.entries());
+
+      let token = localStorage.getItem('token');
+      let res = await axios.put(
+        'http://localhost:5000/api/v1/auth/admin/update',
+        formData,
+        {
+          headers: { token: token },
+        }
+      );
+      console.log(res);
     },
   },
 };
@@ -156,7 +230,7 @@ export default {
   margin-left: 42px;
 }
 .header {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 300;
   font-size: 43.5555px;
@@ -166,7 +240,7 @@ export default {
   margin: 102px 0 15px 0px;
 }
 .subText {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -182,7 +256,7 @@ export default {
 .btnBtns {
   width: 188px;
   height: 64px;
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -210,7 +284,7 @@ export default {
 
 .adminP p,
 .timerSet p {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -224,7 +298,7 @@ export default {
   border-radius: 3px;
   width: 127px;
   height: 38px;
-  font-family: "Karla";
+  font-family: 'Karla';
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -250,7 +324,7 @@ export default {
   border-radius: 30px;
 }
 .upload {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -265,7 +339,7 @@ export default {
   display: none;
 }
 .remove {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -281,7 +355,7 @@ export default {
   gap: 0 40px;
 }
 .label {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -314,7 +388,7 @@ export default {
   border: none;
   width: 127px;
   height: 38px;
-  font-family: "Karla";
+  font-family: 'Karla';
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -338,7 +412,7 @@ export default {
   margin-bottom: 34px;
 }
 .timerP {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -346,7 +420,7 @@ export default {
   color: #2b3c4e;
 }
 .min1 {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 300;
   font-size: 48px;
@@ -354,7 +428,7 @@ export default {
   color: #2b3c4e;
 }
 .min2 {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -383,5 +457,9 @@ select option {
 }
 .displayTab {
   display: block;
+}
+
+input[type='text'] {
+  color: black;
 }
 </style>
