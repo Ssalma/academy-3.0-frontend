@@ -28,13 +28,24 @@
       </div>
       <hr class="hr" />
 
-      <form>
+      <form
+        action="/application"
+        method="post"
+        enctype="multipart/form-data"
+        @submit.prevent="updateProfile"
+      >
         <div class="profileImage">
           <img src="" alt="" class="image" />
 
           <div>
             <label for="file" class="upload">Upload new image</label>
-            <input type="file" id="file" />
+            <input
+              type="file"
+              id="file"
+              accept="image/*"
+              name="img"
+              v-on:change="selectedImg($event)"
+            />
           </div>
 
           <p class="remove">
@@ -45,29 +56,29 @@
         <div class="input1">
           <div>
             <label class="label">Name</label>
-            <input v-model="adminName" type="text"/>
+            <input v-model="adminName" />
           </div>
 
           <div>
             <label class="label">Email</label>
-            <input v-model="adminEmail" type="text"/>
+            <input v-model="adminEmail" />
           </div>
 
           <div>
             <label class="label">Phone number</label>
-            <input v-model="phoneNumber" type="text" />
+            <input v-model="phoneNumber" />
           </div>
         </div>
 
         <div class="bottom">
           <div>
             <label class="label">Country</label>
-            <input class="country" v-model="country" type="text"/>
+            <input class="country" v-model="country" />
           </div>
 
           <div class="address">
             <label class="label">Address</label>
-            <input class="addressInput" v-model="address" type="text"/>
+            <input class="addressInput" v-model="address" />
           </div>
         </div>
 
@@ -129,6 +140,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Profile",
   data() {
@@ -141,11 +153,71 @@ export default {
       adminEmail: "",
       phoneNumber: "",
       address: "",
+      country: "",
+      img: null,
+      firstName: "",
+      lastName: "",
+      fullName: null,
     };
   },
   methods: {
     clicked(data) {
       this.displayTab = data;
+    },
+
+    selectedImg(event) {
+      this.img = event.target.files[0];
+    },
+
+    async updateProfile() {
+      this.fullName = this.adminName.split(" ");
+      if (this.fullName.length > 1) {
+        this.firstName = this.fullName[0];
+        this.lastName = this.fullName[1];
+      } else {
+        this.firstName = "";
+        this.lastname = "";
+      }
+      const formData = new FormData();
+      if (this.img) {
+        formData.append("img", this.img, this.img.name);
+      }
+      if (this.firstName.length > 1) {
+        formData.append("firstName", this.firstName);
+        console.log(this.firstName);
+      }
+      if (this.lastName.length > 1) {
+        formData.append("lastName", this.lastName);
+        console.log(this.lastName);
+      }
+      if (this.adminEmail.length > 1) {
+        formData.append("email", this.adminEmail);
+        console.log(this.adminEmail);
+      }
+      if (this.country.length > 1) {
+        formData.append("country", this.country);
+        console.log(this.country);
+      }
+      if (this.address.length > 1) {
+        formData.append("address", this.address);
+        console.log(this.address);
+      }
+      if (this.phoneNumber.length > 1) {
+        formData.append("phoneNumber", this.phoneNumber);
+        console.log(this.phoneNumber);
+      }
+
+      console.log(formData.entries());
+
+      let token = localStorage.getItem("token");
+      let res = await axios.put(
+        "http://localhost:5000/api/v1/auth/admin/update",
+        formData,
+        {
+          headers: { token: token },
+        }
+      );
+      console.log(res);
     },
   },
 };
@@ -383,5 +455,9 @@ select option {
 }
 .displayTab {
   display: block;
+}
+
+input[type="text"] {
+  color: black;
 }
 </style>
