@@ -61,24 +61,24 @@
 
           <div>
             <label class="label">Email</label>
-            <input v-model="adminEmail" />
+            <input v-model="adminEmail" type="text" />
           </div>
 
           <div>
             <label class="label">Phone number</label>
-            <input v-model="phoneNumber" />
+            <input v-model="phoneNumber" type="text" />
           </div>
         </div>
 
         <div class="bottom">
           <div>
             <label class="label">Country</label>
-            <input class="country" v-model="country" />
+            <input class="country" v-model="country" type="text" />
           </div>
 
           <div class="address">
             <label class="label">Address</label>
-            <input class="addressInput" v-model="address" />
+            <input class="addressInput" v-model="address" type="text" />
           </div>
         </div>
 
