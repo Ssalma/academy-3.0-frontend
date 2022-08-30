@@ -91,7 +91,7 @@ export default {
     async loadUserDetails() {
       let token = localStorage.getItem('token');
       const response = await axios.get(
-        'http://localhost:8081/api/v1/auth/user/application',
+        'http://localhost:5000/api/v1/auth/user/application',
         {
           headers: { token: token },
         }

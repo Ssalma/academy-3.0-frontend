@@ -76,7 +76,7 @@ export default {
       try {
         // this.email.includes('@') && this.password.length >= 8 && this.password ? this.success = 'Success' : console.log("Success")
         let response = await axios.post(
-          'http://localhost:8081/api/v1/auth/login',
+          'http://localhost:5000/api/v1/auth/login',
           {
             email: this.email.trim(),
             password: this.password,
@@ -87,7 +87,7 @@ export default {
 
         let token = localStorage.getItem('token');
         let applicationResponse = await axios.get(
-          'http://localhost:8081/api/v1/auth/user',
+          'http://localhost:5000/api/v1/auth/user',
           {
             headers: { token: token },
           }

@@ -210,7 +210,7 @@ export default {
 
       let token = localStorage.getItem('token');
       let response = await axios.post(
-        'http://localhost:8081/api/v1/auth/application',
+        'http://localhost:5000/api/v1/auth/application',
         formData,
         {
           headers: { token: token },
@@ -223,7 +223,7 @@ export default {
     async userDetails() {
       let token = localStorage.getItem('token');
       const response = await axios.get(
-        'http://localhost:8081/api/v1/auth/user',
+        'http://localhost:5000/api/v1/auth/user',
         {
           headers: { token: token },
         }

@@ -143,7 +143,7 @@ export default {
           : (this.form.confirmPasswordErr = "Your passwords do not match");
 
         let response = await axios.post(
-          "http://localhost:8081/api/v1/users/signUp",
+          "http://localhost:5000/api/v1/users/signUp",
           {
             firstName: this.firstName.trim(),
             lastName: this.lastName.trim(),
