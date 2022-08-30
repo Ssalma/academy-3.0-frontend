@@ -37,7 +37,7 @@
         :key="applicant._id"
       >
         <p>{{ applicant.firstName + " " + applicant.lastName }}</p>
-        <p>{{ applicant.email }}</p>
+        <p id="applicantEmail">{{ applicant.email }}</p>
         <p>
           {{
             `${applicant.dateOfBirth.substr(8, 2)}/${applicant.dateOfBirth.substr(
@@ -122,8 +122,9 @@ export default {
   background: #2b3c4e;
   display: flex;
   align-items: center;
-  padding-left: 42px;
+  /* padding: 0 8px 0 42px; */
   margin-bottom: 20px;
+  justify-content: space-around;
 }
 .thead p {
   font-family: "Lato";
@@ -145,8 +146,9 @@ export default {
   width: 1042px;
   height: 66px;
   align-items: center;
-  padding-left: 20px;
-  /* justify-content: space-around; */
+  /* padding-left: 20px; */
+  gap: 0 30px;
+  justify-content: space-around;
 }
 .active {
   background: #ffffff;
@@ -161,33 +163,7 @@ export default {
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  text-align: left;
   color: #4f4f4f;
-  margin-right: 60px;
-  width: 80%;
-}
-#name {
-  margin-right: 94px;
-  width: 42px;
-}
-#email {
-  margin-right: 72px;
-  width: 100px;
-}
-#age {
-  margin-right: 120px;
-  width: 82px;
-}
-#address {
-  margin-right: 135px;
-  width: 44px;
-}
-#university {
-  margin-right: 90px;
-  width: 65px;
-}
-#cgpa {
-  margin-right: 50px;
-  width: 38px;
+  width: 90%;
 }
 </style>

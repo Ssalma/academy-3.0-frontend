@@ -13,10 +13,11 @@
 
         <label for="Password">Password</label>
         <div class="input">
-          <input type="password" v-model="password" /><img
+          <input :type="inputTypeIcon" v-model="password" /><img
             src="../assets/Vector.svg"
             alt=""
             class="eyeIcon"
+            @click.prevent="toggleInputIcon"
           />
         </div>
         <p class="error">{{ errorP }}</p>
@@ -42,6 +43,7 @@ export default {
       password: "",
       error: "",
       errorP: "",
+      inputTypeIcon: "password",
     };
   },
   methods: {
@@ -65,6 +67,10 @@ export default {
           this.$router.push({ name: "DashBoard" });
         }
       }
+    },
+
+    toggleInputIcon() {
+      this.inputTypeIcon = this.inputTypeIcon === "password" ? "text" : "password";
     },
   },
 };
@@ -96,7 +102,7 @@ input {
   height: 48px;
   margin-bottom: 22px;
   width: 379px;
-  color:#ffffff
+  color: #ffffff;
 }
 .input {
   position: relative;
