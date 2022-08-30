@@ -24,18 +24,20 @@
     <div class="adminSet" :class="{ displayTab: displayTab == false }">
       <div class="adminP">
         <p>Profiles Setting</p>
-        <button>Edit</button>
+        <button @click="editProfile">Edit</button>
       </div>
       <hr class="hr" />
 
       <form
         action="/application"
+        class="form"
         method="post"
         enctype="multipart/form-data"
         @submit.prevent="updateProfile"
+        :class="[editData ? 'formBlock' : 'none']"
       >
         <div class="profileImage">
-          <img src="" alt="" class="image" />
+          <img :src="img" alt="" class="image" />
 
           <div>
             <label for="file" class="upload">Upload new image</label>
@@ -53,20 +55,22 @@
           </p>
         </div>
 
+        <p class="error">{{ error }}</p>
+
         <div class="input1">
           <div>
             <label class="label">Name</label>
-            <input v-model="adminName" />
+            <input v-model="adminName" type="text" class="inputFields" />
           </div>
 
           <div>
             <label class="label">Email</label>
-            <input v-model="adminEmail" type="text" />
+            <input v-model="adminEmail" type="text" class="inputFields" />
           </div>
 
           <div>
             <label class="label">Phone number</label>
-            <input v-model="phoneNumber" type="text" />
+            <input v-model="phoneNumber" type="text" class="inputFields" />
           </div>
         </div>
 
@@ -158,8 +162,11 @@ export default {
       firstName: "",
       lastName: "",
       fullName: null,
+      error: "",
+      editData: false,
     };
   },
+
   methods: {
     clicked(data) {
       this.displayTab = data;
@@ -169,55 +176,76 @@ export default {
       this.img = event.target.files[0];
     },
 
-    async updateProfile() {
-      this.fullName = this.adminName.split(" ");
-      if (this.fullName.length > 1) {
-        this.firstName = this.fullName[0];
-        this.lastName = this.fullName[1];
-      } else {
-        this.firstName = "";
-        this.lastname = "";
-      }
-      const formData = new FormData();
-      if (this.img) {
-        formData.append("img", this.img, this.img.name);
-      }
-      if (this.firstName.length > 1) {
-        formData.append("firstName", this.firstName);
-        console.log(this.firstName);
-      }
-      if (this.lastName.length > 1) {
-        formData.append("lastName", this.lastName);
-        console.log(this.lastName);
-      }
-      if (this.adminEmail.length > 1) {
-        formData.append("email", this.adminEmail);
-        console.log(this.adminEmail);
-      }
-      if (this.country.length > 1) {
-        formData.append("country", this.country);
-        console.log(this.country);
-      }
-      if (this.address.length > 1) {
-        formData.append("address", this.address);
-        console.log(this.address);
-      }
-      if (this.phoneNumber.length > 1) {
-        formData.append("phoneNumber", this.phoneNumber);
-        console.log(this.phoneNumber);
-      }
-
-      console.log(formData.entries());
-
+    async editProfile() {
+      this.editData = !this.editData;
       let token = localStorage.getItem("token");
-      let res = await axios.put(
-        "http://localhost:5000/api/v1/auth/admin/update",
-        formData,
-        {
-          headers: { token: token },
+      let response = await axios.get("http://localhost:5000/api/v1/auth/user", {
+        headers: { token: token },
+      });
+      let adminProfile = response.data.data.user;
+      console.log(adminProfile);
+      this.adminName = adminProfile.firstName + " " + adminProfile.lastName;
+      this.adminEmail = adminProfile.email;
+      this.phoneNumber = adminProfile.phoneNumber;
+      this.img = adminProfile.img;
+    },
+
+    async updateProfile() {
+      try {
+        this.fullName = this.adminName.split(" ");
+        if (this.fullName.length > 1) {
+          this.firstName = this.fullName[0];
+          this.lastName = this.fullName[1];
+        } else {
+          this.firstName = "";
+          this.lastname = "";
         }
-      );
-      console.log(res);
+        const formData = new FormData();
+        if (typeof this.img === "object") {
+          formData.append("img", this.img, this.img.name);
+          console.log(typeof this.img);
+        }
+        if (this.firstName.length > 1) {
+          formData.append("firstName", this.firstName);
+          console.log(this.firstName);
+        }
+        if (this.lastName.length > 1) {
+          formData.append("lastName", this.lastName);
+          console.log(this.lastName);
+        }
+        if (this.adminEmail.length > 4 && this.adminEmail.includes("@")) {
+          formData.append("email", this.adminEmail);
+          console.log(this.adminEmail);
+        }
+        if (this.country.length > 1) {
+          formData.append("country", this.country);
+          console.log(this.country);
+        }
+        if (this.address.length > 1) {
+          formData.append("address", this.address);
+          console.log(this.address);
+        }
+        if (this.phoneNumber.length > 1) {
+          formData.append("phoneNumber", this.phoneNumber);
+          console.log(this.phoneNumber);
+        }
+
+        console.log(formData.entries());
+
+        let token = localStorage.getItem("token");
+        let res = await axios.put(
+          "http://localhost:5000/api/v1/auth/admin/update",
+          formData,
+          {
+            headers: { token: token },
+          }
+        );
+        console.log(res);
+        this.error = "Profile Updated successfully, Login again to view Updates";
+      } catch (err) {
+        console.log(err);
+        this.error = "profile update error";
+      }
     },
   },
 };
@@ -363,15 +391,21 @@ export default {
   opacity: 0.5;
   display: block;
 }
-.input1 input,
+.inputFields,
 .country {
   width: 216px;
   height: 54px;
-  background: #7557d3;
-  opacity: 0.04;
+  background: rgba(117, 87, 211, 0.1);
   outline: none;
   border: none;
   padding-left: 18px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 23px;
+  letter-spacing: -0.117188px;
+  color: #333758;
 }
 .bottom {
   margin-top: 40px;
@@ -401,8 +435,16 @@ export default {
 .addressInput {
   width: 469px;
   height: 54px;
-  background: #7557d3;
-  opacity: 0.04;
+  background: rgba(117, 87, 211, 0.1);
+  outline: none;
+  border: none;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 23px;
+  letter-spacing: -0.117188px;
+  color: #333758;
 }
 .timer {
   display: flex;
@@ -459,5 +501,20 @@ select option {
 
 input[type="text"] {
   color: black;
+}
+.error {
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 19px;
+  letter-spacing: -0.4px;
+  color: #7557d3;
+}
+.form {
+  display: none;
+}
+.formBlock {
+  display: block;
 }
 </style>
