@@ -6,7 +6,7 @@
       <thead class="head">
         <th width="20%">Batch</th>
         <th>Date Compsed</th>
-        <th>No of Questions</th>
+        <th width="30%">No of Questions</th>
         <th>Time Allocated</th>
         <th>Status</th>
       </thead>

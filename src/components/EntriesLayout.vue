@@ -3,11 +3,11 @@
   <div class="main">
     <div class="header">
       <span class="headerText">
-        Entries - Batch 2<span class="material-symbols-outlined"> arrow_drop_down </span>
+        Entries - Batch 1<span class="material-symbols-outlined"> arrow_drop_down </span>
       </span>
       <br />
 
-      <span class="subText">Comprises of all that applied for batch 2</span>
+      <span class="subText">Comprises of all that applied for batch 1</span>
     </div>
 
     <table class="tWrap">
