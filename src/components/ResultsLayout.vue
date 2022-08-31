@@ -2,56 +2,57 @@
   <div class="main">
     <div class="header">
       <span class="headerText">
-        Results - Batch 2<span class="material-symbols-outlined"> arrow_drop_down </span>
+        Results - Batch 1<span class="material-symbols-outlined"> arrow_drop_down </span>
       </span>
       <br />
 
-      <span class="subText">Comprises of all that applied for batch 2</span>
+      <span class="subText">Comprises of all that applied for batch 1</span>
     </div>
 
-    <div class="body">
-      <div class="thead">
-        <P id="name">Name</P>
-        <P id="email">Email</P>
-        <div class="text" id="age">
-          <P>DOB - Age</P>
+    <table>
+      <thead>
+        <th width="10%" id="headName">Name</th>
+        <th width="5%">Email</th>
+        <th>
+          DOB - Age
           <img src="../assets/arrowUpanddown.svg" />
-        </div>
-        <P id="address">Address</P>
-        <P id="university">University</P>
-        <div class="text" id="cgpa">
-          <P>CGPA</P>
+        </th>
+        <th>Address</th>
+        <th>University</th>
+        <th width="10%">
+          CGPA
           <img src="../assets/arrowUpanddown.svg" />
-        </div>
-        <div class="text">
-          <P>Test Scores</P>
-          <img src="../assets/arrowUpanddown.svg" alt="" />
-        </div>
-      </div>
+        </th>
+        <th width="15%">Test Scores <img src="../assets/arrowUpanddown.svg" alt="" /></th>
+      </thead>
 
-      <div
-        class="data"
-        :class="{ active: applicant.active === true }"
-        @click="toggler(applicant)"
-        v-for="applicant in applicants"
-        :key="applicant._id"
-      >
-        <p>{{ applicant.firstName + " " + applicant.lastName }}</p>
-        <p id="applicantEmail">{{ applicant.email }}</p>
-        <p>
-          {{
-            `${applicant.dateOfBirth.substr(8, 2)}/${applicant.dateOfBirth.substr(
-              5,
-              2
-            )}/${applicant.dateOfBirth.substr(2, 2)}`
-          }}
-        </p>
-        <p>{{ applicant.address }}</p>
-        <p>{{ applicant.university }}</p>
-        <p>{{ applicant.cgpa }}</p>
-        <p>{{ applicant.score }}</p>
-      </div>
-    </div>
+      <tbody>
+        <tr
+          class="data"
+          :class="{ active: applicant.active === true }"
+          @click="toggler(applicant)"
+          v-for="applicant in applicants"
+          :key="applicant._id"
+        >
+          <td width="20%" id="name">
+            {{ applicant.firstName + " " + applicant.lastName }}
+          </td>
+          <td width="20%">{{ applicant.email }}</td>
+          <td width="10%">
+            {{
+              `${applicant.dateOfBirth.substr(8, 2)}/${applicant.dateOfBirth.substr(
+                5,
+                2
+              )}/${applicant.dateOfBirth.substr(2, 2)}`
+            }}
+          </td>
+          <td width="15%">{{ applicant.address }}</td>
+          <td width="15%">{{ applicant.university }}</td>
+          <td>{{ applicant.cgpa }}</td>
+          <td>{{ applicant.score }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -116,39 +117,42 @@ export default {
   line-height: 16px;
   color: #4f4f4f;
 }
-.thead {
+table {
   width: 1042px;
+  border-collapse: collapse;
+}
+thead {
+  width: 100%;
   height: 46px;
   background: #2b3c4e;
-  display: flex;
-  align-items: center;
-  /* padding: 0 8px 0 42px; */
-  margin-bottom: 20px;
-  justify-content: space-around;
-}
-.thead p {
   font-family: "Lato";
   font-size: 14px;
   line-height: 17px;
   color: #ffffff;
+  margin-bottom: 20px;
   text-align: center;
 }
-.text {
-  display: flex;
-  align-items: center;
+
+#name {
+  padding-left: 20px;
 }
-.text img {
-  margin-left: 6px;
-}
-.data {
-  display: flex;
-  border-radius: 8px;
-  width: 1042px;
+
+tr {
+  width: 100%;
   height: 66px;
-  align-items: center;
-  /* padding-left: 20px; */
-  gap: 0 30px;
-  justify-content: space-around;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #4f4f4f;
+  border-radius: 8px;
+  margin-left: 20px;
+  /* text-align: center; */
+  text-align: center;
+}
+td {
+  border-radius: 8px;
 }
 .active {
   background: #ffffff;
@@ -156,14 +160,5 @@ export default {
   border-left-color: #7557d3;
   border-left-style: solid;
   border-left-width: 7px;
-}
-.data p {
-  font-family: "Lato";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
-  color: #4f4f4f;
-  width: 90%;
 }
 </style>

@@ -1,6 +1,7 @@
 <template>
   <div class="main">
     <p class="headText">Compose Assessment</p>
+    <p class="error">{{ errorMessage }}</p>
     <p class="num">{{ count }}/30</p>
 
     <form action="" @submit.prevent="">
@@ -13,13 +14,7 @@
       </div>
 
       <label for="Questions">Questions</label><br />
-      <textarea
-        name=""
-        id="questions"
-        cols=""
-        rows=""
-        v-model="question"
-      ></textarea>
+      <textarea name="" id="questions" cols="" rows="" v-model="question"></textarea>
 
       <div class="miniwrap">
         <div class="left">
@@ -74,30 +69,84 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
-  name: 'ComposeAssessment layout',
+  name: "ComposeAssessment layout",
   components: {},
   data() {
     return {
-      question: '',
-      optionA: '',
-      optionB: '',
-      optionC: '',
-      optionD: '',
+      question: "",
+      optionA: "",
+      optionB: "",
+      optionC: "",
+      optionD: "",
       assessments: [],
-      correctAnswer: '',
+      correctAnswer: "",
       count: 1,
+      errorMessage: "",
     };
   },
   methods: {
     async nextQuestion() {
-      let token = localStorage.getItem('token');
-      if (this.assessments[this.count - 1]) {
-        var id = this.assessments[this.count - 1];
-        if (this.assessments[this.count]) {
-          let response = await axios.put(
-            `http://localhost:5000/api/v1/auth/assessment/${id}/update`,
+      try {
+        this.errorMessage = "";
+        let token = localStorage.getItem("token");
+        if (this.assessments[this.count - 1]) {
+          var id = this.assessments[this.count - 1];
+          if (this.assessments[this.count]) {
+            let response = await axios.put(
+              `http://localhost:5000/api/v1/auth/assessment/${id}/update`,
+              {
+                question: this.question,
+                a: this.optionA,
+                b: this.optionB,
+                c: this.optionC,
+                d: this.optionD,
+                correctAnswer: this.correctAnswer,
+              },
+              { headers: { token: token } }
+            );
+            let next = this.assessments[this.count];
+
+            let res = await axios.get(
+              `http://localhost:5000/api/v1/auth/assessment/${next}`,
+              {
+                headers: { token: token },
+              }
+            );
+            this.count += 1;
+            let currentAssessment = res.data.data;
+            this.question = currentAssessment.question;
+            this.optionA = currentAssessment.a;
+            this.optionB = currentAssessment.b;
+            this.optionC = currentAssessment.c;
+            this.optionD = currentAssessment.d;
+            this.correctAnswer = currentAssessment.correctAnswer;
+          } else {
+            let response = await axios.put(
+              `http://localhost:5000/api/v1/auth/assessment/${id}/update`,
+              {
+                question: this.question,
+                a: this.optionA,
+                b: this.optionB,
+                c: this.optionC,
+                d: this.optionD,
+                correctAnswer: this.correctAnswer,
+              },
+              { headers: { token: token } }
+            );
+
+            this.count += 1;
+            this.question = "";
+            this.optionA = "";
+            this.optionB = "";
+            this.optionC = "";
+            this.optionD = "";
+            this.correctAnswer = "";
+          }
+        } else {
+          let res = await axios.post(
+            "http://localhost:5000/api/v1/auth/assessment/create",
             {
               question: this.question,
               a: this.optionA,
@@ -106,70 +155,25 @@ export default {
               d: this.optionD,
               correctAnswer: this.correctAnswer,
             },
-            { headers: { token: token } }
-          );
-          let next = this.assessments[this.count];
-
-          let res = await axios.get(
-            `http://localhost:5000/api/v1/auth/assessment/${next}`,
             {
               headers: { token: token },
             }
           );
+          let currentAssessmentId = res.data.data._id;
+          this.assessments.push(currentAssessmentId);
           this.count += 1;
-          let currentAssessment = res.data.data;
-          this.question = currentAssessment.question;
-          this.optionA = currentAssessment.a;
-          this.optionB = currentAssessment.b;
-          this.optionC = currentAssessment.c;
-          this.optionD = currentAssessment.d;
-          this.correctAnswer = currentAssessment.correctAnswer;
-        } else {
-          let response = await axios.put(
-            `http://localhost:5000/api/v1/auth/assessment/${id}/update`,
-            {
-              question: this.question,
-              a: this.optionA,
-              b: this.optionB,
-              c: this.optionC,
-              d: this.optionD,
-              correctAnswer: this.correctAnswer,
-            },
-            { headers: { token: token } }
-          );
-
-          this.count += 1;
-          this.question = '';
-          this.optionA = '';
-          this.optionB = '';
-          this.optionC = '';
-          this.optionD = '';
-          this.correctAnswer = '';
+          this.question = "";
+          this.optionA = "";
+          this.optionB = "";
+          this.optionC = "";
+          this.optionD = "";
+          this.correctAnswer = "";
         }
-      } else {
-        let res = await axios.post(
-          'http://localhost:5000/api/v1/auth/assessment/create',
-          {
-            question: this.question,
-            a: this.optionA,
-            b: this.optionB,
-            c: this.optionC,
-            d: this.optionD,
-            correctAnswer: this.correctAnswer,
-          },
-          {
-            headers: { token: token },
-          }
-        );
-        let currentAssessmentId = res.data.data._id;
-        this.assessments.push(currentAssessmentId);
-        this.count += 1;
-        this.question = '';
-        this.optionA = '';
-        this.optionB = '';
-        this.optionC = '';
-        this.optionD = '';
-        this.correctAnswer = '';
+      } catch (err) {
+        console.log(err);
+        if (err.response.data.message.includes("correctAnswer")) {
+          this.errorMessage = "Please select the correct answer";
+        }
       }
     },
 
@@ -178,7 +182,7 @@ export default {
     },
 
     async previousQuestion() {
-      let token = localStorage.getItem('token');
+      let token = localStorage.getItem("token");
       if (this.count > 1) {
         try {
           let id = this.assessments[this.count - 2];
@@ -201,7 +205,7 @@ export default {
           console.log(error);
         }
       } else {
-        console.log('No previous available');
+        console.log("No previous available");
       }
     },
   },
@@ -213,7 +217,7 @@ export default {
   margin-left: 80px;
 }
 .headText {
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 300;
   font-size: 43.5555px;
@@ -222,7 +226,7 @@ export default {
   color: #2b3c4e;
 }
 .num {
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -234,7 +238,7 @@ export default {
   display: none;
 }
 .chooseFile {
-  font-family: 'Avenir';
+  font-family: "Avenir";
   font-size: 16px;
   line-height: 22px;
   color: #2b3c4e;
@@ -253,7 +257,7 @@ export default {
   padding-bottom: 25px;
 }
 label {
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -291,7 +295,7 @@ label {
   width: 125px;
   height: 41px;
   border: none;
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -316,12 +320,20 @@ label {
   width: 205px;
   height: 41px;
   border: none;
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
   color: #ffffff;
   margin: 55px 0 0 374px;
+}
+.error {
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+  color: tomato;
 }
 </style>
