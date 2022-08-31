@@ -4,7 +4,7 @@
 
     <table class="tWrap">
       <thead class="head">
-        <th class="first">Batch</th>
+        <th width="20%">Batch</th>
         <th>Date Compsed</th>
         <th>No of Questions</th>
         <th>Time Allocated</th>
@@ -17,7 +17,7 @@
           :class="{ active: isActive === true }"
           @click="() => (this.isActive = !this.isActive)"
         >
-          <td>Batch 1</td>
+          <td width="20%">Batch 1</td>
           <td>12/07/94</td>
           <td class="num">30</td>
           <td>30 mins</td>
@@ -57,36 +57,31 @@ export default {
 .tWrap {
   background: #ffffff;
   box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
-  border-radius: 8px;
-  width: 100%;
+
+  width: 946px;
   height: fit-content;
-  padding: 42px 30px;
+  border-collapse: collapse;
 }
 
 .head {
   background: #2b3c4e;
-  width: 946px;
+  width: 100%;
   height: 42px;
-  border-collapse: collapse;
-  align-items: center;
-  display: flex;
-  justify-content: space-around;
-  /* padding: 0 112px 0 58px; */
   margin-bottom: 28px;
   font-family: "Lato";
   font-size: 12.7167px;
   line-height: 15px;
   text-align: center;
   color: #ffffff;
+  margin-bottom: 20px;
+}
+tbody {
+  margin-top: 20px;
+  border-radius: 8px;
 }
 
 .data {
-  width: 946px;
   height: 42px;
-  align-items: center;
-  display: flex;
-  justify-content: space-around;
-  /* padding: 0 112px 0 58px; */
   border-radius: 8px;
   font-family: "Lato";
   font-style: normal;
@@ -94,6 +89,7 @@ export default {
   font-size: 14.5333px;
   line-height: 17px;
   color: #4f4f4f;
+  text-align: center;
 }
 .active {
   background: #ffffff;
