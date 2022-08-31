@@ -280,5 +280,6 @@ hr {
   border: none;
   /* margin: 0 auto; */
   margin-left: 118px;
+  cursor: pointer;
 }
 </style>

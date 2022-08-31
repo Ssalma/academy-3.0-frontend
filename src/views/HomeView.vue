@@ -111,6 +111,7 @@ input {
   position: absolute;
   right: 22px;
   top: 18px;
+  z-index: 2;
 }
 .submitBtn {
   background: #ffffff;
