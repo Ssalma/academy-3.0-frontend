@@ -1,7 +1,9 @@
 <template>
   <div class="main">
     <p class="header">Profiles and Settings</p>
-    <p class="subText">Helps you set admin profile and give other users permissions</p>
+    <p class="subText">
+      Helps you set admin profile and give other users permissions
+    </p>
 
     <div class="btns">
       <button
@@ -134,29 +136,29 @@
         </div>
       </div>
 
-      <button class="timeSave">Save</button>
+      <button class="timeSave" @click="setTimer">Save</button>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 export default {
-  name: "Profile",
+  name: 'Profile',
   data() {
     return {
-      active: "",
-      setMin: "00",
-      setSec: "000",
-      displayTab: "",
-      adminName: "",
-      adminEmail: "",
-      phoneNumber: "",
-      address: "",
-      country: "",
+      active: '',
+      setMin: '00',
+      setSec: '000',
+      displayTab: '',
+      adminName: '',
+      adminEmail: '',
+      phoneNumber: '',
+      address: '',
+      country: '',
       img: null,
-      firstName: "",
-      lastName: "",
+      firstName: '',
+      lastName: '',
       fullName: null,
     };
   },
@@ -170,54 +172,65 @@ export default {
     },
 
     async updateProfile() {
-      this.fullName = this.adminName.split(" ");
+      this.fullName = this.adminName.split(' ');
       if (this.fullName.length > 1) {
         this.firstName = this.fullName[0];
         this.lastName = this.fullName[1];
       } else {
-        this.firstName = "";
-        this.lastname = "";
+        this.firstName = '';
+        this.lastname = '';
       }
       const formData = new FormData();
       if (this.img) {
-        formData.append("img", this.img, this.img.name);
+        formData.append('img', this.img, this.img.name);
       }
       if (this.firstName.length > 1) {
-        formData.append("firstName", this.firstName);
+        formData.append('firstName', this.firstName);
         console.log(this.firstName);
       }
       if (this.lastName.length > 1) {
-        formData.append("lastName", this.lastName);
+        formData.append('lastName', this.lastName);
         console.log(this.lastName);
       }
       if (this.adminEmail.length > 1) {
-        formData.append("email", this.adminEmail);
+        formData.append('email', this.adminEmail);
         console.log(this.adminEmail);
       }
       if (this.country.length > 1) {
-        formData.append("country", this.country);
+        formData.append('country', this.country);
         console.log(this.country);
       }
       if (this.address.length > 1) {
-        formData.append("address", this.address);
+        formData.append('address', this.address);
         console.log(this.address);
       }
       if (this.phoneNumber.length > 1) {
-        formData.append("phoneNumber", this.phoneNumber);
+        formData.append('phoneNumber', this.phoneNumber);
         console.log(this.phoneNumber);
       }
 
       console.log(formData.entries());
 
-      let token = localStorage.getItem("token");
+      let token = localStorage.getItem('token');
       let res = await axios.put(
-        "http://localhost:5000/api/v1/auth/admin/update",
+        'http://localhost:5000/api/v1/auth/admin/update',
         formData,
         {
           headers: { token: token },
         }
       );
       console.log(res);
+    },
+
+    async setTimer() {
+      let token = localStorage.getItem('token');
+      let res = await axios.put(
+        'http://localhost:5000/api/v1/auth/timer/update',
+        { minutes: this.setMin, seconds: this.setSec },
+        {
+          headers: { token: token },
+        }
+      );
     },
   },
 };
@@ -228,7 +241,7 @@ export default {
   margin-left: 42px;
 }
 .header {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 300;
   font-size: 43.5555px;
@@ -238,7 +251,7 @@ export default {
   margin: 102px 0 15px 0px;
 }
 .subText {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -254,7 +267,7 @@ export default {
 .btnBtns {
   width: 188px;
   height: 64px;
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -282,7 +295,7 @@ export default {
 
 .adminP p,
 .timerSet p {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -296,7 +309,7 @@ export default {
   border-radius: 3px;
   width: 127px;
   height: 38px;
-  font-family: "Karla";
+  font-family: 'Karla';
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -322,7 +335,7 @@ export default {
   border-radius: 30px;
 }
 .upload {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -337,7 +350,7 @@ export default {
   display: none;
 }
 .remove {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -353,7 +366,7 @@ export default {
   gap: 0 40px;
 }
 .label {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -386,7 +399,7 @@ export default {
   border: none;
   width: 127px;
   height: 38px;
-  font-family: "Karla";
+  font-family: 'Karla';
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -410,7 +423,7 @@ export default {
   margin-bottom: 34px;
 }
 .timerP {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -418,7 +431,7 @@ export default {
   color: #2b3c4e;
 }
 .min1 {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 300;
   font-size: 48px;
@@ -426,7 +439,7 @@ export default {
   color: #2b3c4e;
 }
 .min2 {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -457,7 +470,7 @@ select option {
   display: block;
 }
 
-input[type="text"] {
+input[type='text'] {
   color: black;
 }
 </style>
