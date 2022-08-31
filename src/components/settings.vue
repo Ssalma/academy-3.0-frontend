@@ -250,6 +250,17 @@ export default {
         this.error = 'profile update error';
       }
     },
+
+    async setTimer() {
+      let token = localStorage.getItem('token');
+      let res = await axios.put(
+        'http://localhost:5000/api/v1/auth/timer/update',
+        { minutes: this.setMin, seconds: this.setSec },
+        {
+          headers: { token: token },
+        }
+      );
+    },
   },
 };
 </script>
