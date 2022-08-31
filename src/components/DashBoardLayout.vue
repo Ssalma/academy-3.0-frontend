@@ -33,7 +33,9 @@
 
     <div class="mid">
       <p class="midHead">History</p>
-      <p class="midSub">Last Update 18:24, 22/02/19</p>
+      <p class="midSub">
+        Last Update {{ lastUpdateTime }}, {{ lastUpdateDate }}
+      </p>
     </div>
 
     <div class="bottom">
@@ -53,8 +55,13 @@
 
       <div class="box">
         <p class="boxH">Create Assessment</p>
-        <p class="boxSub">Create test question for an incoming academy students</p>
-        <button class="boxBtn" @click="this.$router.push({ name: 'ComposeAssessment' })">
+        <p class="boxSub">
+          Create test question for an incoming academy students
+        </p>
+        <button
+          class="boxBtn"
+          @click="this.$router.push({ name: 'ComposeAssessment' })"
+        >
           Create Assessment
         </button>
       </div>
@@ -63,19 +70,21 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   data() {
     return {
-      activeTab: "",
+      activeTab: '',
       noOfApplicants: null,
+      lastUpdateTime: null,
+      lastUpdateDate: null,
       batches: [
         {
-          id: "1",
-          batchNo: "Academy Batch 1",
-          noOfStudents: "",
-          started: "started 11/09/15",
+          id: '1',
+          batchNo: 'Academy Batch 1',
+          noOfStudents: '',
+          started: 'started -',
         },
       ],
     };
@@ -85,13 +94,23 @@ export default {
   },
   methods: {
     async getApplicantsCount() {
-      let token = localStorage.getItem("token");
+      let token = localStorage.getItem('token');
       try {
-        let response = await axios.get("http://localhost:5000/api/v1/auth/applications", {
-          headers: { token: token },
-        });
+        let response = await axios.get(
+          'http://localhost:5000/api/v1/auth/applications',
+          {
+            headers: { token: token },
+          }
+        );
         console.log(response);
         this.noOfApplicants = response.data.data;
+        const now = new Date();
+        const lastUpdate = now.toISOString();
+        this.lastUpdateTime = lastUpdate.substr(11, 5);
+        this.lastUpdateDate = `${lastUpdate.substr(8, 2)}/${lastUpdate.substr(
+          5,
+          2
+        )}/${lastUpdate.substr(2, 2)}`;
       } catch (e) {
         console.log(e);
       }
@@ -105,7 +124,7 @@ export default {
   /* background: #e5e5e5; */
 }
 .headText {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 300;
   font-size: 43.5555px;
@@ -138,7 +157,7 @@ export default {
   margin-right: 100px;
 }
 .cHeadT {
-  font-family: "Nunito Sans";
+  font-family: 'Nunito Sans';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -147,7 +166,7 @@ export default {
   margin: 0 0 8px 0;
 }
 .num {
-  font-family: "Nunito Sans";
+  font-family: 'Nunito Sans';
   font-style: normal;
   font-weight: 300;
   font-size: 48px;
@@ -158,7 +177,7 @@ export default {
   height: 66px;
 }
 .subText {
-  font-family: "Nunito Sans";
+  font-family: 'Nunito Sans';
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -186,7 +205,7 @@ hr {
   margin: 77px 0 0 60px;
 }
 .midHead {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -196,7 +215,7 @@ hr {
   margin-bottom: 4px;
 }
 .midSub {
-  font-family: "Nunito Sans";
+  font-family: 'Nunito Sans';
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -228,7 +247,7 @@ hr {
   border-left-width: 7px;
 }
 .batch p {
-  font-family: "Nunito Sans";
+  font-family: 'Nunito Sans';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -244,7 +263,7 @@ hr {
   padding: 26px 0 80px 31px;
 }
 .boxH {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -254,7 +273,7 @@ hr {
   margin-bottom: 70px;
 }
 .boxSub {
-  font-family: "Nunito Sans";
+  font-family: 'Nunito Sans';
   font-style: normal;
   font-weight: 400;
   font-size: 16.7273px;
@@ -271,7 +290,7 @@ hr {
   border-radius: 4px;
   width: 205px;
   height: 41px;
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;

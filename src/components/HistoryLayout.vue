@@ -5,7 +5,7 @@
     <table class="tWrap">
       <thead class="head">
         <th width="20%">Batch</th>
-        <th>Date Compsed</th>
+        <th>Date Composed</th>
         <th width="30%">No of Questions</th>
         <th>Time Allocated</th>
         <th>Status</th>
@@ -18,9 +18,9 @@
           @click="() => (this.isActive = !this.isActive)"
         >
           <td width="20%">Batch 1</td>
-          <td>12/07/94</td>
-          <td class="num">30</td>
-          <td>30 mins</td>
+          <td>{{ date }}</td>
+          <td class="num">{{ noOfQuestions }}</td>
+          <td>{{ time }} mins</td>
           <td>Taken</td>
         </tr>
       </tbody>
@@ -29,15 +29,48 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-  name: "HistoryView",
+  name: 'HistoryView',
   components: {},
+  async created() {
+    await this.getAllAssessments();
+  },
   data() {
     return {
-      isActive: "false",
+      isActive: 'false',
+      date: null,
+      noOfQuestions: null,
+      time: null,
     };
   },
-  methods: {},
+  methods: {
+    async getAllAssessments() {
+      let token = localStorage.getItem('token');
+      let res = await axios.get(
+        'http://localhost:5000/api/v1/auth/assessments/all',
+        {
+          headers: { token: token },
+        }
+      );
+      const assessments = res.data.data;
+      this.noOfQuestions = assessments.length;
+      if (this.noOfQuestions > 0) {
+        const date = assessments[0].createdAt;
+        this.date = `${date.substr(8, 2)}/${date.substr(5, 2)}/${date.substr(
+          2,
+          2
+        )}`;
+      } else {
+        this.date = '-';
+      }
+
+      let timer = await axios.get('http://localhost:5000/api/v1/auth/timer', {
+        headers: { token: token },
+      });
+      this.time = timer.data.data.minutes;
+    },
+  },
 };
 </script>
 
@@ -46,7 +79,7 @@ export default {
   margin-left: 42px;
 }
 .headerText {
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 300;
   font-size: 43.5555px;
@@ -68,7 +101,7 @@ export default {
   width: 100%;
   height: 42px;
   margin-bottom: 28px;
-  font-family: "Lato";
+  font-family: 'Lato';
   font-size: 12.7167px;
   line-height: 15px;
   text-align: center;
@@ -83,7 +116,7 @@ tbody {
 .data {
   height: 42px;
   border-radius: 8px;
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
   font-size: 14.5333px;
