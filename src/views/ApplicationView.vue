@@ -23,10 +23,13 @@
             name="cv"
             v-on:change="selectedFile($event)"
           />
-          <label for="file" class="upload-file" :class="[error.cvErr? 'borderRed': 'none']"
+          <label
+            for="file"
+            class="upload-file"
+            :class="[error.cvErr ? 'borderRed' : 'none']"
             ><span class="material-symbols-outlined">add</span> Upload CV</label
           >
-    
+
           <input
             type="file"
             accept="image/*"
@@ -34,7 +37,10 @@
             name="img"
             v-on:change="selectedImg($event)"
           />
-          <label for="upload-photo" class="upload-file" :class="[error.imgErr? 'borderRed': 'none']"
+          <label
+            for="upload-photo"
+            class="upload-file"
+            :class="[error.imgErr ? 'borderRed' : 'none']"
             ><span class="material-symbols-outlined">add</span> Upload
             Photo</label
           >
@@ -47,17 +53,23 @@
               id="fName"
               name="fName"
               v-model="form.firstName"
-              :class="[error.firstNameErr? 'borderRed': 'none']"
+              :class="[error.firstNameErr ? 'borderRed' : 'none']"
             />
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" v-model="form.email" :class="[error.emailErr? 'borderRed': 'none']"/>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              v-model="form.email"
+              :class="[error.emailErr ? 'borderRed' : 'none']"
+            />
             <label for="address">Address</label>
             <input
               type="text"
               id="address"
               name="address"
               v-model="form.address"
-              :class="[error.addressErr? 'borderRed': 'none']"
+              :class="[error.addressErr ? 'borderRed' : 'none']"
             />
             <label for="course">Course of Study</label>
             <input
@@ -65,7 +77,7 @@
               id="course"
               name="course"
               v-model="form.course"
-              :class="[error.courseErr? 'borderRed': 'none']"
+              :class="[error.courseErr ? 'borderRed' : 'none']"
             />
           </fieldset>
           <fieldset>
@@ -75,9 +87,9 @@
               id="lName"
               name="lastName"
               v-model="form.lastName"
-              :class="[error.lastNameErr? 'borderRed': 'none']"
+              :class="[error.lastNameErr ? 'borderRed' : 'none']"
             />
-            
+
             <label for="date">Date of Birth</label>
             <input
               type="date"
@@ -85,16 +97,16 @@
               min="31-12-1979"
               name="dateOfBirth"
               v-model="form.dateOfBirth"
-              :class="[error.dateOfBirthErr? 'borderRed': 'none']"
+              :class="[error.dateOfBirthErr ? 'borderRed' : 'none']"
             />
-            
+
             <label for="university">University</label>
             <input
               type="text"
               id="university"
               name="university"
               v-model="form.university"
-              :class="[error.universityErr? 'borderRed': 'none']"
+              :class="[error.universityErr ? 'borderRed' : 'none']"
             />
             <label for="number">CGPA</label>
             <input
@@ -105,7 +117,7 @@
               step="0.01"
               name="cgpa"
               v-model="form.cgpa"
-              :class="[error.cgpaErr? 'borderRed': 'none']"
+              :class="[error.cgpaErr ? 'borderRed' : 'none']"
             />
           </fieldset>
         </div>
@@ -166,35 +178,33 @@ export default {
     },
     async applicationFormSubmit() {
       !this.form.cv
-        ? this.error.cvErr = true
+        ? (this.error.cvErr = true)
         : console.log(this.form.cv.name);
-      !this.form.img
-        ? this.error.imgErr = true
-        : console.log(this.form.img);
+      !this.form.img ? (this.error.imgErr = true) : console.log(this.form.img);
       this.form.firstName.trim().length < 2
-        ? this.error.firstNameErr = true
+        ? (this.error.firstNameErr = true)
         : console.log(this.form.firstName);
       this.form.lastName.trim().length < 2
-        ? this.error.lastNameErr = true
+        ? (this.error.lastNameErr = true)
         : console.log(this.form.lastName);
       this.form.email.trim().includes('@')
-        ? this.error.emailErr = false
-        : this.error.emailErr = true
+        ? (this.error.emailErr = false)
+        : (this.error.emailErr = true);
       !this.form.dateOfBirth
-        ? this.error.dateOfBirthErr = true
+        ? (this.error.dateOfBirthErr = true)
         : console.log(this.form.dateOfBirth);
       this.form.address.trim()
         ? console.log(this.form.address)
-        : this.error.addressErr = true
+        : (this.error.addressErr = true);
       this.form.university.trim()
         ? console.log(this.form.university)
-        : this.error.universityErr = true
+        : (this.error.universityErr = true);
       this.form.course.trim()
         ? console.log(this.form.course)
-        : this.error.courseErr = true
+        : (this.error.courseErr = true);
       this.form.cgpa
         ? console.log(this.form.cgpa)
-        : this.error.cgpaErr = true
+        : (this.error.cgpaErr = true);
 
       const formData = new FormData();
       formData.append('cv', this.form.cv, this.form.cv.name);
@@ -209,14 +219,13 @@ export default {
       formData.append('university', this.form.university);
 
       let token = localStorage.getItem('token');
-      let response = await axios.post(
+      await axios.post(
         'http://localhost:5000/api/v1/auth/application',
         formData,
         {
           headers: { token: token },
         }
       );
-      console.log(response);
       this.$router.push('/applicantdashboard');
     },
 
@@ -230,7 +239,6 @@ export default {
       );
       const user = response.data.data.user;
       const { firstName, lastName, email } = user;
-      console.log(firstName);
       this.form.firstName = firstName;
       this.form.lastName = lastName;
       this.form.email = email;
@@ -395,18 +403,17 @@ input[type='password'],
   padding: 53px 0px 39px 0px;
 }
 
-.error{
+.error {
   color: #d90429;
   position: relative;
   top: -20px;
 }
 
-.borderRed{
+.borderRed {
   border: 3px solid #d90429;
 }
 
-.borderGreen{
+.borderGreen {
   border-color: #38b000;
 }
-
 </style>

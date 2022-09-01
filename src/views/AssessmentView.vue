@@ -15,13 +15,13 @@
         </div>
         <div>
           <h1 class="timer">Timer</h1>
-          <p class="time">00<sub>min</sub>000<sub>sec</sub></p>
+          <p class="time">00<sub>min</sub>00<sub>sec</sub></p>
         </div>
       </div>
 
       <div class="main-body">
         <div class="questions">
-          <h5>{{ questions[index]['questionNumber'] }}</h5>
+          <h5>Question {{ index + 1 }}</h5>
           <h1 class="question">{{ questions[index]['question'] }}</h1>
           <div class="checkbox-container">
             <div class="input-questions">
@@ -29,7 +29,7 @@
                 <label
                   class="option-selector"
                   :for="key"
-                  v-for="(answer, key) in questions[index]['answers']"
+                  v-for="(answer, key) in questionAnswers"
                   :key="answer"
                 >
                   <br />
@@ -54,12 +54,12 @@
         <div class="next-previous">
           <app-button
             class="previous-btn"
-            @click="index--"
+            @click="previous"
             :text="Button.previousButton"
           ></app-button>
           <app-button
             class="next-btn next-button-right"
-            @click="index++"
+            @click="next"
             :text="Button.nextButton"
           ></app-button>
         </div>
@@ -67,6 +67,7 @@
           <app-button
             class="finish-btn finish-button-center"
             :text="Button.finishButton"
+            :isActive="isFinished"
           ></app-button>
         </div>
       </div>
@@ -95,6 +96,8 @@ export default {
       img: null,
       isClicked: false,
       clicked: '',
+      score: 0,
+      isFinished: false,
       Button: {
         nextButton: 'Next',
         previousButton: 'Previous',
@@ -103,47 +106,13 @@ export default {
       },
       selectedAnswer: '',
       index: 0,
-      questions: [
-        {
-          questionNumber: 'Question 1',
-          question: 'which of these is a frameworks?',
-          answers: {
-            a: 'A. To reduce the file size of images and videos.',
-            b: 'B. To speed up 3D rendering performance.',
-            c: 'C. To support higher video resolutions.',
-            d: 'D. To display more colors in images and videos',
-          },
-          correctAnswer: 'c',
-        },
-        {
-          questionNumber: 'Question 2',
-          question: 'which of these is a programming language ?',
-          answers: {
-            a: 'A. css',
-            b: 'B. javascript',
-            c: 'C. vuejs',
-            d: 'D. html',
-          },
-          correctAnswer: 'b',
-        },
-        {
-          questionNumber: 'Question 3',
-          question: 'which of these is used for styling?',
-          answers: {
-            a: 'A. css',
-            b: 'B. javascript',
-            c: 'C. uejs',
-            d: 'D. html',
-          },
-          correctAnswer: 'a',
-        },
-      ],
+      questions: [],
     };
   },
   methods: {
     answered(event) {
       this.selectedAnswer = event.target.value;
-      console.log(this.selectedAnswer);
+
       this.isClicked = !this.isClicked;
     },
     async loadUserDetails() {
@@ -159,6 +128,68 @@ export default {
       this.fullName = `${application.firstName} ${application.lastName}`;
       this.email = application.email;
       this.img = application.img;
+
+      const res = await axios.get(
+        'http://localhost:5000/api/v1/auth/assessments/all',
+        {
+          headers: { token: token },
+        }
+      );
+      this.questions = res.data.data;
+    },
+
+    next() {
+      if (this.index < this.questions.length) {
+        this.questions[this.index]['selectedAnswer'] = this.selectedAnswer;
+        if (
+          this.selectedAnswer == this.questions[this.index]['correctAnswer']
+        ) {
+          this.score += 1;
+        }
+        this.selectedAnswer = '';
+        if (this.index < this.questions.length - 1) {
+          this.index += 1;
+        }
+      }
+      if (this.index + 2 > this.questions.length) {
+        this.isFinished = true;
+      }
+    },
+
+    previous() {
+      if (this.index > 0) {
+        this.index -= 1;
+        this.isFinished = false;
+        if (this.score > 0) {
+          this.score -= 1;
+        }
+        this.selectedAnswer = this.questions[this.index]['selectedAnswer'];
+      }
+    },
+
+    async finish() {
+      let token = localStorage.getItem('token');
+      await axios.put(
+        'http://localhost:5000/api/v1/auth/user/score',
+        {
+          score: this.score,
+        },
+        {
+          headers: { token: token },
+        }
+      );
+    },
+  },
+  computed: {
+    questionAnswers() {
+      const keys = Object.keys(this.questions[this.index]).filter(
+        (k) => k.length == 1
+      );
+      const obj = {};
+      keys.forEach((key) => {
+        obj[key] = this.questions[this.index][key];
+      });
+      return obj;
     },
   },
 };
@@ -234,7 +265,7 @@ sub {
   color: #4f4f4f;
 }
 
-.main-body{
+.main-body {
   margin-top: 64px;
 }
 
@@ -321,7 +352,7 @@ h5 {
   padding-left: 10px;
 }
 
-label{
+label {
   cursor: pointer;
 }
 
