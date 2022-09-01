@@ -18,7 +18,7 @@
         <fieldset class="input-file-photo">
           <input
             type="file"
-            accept="file_extension"
+            accept="application/msword, application/pdf"
             id="file"
             name="cv"
             v-on:change="selectedFile($event)"
@@ -82,7 +82,7 @@
             <input
               type="date"
               id="date"
-              max="31-12-1979"
+              min="31-12-1979"
               name="dateOfBirth"
               v-model="form.dateOfBirth"
               :class="[error.dateOfBirthErr? 'borderRed': 'none']"
