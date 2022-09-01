@@ -68,6 +68,7 @@
             class="finish-btn finish-button-center"
             :text="Button.finishButton"
             :isActive="isFinished"
+            @click="finish"
           ></app-button>
         </div>
       </div>
@@ -136,6 +137,7 @@ export default {
         }
       );
       this.questions = res.data.data;
+      console.log(this.questions)
     },
 
     next() {
@@ -178,6 +180,9 @@ export default {
           headers: { token: token },
         }
       );
+      if(this.isFinished){
+          this.$router.push('/thankyouassessmentdashboard');
+        }
     },
   },
   computed: {
