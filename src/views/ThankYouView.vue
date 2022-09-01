@@ -26,7 +26,7 @@
             <br />
             Best of luck
           </figcaption>
-          <router-link :to="{ name: 'home' }"
+          <router-link :to="{ name: 'applicantdashboard' }"
             ><app-button
               class="home-btn finish-button-center"
               :text="Button.Home"
@@ -39,29 +39,29 @@
 </template>
 
 <script>
-import leftDashboardComponentVue from "@/components/leftDashboardComponent.vue";
-import buttonComponentVue from "@/components/buttonComponent.vue";
-import axios from "axios"
+import leftDashboardComponentVue from '@/components/leftDashboardComponent.vue';
+import buttonComponentVue from '@/components/buttonComponent.vue';
+import axios from 'axios';
 export default {
   components: {
-    "dashboard-left": leftDashboardComponentVue,
-    "app-button": buttonComponentVue,
+    'dashboard-left': leftDashboardComponentVue,
+    'app-button': buttonComponentVue,
   },
   data() {
     return {
       Button: {
-        nextButton: "Next",
-        previousButton: "Previous",
-        finishButton: "Finish",
-        TakeAssessment: "Take Assessment",
-        Home: "Home",
+        nextButton: 'Next',
+        previousButton: 'Previous',
+        finishButton: 'Finish',
+        TakeAssessment: 'Take Assessment',
+        Home: 'Home',
       },
-        selectedAnswer: "",
-        fullName: null,
-        user: null,
-        application: null,
-        email: null,
-        img: null,
+      selectedAnswer: '',
+      fullName: null,
+      user: null,
+      application: null,
+      email: null,
+      img: null,
     };
   },
   async created() {
@@ -69,9 +69,9 @@ export default {
   },
   methods: {
     async loadUserDetails() {
-      let token = localStorage.getItem("token");
+      let token = localStorage.getItem('token');
       const response = await axios.get(
-        "http://localhost:5000/api/v1/auth/user/application",
+        'http://localhost:5000/api/v1/auth/user/application',
         {
           headers: { token: token },
         }
@@ -91,7 +91,7 @@ export default {
   display: flex;
   max-width: 100%;
   overflow-x: hidden;
-  font-family: "Lato";
+  font-family: 'Lato';
   font-style: normal;
   height: 100vh;
 }

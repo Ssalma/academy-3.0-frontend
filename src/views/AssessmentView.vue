@@ -15,7 +15,7 @@
         </div>
         <div>
           <h1 class="timer">Timer</h1>
-          <p class="time">00<sub>min</sub>00<sub>sec</sub></p>
+          <p class="time">{{ score }}<sub>min</sub>00<sub>sec</sub></p>
         </div>
       </div>
 
@@ -124,11 +124,10 @@ export default {
           headers: { token: token },
         }
       );
-      const application = response.data.data;
-      this.status = application.status;
-      this.fullName = `${application.firstName} ${application.lastName}`;
-      this.email = application.email;
-      this.img = application.img;
+      // const application = response.data.data;
+      // this.fullName = `${application.firstName} ${application.lastName}`;
+      // this.email = application.email;
+      // this.img = application.img;
 
       const res = await axios.get(
         'http://localhost:5000/api/v1/auth/assessments/all',
@@ -136,15 +135,19 @@ export default {
           headers: { token: token },
         }
       );
+      const application = response.data.data;
+      this.fullName = `${application.firstName} ${application.lastName}`;
+      this.email = application.email;
+      this.img = application.img;
       this.questions = res.data.data;
-      console.log(this.questions)
     },
 
     next() {
-      if (this.index < this.questions.length) {
+      if (this.index < this.questions.length - 1) {
         this.questions[this.index]['selectedAnswer'] = this.selectedAnswer;
         if (
-          this.selectedAnswer == this.questions[this.index]['correctAnswer']
+          this.selectedAnswer == this.questions[this.index]['correctAnswer'] &&
+          !this.isFinished
         ) {
           this.score += 1;
         }
@@ -170,19 +173,25 @@ export default {
     },
 
     async finish() {
-      let token = localStorage.getItem('token');
-      await axios.put(
-        'http://localhost:5000/api/v1/auth/user/score',
-        {
-          score: this.score,
-        },
-        {
-          headers: { token: token },
+      if (this.isFinished) {
+        if (
+          this.selectedAnswer == this.questions[this.index]['correctAnswer']
+        ) {
+          this.score += 1;
         }
-      );
-      if(this.isFinished){
-          this.$router.push('/thankyouassessmentdashboard');
-        }
+        let token = localStorage.getItem('token');
+        await axios.put(
+          'http://localhost:5000/api/v1/auth/user/score',
+          {
+            score: this.score,
+          },
+          {
+            headers: { token: token },
+          }
+        );
+
+        this.$router.push('/thankyouassessmentdashboard');
+      }
     },
   },
   computed: {
