@@ -1,4 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import AdminHomeView from '../views/adminViews/HomeView.vue'
+import DashBoard from '../views/adminViews/DashBoard.vue'
+import CreateAssessment from '../views/adminViews/CreateAssessment.vue'
+import ApplicationEntries from '../views/adminViews/ApplicationEntries.vue'
+import ComposeAssessment from "../views/adminViews/ComposeAssessment.vue"
+import AssessmentHistory from "../views/adminViews/AssessmentHistory.vue"
+import ResultsView from "../views/adminViews/Results.vue"
+import Settings from "../views/adminViews/SettingsProfile.vue"
 import HomeView from '../views/user/HomeView.vue'
 import SignUpView from '../views/user/SignUpView.vue'
 import SignInView from '../views/user/SignInView.vue'
@@ -9,18 +17,19 @@ import ForgotView from '../views/user/ForgetView.vue'
 import TakeAssessmentView from '../views/user/TakeAssessmentView.vue'
 import ThankYouAssessmentView from '../views/user/ThankYouView.vue'
 
-
 const routes = [
   {
     path: '/',
     name: 'home',
     component: HomeView
   },
+
   {
     path: '/signup',
     name: 'signup',
     component: SignUpView
   },
+
   {
     path: '/signin',
     name: 'signin',
@@ -60,7 +69,58 @@ const routes = [
     name: 'thankyoussessmentdashboard',
     component: ThankYouAssessmentView,
     meta: { requiresAuth: true },
+  },
+  {
+    path: '/adminHome',
+    name: 'adminhome',
+    component: AdminHomeView
+  },
+  
+  {
+    path:'/dashboard',
+    name:'DashBoard',
+    component:DashBoard,
+    meta: { requiresAuth: true },
+    
+  },
+  {
+    path:'/createAssessment',
+    name:"FormAssesment",
+    component: CreateAssessment,
+    meta: { requiresAuth: true },
+  },
+  {
+    path:"/applicationEntries",
+    name:"ApplicationEntries",
+    component: ApplicationEntries,
+    meta: { requiresAuth: true },
+  },
+  {
+    path:"/composeAssessment",
+    name:"ComposeAssessment",
+    component: ComposeAssessment,
+    meta: { requiresAuth: true },
+  },
+  {
+     path:"/AssessmentHistory",
+      name:"AssessmentHistory",
+      component: AssessmentHistory,
+      meta: { requiresAuth: true },
+  },
+  {
+    path:"/results",
+    name:"Results",
+    component: ResultsView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path:"/settingsProfile",
+    name:"Settings",
+    component:Settings,
+    meta: { requiresAuth: true },
   }
+
+
 ]
 
 const router = createRouter({

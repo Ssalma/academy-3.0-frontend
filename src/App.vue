@@ -1,29 +1,19 @@
 <template>
- 
-  <router-view></router-view>
+ <router-view/>
 </template>
 
-<script>
-
-export default {
-  name: 'App'
+<style lang="scss">
+#app {
+font-family: 'Poppins', sans-serif;
 }
-</script>
 
-<style>
+:root{
+  --primary-color: #7557d3;
+}
+
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
-body{
-
-}
-
-#app {
-  font-family: 'Poppins', sans-serif;
-}
-
-
 </style>
