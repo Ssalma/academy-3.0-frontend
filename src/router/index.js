@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import DashBoard from '../views/DashBoard.vue'
-import CreateAssessment from '../views/CreateAssessment.vue'
-import ApplicationEntries from '../views/ApplicationEntries.vue'
-import ComposeAssessment from "../views/ComposeAssessment.vue"
-import AssessmentHistory from "../views/AssessmentHistory.vue"
-import ResultsView from "../views/Results.vue"
-import Settings from "../views/SettingsProfile.vue"
+import HomeView from '../views/adminViews/HomeView.vue'
+import DashBoard from '../views/adminViews/DashBoard.vue'
+import CreateAssessment from '../views/adminViews/CreateAssessment.vue'
+import ApplicationEntries from '../views/adminViews/ApplicationEntries.vue'
+import ComposeAssessment from "../views/adminViews/ComposeAssessment.vue"
+import AssessmentHistory from "../views/adminViews/AssessmentHistory.vue"
+import ResultsView from "../views/adminViews/Results.vue"
+import Settings from "../views/adminViews/SettingsProfile.vue"
 
 const routes = [
   {
@@ -14,14 +14,7 @@ const routes = [
     name: 'home',
     component: HomeView
   },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  },
+  
   {
     path:'/dashboard',
     name:'DashBoard',

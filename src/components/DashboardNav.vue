@@ -24,7 +24,7 @@
       </div>
 
       <div class="" id="logout">
-        <img src="../assets/logout.svg" alt="" class="tabIcon" />
+        <img src="@/assets/logout.svg" alt="" class="tabIcon" />
         <p class="tabText" @click="loggedOut()">Log Out</p>
       </div>
     </div>
@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-  name: 'DashBoardNav',
+  name: "DashBoardNav",
   props: {
     activeTab: { type: String },
   },
@@ -46,49 +46,49 @@ export default {
       id: this.activeTab,
       adminName: null,
       email: null,
-      img: '',
+      img: "",
       tabs: [
         {
-          id: '1',
-          icon: require('../assets/D.svg'),
-          text: 'Dashboard',
-          route: 'DashBoard',
+          id: "1",
+          icon: require("@/assets/D.svg"),
+          text: "Dashboard",
+          route: "DashBoard",
         },
         {
-          id: '2',
-          icon: require('../assets/plus.svg'),
-          text: 'Create Application',
-          route: 'FormAssesment',
+          id: "2",
+          icon: require("@/assets/plus.svg"),
+          text: "Create Application",
+          route: "FormAssesment",
         },
         {
-          id: '3',
-          icon: require('../assets/message.svg'),
-          text: 'Application Entries',
-          route: 'ApplicationEntries',
+          id: "3",
+          icon: require("@/assets/message.svg"),
+          text: "Application Entries",
+          route: "ApplicationEntries",
         },
         {
-          id: '4',
-          icon: require('../assets/mm.svg'),
-          text: 'Compose Assessment',
-          route: 'ComposeAssessment',
+          id: "4",
+          icon: require("@/assets/mm.svg"),
+          text: "Compose Assessment",
+          route: "ComposeAssessment",
         },
         {
-          id: '5',
-          icon: require('../assets/4.svg'),
-          text: 'Assessment History',
-          route: 'AssessmentHistory',
+          id: "5",
+          icon: require("@/assets/4.svg"),
+          text: "Assessment History",
+          route: "AssessmentHistory",
         },
         {
-          id: '6',
-          icon: require('../assets/dr.svg'),
-          text: 'Results',
-          route: 'Results',
+          id: "6",
+          icon: require("../assets/dr.svg"),
+          text: "Results",
+          route: "Results",
         },
         {
-          id: '7',
-          icon: require('../assets/Setting.svg'),
-          text: 'Settings',
-          route: 'Settings',
+          id: "7",
+          icon: require("@/assets/Setting.svg"),
+          text: "Settings",
+          route: "Settings",
         },
       ],
     };
@@ -102,22 +102,20 @@ export default {
     },
 
     async getAdmin() {
-      let token = localStorage.getItem('token');
-      let response = await axios.get('http://localhost:5000/api/v1/auth/user', {
+      let token = localStorage.getItem("token");
+      let response = await axios.get("http://localhost:5000/api/v1/auth/user", {
         headers: { token: token },
       });
       console.log(response);
       this.email = response.data.data.user.email;
       this.adminName =
-        response.data.data.user.firstName +
-        ' ' +
-        response.data.data.user.lastName;
+        response.data.data.user.firstName + " " + response.data.data.user.lastName;
       this.img = response.data.data.user.img;
     },
 
     loggedOut() {
       localStorage.clear();
-      this.$router.push({ name: 'home' });
+      this.$router.push({ name: "home" });
     },
   },
 };
@@ -140,7 +138,7 @@ p {
   border-radius: 30px;
 }
 .name {
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -150,7 +148,7 @@ p {
   margin: 12px 0 5px 0;
 }
 .email {
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: italic;
   font-weight: 400;
   font-size: 16px;
@@ -187,7 +185,7 @@ p {
 }
 
 .tabText {
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;

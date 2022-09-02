@@ -7,7 +7,7 @@
 
 <script>
 import DashboardNav from "@/components/DashboardNav.vue";
-import FormLayOut from "../components/CreateForm.vue";
+import FormLayOut from "@/components/CreateForm.vue";
 export default {
   name: "CreateAssessment",
   components: {

@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import DashBoardNav from "../components/DashboardNav.vue";
-import Layout from "../components/EntriesLayout.vue";
+import DashBoardNav from "@/components/DashboardNav.vue";
+import Layout from "@/components/EntriesLayout.vue";
 
 export default {
   name: "ApplicationEntries View",

@@ -1,13 +1,13 @@
 <template>
   <div class="home">
-    <DashBoardNav activeTab="6" />
+    <DashBoardNav activeTab="7" />
     <Layout />
   </div>
 </template>
 
 <script>
-import DashBoardNav from "../components/DashboardNav.vue";
-import Layout from "../components/ResultsLayout.vue";
+import DashBoardNav from "@/components/DashboardNav.vue";
+import Layout from "@/components/settings.vue";
 export default {
   name: "HomeView",
   components: { DashBoardNav, Layout },

@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import DashBoardNav from "../components/DashboardNav.vue";
-import Layout from "../components/ComposeAssessmentLayout.vue";
+import DashBoardNav from "@/components/DashboardNav.vue";
+import Layout from "@/components/ComposeAssessmentLayout.vue";
 export default {
   name: "Compose Assessment View",
   components: { DashBoardNav, Layout },

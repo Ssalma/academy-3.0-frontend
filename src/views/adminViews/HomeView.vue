@@ -2,7 +2,7 @@
   <div class="background">
     <div class="formWrap">
       <div>
-        <img src="../assets/enyataIcon.svg" alt="" class="icon" />
+        <img src="@/assets/enyataIcon.svg" alt="" class="icon" />
         <p class="admin">Admin Log In</p>
       </div>
 
@@ -14,7 +14,7 @@
         <label for="Password">Password</label>
         <div class="input">
           <input :type="inputTypeIcon" v-model="password" /><img
-            src="../assets/Vector.svg"
+            src="@/assets/Vector.svg"
             alt=""
             class="eyeIcon"
             @click.prevent="toggleInputIcon"
@@ -27,7 +27,7 @@
     </div>
 
     <div>
-      <img src="../assets/Group.svg" alt="" class="bigImage" />
+      <img src="@/assets/Group.svg" alt="" class="bigImage" />
     </div>
   </div>
 </template>
