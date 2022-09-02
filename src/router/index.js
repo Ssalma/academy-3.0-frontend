@@ -1,12 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import DashBoard from '../views/DashBoard.vue'
-import CreateAssessment from '../views/CreateAssessment.vue'
-import ApplicationEntries from '../views/ApplicationEntries.vue'
-import ComposeAssessment from "../views/ComposeAssessment.vue"
-import AssessmentHistory from "../views/AssessmentHistory.vue"
-import ResultsView from "../views/Results.vue"
-import Settings from "../views/SettingsProfile.vue"
+import HomeView from '../views/user/HomeView.vue'
+import SignUpView from '../views/user/SignUpView.vue'
+import SignInView from '../views/user/SignInView.vue'
+import ApplicationView from '../views/user/ApplicationView.vue'
+import DashboardView from '../views/user/DashboardView.vue'
+import AssessmentDashboardView from '../views/user/AssessmentView.vue'
+import ForgotView from '../views/user/ForgetView.vue'
+import TakeAssessmentView from '../views/user/TakeAssessmentView.vue'
+import ThankYouAssessmentView from '../views/user/ThankYouView.vue'
+
 
 const routes = [
   {
@@ -15,75 +17,74 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/signup',
+    name: 'signup',
+    component: SignUpView
   },
   {
-    path:'/dashboard',
-    name:'DashBoard',
-    component:DashBoard,
-    meta: { requiresAuth: true },
-    
+    path: '/signin',
+    name: 'signin',
+    component: SignInView
   },
   {
-    path:'/createAssessment',
-    name:"FormAssesment",
-    component: CreateAssessment,
-    meta: { requiresAuth: true },
+    path: '/forgot',
+    name: 'forgot',
+    component: ForgotView
   },
   {
-    path:"/applicationEntries",
-    name:"ApplicationEntries",
-    component: ApplicationEntries,
+    path: '/applicationform',
+    name: 'applicationform',
+    component: ApplicationView,
     meta: { requiresAuth: true },
   },
   {
-    path:"/composeAssessment",
-    name:"ComposeAssessment",
-    component: ComposeAssessment,
+    path: '/applicantdashboard',
+    name: 'applicantdashboard',
+    component: DashboardView,
     meta: { requiresAuth: true },
   },
   {
-     path:"/AssessmentHistory",
-      name:"AssessmentHistory",
-      component: AssessmentHistory,
-      meta: { requiresAuth: true },
-  },
-  {
-    path:"/results",
-    name:"Results",
-    component: ResultsView,
+    path: '/assessmentdashboard',
+    name: 'assessmentdashboard',
+    component: AssessmentDashboardView,
     meta: { requiresAuth: true },
   },
   {
-    path:"/settingsProfile",
-    name:"Settings",
-    component:Settings,
+    path: '/takeassessmentdashboard',
+    name: 'takeassessmentdashboard',
+    component: TakeAssessmentView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/thankyouassessmentdashboard',
+    name: 'thankyoussessmentdashboard',
+    component: ThankYouAssessmentView,
     meta: { requiresAuth: true },
   }
-
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-});
+})
 
 router.beforeEach((to) => {
   const token = localStorage.getItem("token");
   let loggedIn = false;
   if (token) {
-     loggedIn = true;
+    // const decoded = jwt_decode(token);
+    // const expiryDate = new Date(decoded.exp * 1000);
+    // const now = new Date();
+    // if (now < expiryDate)
+    loggedIn = true;
   }
   if (to.meta.requiresAuth && !loggedIn) {
     return "/";
   }
 
-  });
-
+  // return true or nothing: navigation is valid
+  // return false: breaks navigation
+  // return route: redirects to that route
+});
 
 export default router
