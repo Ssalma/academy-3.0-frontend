@@ -15,7 +15,9 @@
         </div>
         <div>
           <h1 class="timer">Timer</h1>
-          <p class="time">{{ score }}<sub>min</sub>00<sub>sec</sub></p>
+          <p class="time">
+            {{ timerMins }}<sub>min</sub>{{ timerSecs }}<sub>sec</sub>
+          </p>
         </div>
       </div>
 
@@ -108,6 +110,10 @@ export default {
       selectedAnswer: '',
       index: 0,
       questions: [],
+      mins: null,
+      secs: null,
+      duration: null,
+      timeUp: false,
     };
   },
   methods: {
@@ -124,22 +130,39 @@ export default {
           headers: { token: token },
         }
       );
-      // const application = response.data.data;
-      // this.fullName = `${application.firstName} ${application.lastName}`;
-      // this.email = application.email;
-      // this.img = application.img;
-
+      const application = response.data.data;
+      this.fullName = `${application.firstName} ${application.lastName}`;
+      this.email = application.email;
+      this.img = application.img;
       const res = await axios.get(
         'http://localhost:5000/api/v1/auth/assessments/all',
         {
           headers: { token: token },
         }
       );
-      const application = response.data.data;
-      this.fullName = `${application.firstName} ${application.lastName}`;
-      this.email = application.email;
-      this.img = application.img;
+
       this.questions = res.data.data;
+
+      const timer = await axios.get('http://localhost:5000/api/v1/auth/timer', {
+        headers: { token: token },
+      });
+      const time = timer.data.data;
+      const minutes = parseInt(time.minutes);
+      const seconds = parseInt(time.seconds) / 60;
+      const duration = 1000 * (60 * (minutes + seconds));
+      const date = new Date();
+      const startTime = date.getTime();
+      const endTime = startTime + duration;
+      setInterval(() => {
+        let rightNow = new Date().getTime();
+
+        let timeLeft = endTime - rightNow;
+        let left = timeLeft / 1000;
+        this.mins = parseInt(left / 60, 10);
+        this.secs = parseInt(left % 60, 10);
+        if (this.secs < 10) this.secs = `0${this.secs}`;
+        if (rightNow >= endTime) this.timeUp = true;
+      }, 1000);
     },
 
     next() {
@@ -158,6 +181,10 @@ export default {
       }
       if (this.index + 2 > this.questions.length) {
         this.isFinished = true;
+      }
+      if (this.timeUp) {
+        this.isFinished = true;
+        this.finish();
       }
     },
 
@@ -204,6 +231,14 @@ export default {
         obj[key] = this.questions[this.index][key];
       });
       return obj;
+    },
+
+    timerMins() {
+      return this.mins;
+    },
+
+    timerSecs() {
+      return this.secs;
     },
   },
 };

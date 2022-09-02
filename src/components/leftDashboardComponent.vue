@@ -2,7 +2,7 @@
   <div class="applicant-dashboard" v-cloak>
     <div class="bguser-image">
       <figure class="user-info">
-        <img :src="imgURL" alt="Image of the user" class="image"/>
+        <img :src="imgURL" alt="Image of the user" class="image" />
         <figcaption class="user-name">{{ fullName }}</figcaption>
         <figcaption class="user-email">{{ email }}</figcaption>
       </figure>
@@ -21,9 +21,7 @@
         >
       </div>
       <div>
-        <router-link
-          :to="{ name: 'assessmentdashboard' }"
-          class="dashboard-text"
+        <router-link :to="{ name: route }" class="dashboard-text"
           ><span
             ><img
               class="dashboard-image"
@@ -56,6 +54,9 @@ export default {
       type: String,
     },
     imgURL: {
+      type: String,
+    },
+    route: {
       type: String,
     },
   },
@@ -154,7 +155,7 @@ a {
   margin-top: 29px;
 }
 
-.image{
+.image {
   position: relative;
   top: 0;
   width: 80px;

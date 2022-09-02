@@ -1,7 +1,11 @@
 <template>
   <div class="main-dashboard">
     <div class="left">
-      <dashboard-left></dashboard-left>
+      <dashboard-left
+        :fullName="fullName"
+        :email="email"
+        :imgURL="img"
+      ></dashboard-left>
     </div>
     <div class="right">
       <div class="header-text">
@@ -20,13 +24,11 @@
       <div class="show-before">
         <figure>
           <img src="../assets/hourglass.svg" alt="hour glass loading" />
-          <figcaption>
-            We have 4 days left until the next assessment <br />
-            Watch this space
-          </figcaption>
+          <figcaption>Take your assessment</figcaption>
           <app-button
             class="finish-btn finish-button-center"
             :text="Button.TakeAssessment"
+            @click="goToAssessment"
           ></app-button>
         </figure>
       </div>
@@ -37,10 +39,14 @@
 <script>
 import leftDashboardComponentVue from '@/components/leftDashboardComponent.vue';
 import buttonComponentVue from '@/components/buttonComponent.vue';
+import axios from 'axios';
 export default {
   components: {
     'dashboard-left': leftDashboardComponentVue,
     'app-button': buttonComponentVue,
+  },
+  async created() {
+    await this.loadUserDetails();
   },
   data() {
     return {
@@ -51,9 +57,31 @@ export default {
         TakeAssessment: 'Take Assessment',
       },
       selectedAnswer: '',
+      email: null,
+      application: null,
+      fullName: null,
+      img: null,
     };
   },
-  methods: {},
+  methods: {
+    async loadUserDetails() {
+      let token = localStorage.getItem('token');
+      const response = await axios.get(
+        'http://localhost:5000/api/v1/auth/user/application',
+        {
+          headers: { token: token },
+        }
+      );
+      const application = response.data.data;
+      this.fullName = `${application.firstName} ${application.lastName}`;
+      this.email = application.email;
+      this.img = application.img;
+    },
+
+    goToAssessment() {
+      this.$router.push('/assessmentdashboard');
+    },
+  },
 };
 </script>
 

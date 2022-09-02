@@ -5,6 +5,7 @@
         :fullName="fullName"
         :email="email"
         :imgURL="img"
+        :route="route"
       ></dashboard-left>
     </div>
     <div class="right">
@@ -85,6 +86,8 @@ export default {
       difference: null,
       status: null,
       img: null,
+      route: null,
+      completedAssessment: false,
     };
   },
   methods: {
@@ -118,6 +121,13 @@ export default {
         new Date(date1).getTime() - new Date(date2).getTime();
       const diffInDays = diffInMilliseconds / DAY_UNIT_IN_MILLISECONDS;
       this.difference = Math.round(diffInDays);
+      application.score
+        ? (this.completedAssessment = true)
+        : (this.completedAssessment = false);
+
+      this.completedAssessment
+        ? (this.route = 'thankyoussessmentdashboard')
+        : (this.route = 'takeassessmentdashboard');
     },
   },
 };
