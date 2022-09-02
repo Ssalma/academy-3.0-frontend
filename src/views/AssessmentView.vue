@@ -16,6 +16,7 @@
         <div>
           <h1 class="timer">Timer</h1>
           <p class="time">
+            <!-- {{ timerMins }}<sub>min</sub>{{ timerSecs }}<sub>sec</sub> -->
             {{ timerMins }}<sub>min</sub>{{ timerSecs }}<sub>sec</sub>
           </p>
         </div>

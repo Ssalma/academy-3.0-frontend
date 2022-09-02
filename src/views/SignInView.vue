@@ -178,6 +178,17 @@ input[type='text']:focus,
   color: #4f4f4f;
 }
 
+input[type="text"]{
+  padding-left: 10px;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  color: #4f4f4f;
+}
+
 input[type='text'] {
   padding-left: 10px;
 }

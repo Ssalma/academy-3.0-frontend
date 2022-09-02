@@ -47,7 +47,7 @@
               <h3 class="update-header">Take Assessment</h3>
               <div class="assessment-info">
                 <h3>
-                  We have 4 days left until the next assessment <br />
+                  We have 0 days left until the next assessment <br />
                   Watch this space
                 </h3>
                 <app-button
