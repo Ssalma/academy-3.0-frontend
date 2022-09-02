@@ -1,14 +1,29 @@
 <template>
-  <nav>
-
-  </nav>
-  <router-view/>
+ 
+  <router-view></router-view>
 </template>
 
-<style lang="scss">
-body{
+<script>
+
+export default {
+  name: 'App'
+}
+</script>
+
+<style>
+*{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+body{
+
+}
+
+#app {
+  font-family: 'Poppins', sans-serif;
+}
+
+
 </style>
