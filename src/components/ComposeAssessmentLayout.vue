@@ -74,6 +74,9 @@ import axios from "axios";
 export default {
   name: "ComposeAssessment layout",
   components: {},
+  async created() {
+    await this.getAssessmentIDs();
+  },
   data() {
     return {
       question: "",
@@ -85,20 +88,70 @@ export default {
       correctAnswer: "",
       count: 1,
       errorMessage: "",
-      previousMessage: "",
     };
   },
   methods: {
     async nextQuestion() {
       try {
         this.errorMessage = "";
-        this.previousMessage = "";
         let token = localStorage.getItem("token");
-        if (this.assessments[this.count - 1]) {
-          var id = this.assessments[this.count - 1];
-          if (this.assessments[this.count]) {
-            let response = await axios.put(
-              `http://localhost:5000/api/v1/auth/assessment/${id}/update`,
+        if (this.count < 30) {
+          if (this.assessments[this.count - 1]) {
+            var id = this.assessments[this.count - 1]._id;
+            if (this.assessments[this.count]) {
+              let response = await axios.put(
+                `http://localhost:5000/api/v1/auth/assessment/${id}/update`,
+                {
+                  question: this.question,
+                  a: this.optionA,
+                  b: this.optionB,
+                  c: this.optionC,
+                  d: this.optionD,
+                  correctAnswer: this.correctAnswer,
+                },
+                { headers: { token: token } }
+              );
+              let next = this.assessments[this.count]._id;
+
+              let res = await axios.get(
+                `http://localhost:5000/api/v1/auth/assessment/${next}`,
+                {
+                  headers: { token: token },
+                }
+              );
+              this.count += 1;
+              let currentAssessment = res.data.data;
+              this.question = currentAssessment.question;
+              this.optionA = currentAssessment.a;
+              this.optionB = currentAssessment.b;
+              this.optionC = currentAssessment.c;
+              this.optionD = currentAssessment.d;
+              this.correctAnswer = currentAssessment.correctAnswer;
+            } else {
+              let response = await axios.put(
+                `http://localhost:5000/api/v1/auth/assessment/${id}/update`,
+                {
+                  question: this.question,
+                  a: this.optionA,
+                  b: this.optionB,
+                  c: this.optionC,
+                  d: this.optionD,
+                  correctAnswer: this.correctAnswer,
+                },
+                { headers: { token: token } }
+              );
+
+              this.count += 1;
+              this.question = "";
+              this.optionA = "";
+              this.optionB = "";
+              this.optionC = "";
+              this.optionD = "";
+              this.correctAnswer = "";
+            }
+          } else {
+            let res = await axios.post(
+              "http://localhost:5000/api/v1/auth/assessment/create",
               {
                 question: this.question,
                 a: this.optionA,
@@ -107,38 +160,12 @@ export default {
                 d: this.optionD,
                 correctAnswer: this.correctAnswer,
               },
-              { headers: { token: token } }
-            );
-            let next = this.assessments[this.count];
-
-            let res = await axios.get(
-              `http://localhost:5000/api/v1/auth/assessment/${next}`,
               {
                 headers: { token: token },
               }
             );
-            this.count += 1;
-            let currentAssessment = res.data.data;
-            this.question = currentAssessment.question;
-            this.optionA = currentAssessment.a;
-            this.optionB = currentAssessment.b;
-            this.optionC = currentAssessment.c;
-            this.optionD = currentAssessment.d;
-            this.correctAnswer = currentAssessment.correctAnswer;
-          } else {
-            let response = await axios.put(
-              `http://localhost:5000/api/v1/auth/assessment/${id}/update`,
-              {
-                question: this.question,
-                a: this.optionA,
-                b: this.optionB,
-                c: this.optionC,
-                d: this.optionD,
-                correctAnswer: this.correctAnswer,
-              },
-              { headers: { token: token } }
-            );
-
+            let currentAssessmentId = res.data.data._id;
+            this.assessments.push({ _id: currentAssessmentId });
             this.count += 1;
             this.question = "";
             this.optionA = "";
@@ -147,35 +174,15 @@ export default {
             this.optionD = "";
             this.correctAnswer = "";
           }
-        } else {
-          let res = await axios.post(
-            "http://localhost:5000/api/v1/auth/assessment/create",
-            {
-              question: this.question,
-              a: this.optionA,
-              b: this.optionB,
-              c: this.optionC,
-              d: this.optionD,
-              correctAnswer: this.correctAnswer,
-            },
-            {
-              headers: { token: token },
-            }
-          );
-          let currentAssessmentId = res.data.data._id;
-          this.assessments.push(currentAssessmentId);
-          this.count += 1;
-          this.question = "";
-          this.optionA = "";
-          this.optionB = "";
-          this.optionC = "";
-          this.optionD = "";
-          this.correctAnswer = "";
         }
       } catch (err) {
         console.log(err);
         if (err.response.data.message.includes("correctAnswer")) {
           this.errorMessage = "Please select the correct answer";
+        } else if (err.response.data.message.includes("question")) {
+          this.errorMessage = "Please type in a question";
+        } else {
+          this.errorMessage = "Type in (minimum) four possible answers";
         }
       }
     },
@@ -188,7 +195,7 @@ export default {
       let token = localStorage.getItem("token");
       if (this.count > 1) {
         try {
-          let id = this.assessments[this.count - 2];
+          let id = this.assessments[this.count - 2]._id;
           this.count -= 1;
           let res = await axios.get(
             `http://localhost:5000/api/v1/auth/assessment/${id}`,
@@ -209,8 +216,19 @@ export default {
         }
       } else {
         console.log("No previous available");
-        this.previousMessage = "No previous available";
       }
+    },
+
+    async getAssessmentIDs() {
+      let token = localStorage.getItem("token");
+      let res = await axios.get(`http://localhost:5000/api/v1/auth/assessments/all/ids`, {
+        headers: { token: token },
+      });
+      const assessments = res.data.data;
+      assessments.length < 30
+        ? (this.count = assessments.length + 1)
+        : (this.count = assessments.length);
+      this.assessments = assessments;
     },
   },
   computed: {},
@@ -332,8 +350,7 @@ label {
   color: #ffffff;
   margin: 55px 0 0 374px;
 }
-.error,
-.previous {
+.error {
   font-family: "Lato";
   font-style: italic;
   font-weight: 700;
