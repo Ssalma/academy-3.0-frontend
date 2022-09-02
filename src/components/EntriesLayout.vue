@@ -208,7 +208,7 @@ export default {
         );
         console.log(response);
         this.alertdisplay = false;
-        this.reviewApplicant.status = "Decline";
+        this.reviewApplicant.status = "Declined";
       }
     },
 

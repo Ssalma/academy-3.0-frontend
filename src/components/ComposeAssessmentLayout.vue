@@ -3,6 +3,7 @@
     <p class="headText">Compose Assessment</p>
     <p class="error">{{ errorMessage }}</p>
     <p class="num">{{ count }}/30</p>
+    <p class="previous">{{ previousMessage }}</p>
 
     <form action="" @submit.prevent="">
       <div class="fileWrap">
@@ -84,12 +85,14 @@ export default {
       correctAnswer: "",
       count: 1,
       errorMessage: "",
+      previousMessage: "",
     };
   },
   methods: {
     async nextQuestion() {
       try {
         this.errorMessage = "";
+        this.previousMessage = "";
         let token = localStorage.getItem("token");
         if (this.assessments[this.count - 1]) {
           var id = this.assessments[this.count - 1];
@@ -206,6 +209,7 @@ export default {
         }
       } else {
         console.log("No previous available");
+        this.previousMessage = "No previous available";
       }
     },
   },
@@ -328,7 +332,8 @@ label {
   color: #ffffff;
   margin: 55px 0 0 374px;
 }
-.error {
+.error,
+.previous {
   font-family: "Lato";
   font-style: italic;
   font-weight: 700;

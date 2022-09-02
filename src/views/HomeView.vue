@@ -48,11 +48,11 @@ export default {
   },
   methods: {
     async login() {
-      if (this.email.trim() === "" || this.email.length < 5) {
-        this.error = "Please insert a valid email";
+      if (this.email.trim().includes("@") === "" || this.email.length < 5) {
+        this.error = "Please insert a valid email and password";
       }
-      if (this.password.trim().includes("@") === "" || this.password.length < 5) {
-        this.errorP = "Please insert a valid password";
+      if (this.password.trim() === "" || this.password.length < 5) {
+        this.errorP = "Please insert a valid email and password";
       } else {
         this.error = "";
         this.errorP = "";
@@ -126,6 +126,7 @@ input {
   line-height: 19px;
   color: #7557d3;
   margin-top: 18px;
+  cursor: pointer;
 }
 .admin {
   font-family: "Lato";
