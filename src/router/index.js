@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/adminViews/HomeView.vue'
+import AdminHomeView from '../views/adminViews/HomeView.vue'
 import DashBoard from '../views/adminViews/DashBoard.vue'
 import CreateAssessment from '../views/adminViews/CreateAssessment.vue'
 import ApplicationEntries from '../views/adminViews/ApplicationEntries.vue'
@@ -29,6 +29,7 @@ const routes = [
     name: 'signup',
     component: SignUpView
   },
+
   {
     path: '/signin',
     name: 'signin',
@@ -68,7 +69,58 @@ const routes = [
     name: 'thankyoussessmentdashboard',
     component: ThankYouAssessmentView,
     meta: { requiresAuth: true },
+  },
+  {
+    path: '/adminHome',
+    name: 'adminhome',
+    component: AdminHomeView
+  },
+  
+  {
+    path:'/dashboard',
+    name:'DashBoard',
+    component:DashBoard,
+    meta: { requiresAuth: true },
+    
+  },
+  {
+    path:'/createAssessment',
+    name:"FormAssesment",
+    component: CreateAssessment,
+    meta: { requiresAuth: true },
+  },
+  {
+    path:"/applicationEntries",
+    name:"ApplicationEntries",
+    component: ApplicationEntries,
+    meta: { requiresAuth: true },
+  },
+  {
+    path:"/composeAssessment",
+    name:"ComposeAssessment",
+    component: ComposeAssessment,
+    meta: { requiresAuth: true },
+  },
+  {
+     path:"/AssessmentHistory",
+      name:"AssessmentHistory",
+      component: AssessmentHistory,
+      meta: { requiresAuth: true },
+  },
+  {
+    path:"/results",
+    name:"Results",
+    component: ResultsView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path:"/settingsProfile",
+    name:"Settings",
+    component:Settings,
+    meta: { requiresAuth: true },
   }
+
+
 ]
 
 const router = createRouter({
