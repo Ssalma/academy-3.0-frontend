@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <figure class="layer">
-      <img src="../assets/Layer.svg" alt="image of the layer">
+      <img src="../../assets/Layer.svg" alt="image of the layer">
     </figure>
     <app-nav></app-nav>
     
@@ -13,7 +13,7 @@
           <router-link :to="{ name: 'signup'}"><app-button :text="registerbtnText"></app-button></router-link>
         </section>
         <figure>
-          <img src="../assets/manChildImage.svg" alt="Image of a man teaching his child on a computer">
+          <img src="../../assets/manChildImage.svg" alt="Image of a man teaching his child on a computer">
         </figure>
       </div>
       <div class="before-card">
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import NavigationComponentView from "../components/navigationComponentView.vue"
+import NavigationComponentView from "../../components/navigationComponentView.vue"
 import buttonVue from "@/components/buttonComponent.vue";
 import cardContainerVue from "@/components/cardContainer.vue";
 import footerComponentVue from "@/components/footerComponent.vue";

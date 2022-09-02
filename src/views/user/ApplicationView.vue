@@ -3,7 +3,7 @@
     <div class="application-header">
       <figure>
         <router-link :to="{ name: 'home' }"
-          ><img src="../assets/enyataSmallerLogo.svg" alt="Enyata logo"
+          ><img src="../../assets/enyataSmallerLogo.svg" alt="Enyata logo"
         /></router-link>
       </figure>
       <h1 class="applicant-text">Applicant Log In</h1>

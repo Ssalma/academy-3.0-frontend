@@ -11,25 +11,27 @@
       <div class="header-text">
         <div>
           <h1 class="take-assessment">Take Assessment</h1>
-          <p class="status">
-            Click the button below to start assessment, you have limited time
-            for this test
-          </p>
+          <p class="status">Thank you!</p>
         </div>
         <div>
           <h1 class="timer">Timer</h1>
-          <p class="time">{{ score }}<sub>min</sub>000<sub>sec</sub></p>
+          <p class="time">00<sub>min</sub>000<sub>sec</sub></p>
         </div>
       </div>
       <div class="show-before">
         <figure>
-          <img src="../assets/hourglass.svg" alt="hour glass loading" />
-          <figcaption>Take your assessment</figcaption>
-          <app-button
-            class="finish-btn finish-button-center"
-            :text="Button.TakeAssessment"
-            @click="goToAssessment"
-          ></app-button>
+          <img src="../../assets/confetti.svg" alt="hour glass loading" />
+          <figcaption>
+            We have received your assessment test, we will get back to you soon.
+            <br />
+            Best of luck
+          </figcaption>
+          <router-link :to="{ name: 'applicantdashboard' }"
+            ><app-button
+              class="home-btn finish-button-center"
+              :text="Button.Home"
+            ></app-button
+          ></router-link>
         </figure>
       </div>
     </div>
@@ -45,9 +47,6 @@ export default {
     'dashboard-left': leftDashboardComponentVue,
     'app-button': buttonComponentVue,
   },
-  async created() {
-    await this.loadUserDetails();
-  },
   data() {
     return {
       Button: {
@@ -55,13 +54,18 @@ export default {
         previousButton: 'Previous',
         finishButton: 'Finish',
         TakeAssessment: 'Take Assessment',
+        Home: 'Home',
       },
       selectedAnswer: '',
-      email: null,
-      application: null,
       fullName: null,
+      user: null,
+      application: null,
+      email: null,
       img: null,
     };
+  },
+  async created() {
+    await this.loadUserDetails();
   },
   methods: {
     async loadUserDetails() {
@@ -73,13 +77,10 @@ export default {
         }
       );
       const application = response.data.data;
+      this.status = application.status;
       this.fullName = `${application.firstName} ${application.lastName}`;
       this.email = application.email;
       this.img = application.img;
-    },
-
-    goToAssessment() {
-      this.$router.push('/assessmentdashboard');
     },
   },
 };
@@ -88,11 +89,11 @@ export default {
 <style scoped>
 .main-dashboard {
   display: flex;
-  max-width: 1440px;
+  max-width: 100%;
+  overflow-x: hidden;
   font-family: 'Lato';
   font-style: normal;
   height: 100vh;
-  overflow-x: hidden;
 }
 
 .left {

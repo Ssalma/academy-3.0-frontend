@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import SignUpView from '../views/SignUpView.vue'
-import SignInView from '../views/SignInView.vue'
-import ApplicationView from '../views/ApplicationView.vue'
-import DashboardView from '../views/DashboardView.vue'
-import AssessmentDashboardView from '../views/AssessmentView.vue'
-import ForgotView from '../views/ForgetView.vue'
-import TakeAssessmentView from '../views/TakeAssessmentView.vue'
-import ThankYouAssessmentView from '../views/ThankYouView.vue'
+import HomeView from '../views/user/HomeView.vue'
+import SignUpView from '../views/user/SignUpView.vue'
+import SignInView from '../views/user/SignInView.vue'
+import ApplicationView from '../views/user/ApplicationView.vue'
+import DashboardView from '../views/user/DashboardView.vue'
+import AssessmentDashboardView from '../views/user/AssessmentView.vue'
+import ForgotView from '../views/user/ForgetView.vue'
+import TakeAssessmentView from '../views/user/TakeAssessmentView.vue'
+import ThankYouAssessmentView from '../views/user/ThankYouView.vue'
 
 
 const routes = [

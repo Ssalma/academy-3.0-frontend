@@ -4,7 +4,7 @@
     <p class="forgot-para">Please select option to send link to reset password</p>
     <div>
         <label class="card">
-            <img src="../assets/email.svg" alt="message-icon" class="image-icon">
+            <img src="../../assets/email.svg" alt="message-icon" class="image-icon">
             <div>
                 <a  href="#" class="reset">Reset via Email</a>
                 <p class="reset-para">Reset password link will be send to your registered email address.</p>
@@ -12,7 +12,7 @@
             <input type="radio" class="checkbox" name="reset" checked>
         </label>
         <div class="card">
-            <img src="../assets/telephone.svg" alt="message-icon" class="image-icon">
+            <img src="../../assets/telephone.svg" alt="message-icon" class="image-icon">
             <div>
                 <a href="#" class="reset">Reset via Sms</a>
                 <p class="reset-para">Reset password link will be send to your registered phone number.</p>
