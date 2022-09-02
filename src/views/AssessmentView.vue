@@ -16,7 +16,6 @@
         <div>
           <h1 class="timer">Timer</h1>
           <p class="time">
-            <!-- {{ timerMins }}<sub>min</sub>{{ timerSecs }}<sub>sec</sub> -->
             {{ timerMins }}<sub>min</sub>{{ timerSecs }}<sub>sec</sub>
           </p>
         </div>
@@ -154,16 +153,21 @@ export default {
       const date = new Date();
       const startTime = date.getTime();
       const endTime = startTime + duration;
-      setInterval(() => {
-        let rightNow = new Date().getTime();
+      if (!this.timeUp) {
+        setInterval(() => {
+          let rightNow = new Date().getTime();
 
-        let timeLeft = endTime - rightNow;
-        let left = timeLeft / 1000;
-        this.mins = parseInt(left / 60, 10);
-        this.secs = parseInt(left % 60, 10);
-        if (this.secs < 10) this.secs = `0${this.secs}`;
-        if (rightNow >= endTime) this.timeUp = true;
-      }, 1000);
+          let timeLeft = endTime - rightNow;
+          let left = timeLeft / 1000;
+          this.mins = parseInt(left / 60, 10);
+          this.secs = parseInt(left % 60, 10);
+          if (this.secs < 10) this.secs = `0${this.secs}`;
+          if (rightNow >= endTime) this.timeUp = true;
+        }, 1000);
+      } else {
+        this.mins = '00';
+        this.secs = '00';
+      }
     },
 
     next() {
