@@ -12,9 +12,9 @@
 
     <table class="tWrap">
       <thead class="head">
-        <th>Name</th>
-        <th>Email</th>
-        <th>
+        <th width="20%">Name</th>
+        <th width="20%">Email</th>
+        <th width="15%">
           DOB - Age
           <img src="../assets/arrowUpanddown.svg" alt="" class="arrow" />
         </th>
@@ -255,40 +255,35 @@ export default {
   line-height: 16px;
   color: #4f4f4f;
 }
-.tWrap {
-  width: 100%;
+table {
+  width: 1042px;
+  border-collapse: collapse;
 }
 .head {
-  width: 1042px;
+  width: 100%;
   height: 46px;
   background: #2b3c4e;
-  /* padding: 0 42px; */
   margin-bottom: 20px;
   font-family: "Lato";
   font-size: 14px;
   line-height: 17px;
   color: #ffffff;
-  align-items: center;
-  display: flex;
-  justify-content: space-around;
 }
 
 .arrow {
   margin-left: 2px;
 }
 .data {
-  width: 1042px;
+  width: 100%;
   height: 66px;
   border-radius: 8px;
-  align-items: center;
-  display: flex;
-  justify-content: space-around;
   font-family: "Lato";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
   color: #4f4f4f;
+  text-align: center;
 }
 .active {
   background: #ffffff;
